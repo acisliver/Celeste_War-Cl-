@@ -11,6 +11,7 @@ class Collider:
     foods=[]
     heallgauge=194
     heal=None
+    iscolided=False
 
     def __init__(self,sceen,arrows,badguys,tankers, thealth, player,foods):
         self.screen=sceen
@@ -26,12 +27,15 @@ class Collider:
         for arrow in self.arrows:           #화살의 개수 만큼 실행
             for tanker in self.tankers:
                 if arrow.colliderect(tanker):
-                    if tanker.heall==0:
+                    if tanker.heall == 0:
                         self.tankers.remove(tanker)
-                        self.arrows.remove(arrow)
+                        self.iscolided = True
                     else:
-                        tanker.heall=tanker.heall-1
-                        self.arrows.remove(arrow)
+                        tanker.heall = tanker.heall - 1
+                        self.iscolided = True
+            if self.iscolided == True:
+                self.arrows.remove(arrow)
+                self.iscolided = False
             for badguy in self.badguys:     #몹의 개수 만큼 실행
                 if arrow.colliderect(badguy):   #충돌시
                     self.arrows.remove(arrow)   #화살 삭제
