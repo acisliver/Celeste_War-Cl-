@@ -2,6 +2,7 @@ import pygame
 import random
 from Player import Player
 from Badguy import Badguy
+from Tanker import Tanker
 from Collider import Collider
 from Food import Food
 from WL import WL
@@ -50,7 +51,6 @@ class Screen:
         self.wl=WL(self.screen,self.exitcode)
         self.timer=Timer(self.screen,self.count)
         self.screen2=Screen2(self.screen,self.width,self.height)
-
     def Start(self):
         self.timer.timer()
         while True:
@@ -86,14 +86,20 @@ class Screen:
             else:
                 for badguy in self.badguys: #몹의 객체만큼
                     badguy.move()   #몹 이동 함수
+                for tanker in self.tankers: #탱커 만큼
+                    tanker.move()       #탱커 무브
                 pygame.display.update()
+
+
 
                 self.badtimer -= 1
                 if self.badtimer == 0:
                     badguy = Badguy(self.screen, self.width,
                                     random.randint(50, self.height - 50), 16)    #위치랜덤의 속도8인 몹 객체 생성
                     self.badguys.append(badguy)                                 #리스트에 추가
-                    self.badtimer = 6
+                    tanker = Tanker(self.screen, 800, random.randint(50, self.height - 50), 8,3)
+                    self.tankers.append(tanker)
+                    self.badtimer = 500
 
             if self.healgauge < 0:
                 break

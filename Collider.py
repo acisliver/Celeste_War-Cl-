@@ -24,18 +24,19 @@ class Collider:
     def collide(self):
         self.heal = Healbar(self.screen, self.heallgauge)
         for arrow in self.arrows:           #화살의 개수 만큼 실행
+            for tanker in self.tankers:
+                if arrow.colliderect(tanker):
+                    if tanker.heall==0:
+                        self.tankers.remove(tanker)
+                        self.arrows.remove(arrow)
+                    else:
+                        tanker.heall=tanker.heall-1
+                        self.arrows.remove(arrow)
             for badguy in self.badguys:     #몹의 개수 만큼 실행
                 if arrow.colliderect(badguy):   #충돌시
                     self.arrows.remove(arrow)   #화살 삭제
                     self.badguys.remove(badguy) #몹 삭제
 
-        for shot in self.arrows:            #탱커 충돌 함수
-            for tanker in self.tankers:
-                if shot.colliderect(tanker):
-                    self.arrows.remove(arrow)
-                    del self.thealth[0]
-                if self.thealth == False
-                    self.tankers.remove(tanker)
 
         for food in self.foods:             #음식(성채)의 개수 만큼
             for badguy in self.badguys:     #몹의 개수 만큼
