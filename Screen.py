@@ -8,11 +8,12 @@ from Food import Food
 from WL import WL
 from Timer import Timer
 from Screen2 import Screen2
-
+from Appearance import Appearance
 class Screen:
     width=1200
     height = 800
-    badtimer = 6
+    badtimer = 10
+    tbadtimer=6
     badguys=[]
     tankers=[]
     thealth=[0, 1, 2]   #탱커의 체력
@@ -90,16 +91,14 @@ class Screen:
                     tanker.move()       #탱커 무브
                 pygame.display.update()
 
-
-
-                self.badtimer -= 1
+                self.badtimer=self.timer.badtimer
                 if self.badtimer == 0:
-                    badguy = Badguy(self.screen, self.width,
-                                    random.randint(50, self.height - 50), 16)    #위치랜덤의 속도8인 몹 객체 생성
-                    self.badguys.append(badguy)                                 #리스트에 추가
-                    tanker = Tanker(self.screen, 800, random.randint(50, self.height - 50), 8,3)
-                    self.tankers.append(tanker)
-                    self.badtimer = 500
+                    for x in range(0,5):
+                        badguy = Badguy(self.screen, self.width,
+                                        random.randint(50, self.height - 50), 16)    #위치랜덤의 속도8인 몹 객체 생성
+                        self.badguys.append(badguy) #리스트에 추가
+                    self.timer.badtimer=round(60/self.timer.max)
+
 
             if self.healgauge < 0:
                 break

@@ -4,8 +4,11 @@ import threading
 
 class Timer:
     screen=None
+    max=0
     count=0
     exidcode=1
+    badtimer=0
+    tbadtimer=0
 
     def __init__(self,screen,count):
         self.screen=screen
@@ -13,7 +16,10 @@ class Timer:
 
     def timer(self):
         time=threading.Timer(1,self.timer)  #1초마다 반복
+        if self.badtimer==0:
+            self.badtimer = round(60 / self.max)
         self.count -= 1                     #1씩 빠짐
+        self.badtimer=self.badtimer-1
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
