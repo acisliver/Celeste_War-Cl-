@@ -7,6 +7,8 @@ class Tanker(pygame.Rect):
     screen = None
     tanker = pygame.image.load("resources/images/badguy2.png")
     heall=0
+    tmax=0
+    tankers=[]
 
     def __init__(self, screen, x, y,speed,heall):
         super().__init__(self.tanker.get_rect())

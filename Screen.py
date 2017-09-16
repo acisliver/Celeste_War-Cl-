@@ -26,6 +26,8 @@ class Screen:
     exitcode = 0
     count=60
     one_count=0
+    tcheck=False
+    tmax=0
 
     background = pygame.image.load('resources/images/grass.png')
     gameover = pygame.image.load("resources/images/gameover.png")
@@ -52,8 +54,15 @@ class Screen:
         self.wl=WL(self.screen,self.exitcode)
         self.timer=Timer(self.screen,self.count)
         self.screen2=Screen2(self.screen,self.width,self.height)
+        self.appearance=Appearance(self.screen,self.tankers)
+
     def Start(self):
+        self.badguys=[]
+        self.player.arrows=[]
         self.timer.timer()
+        self.tmax = self.timer.tmax
+        if 1<=self.tmax:
+            self.tcheck=True
         while True:
             for event in pygame.event.get():    #종료 이벤트
                 if event.type == pygame.QUIT:
@@ -78,9 +87,11 @@ class Screen:
             self.healgauge = self.collider.heallgauge
             self.one_count = self.timer.count       #타이머의 count와 같은 one_count
             pygame.display.update()
+            self.collider.badguys = self.badguys
+            self.collider.arrows=self.player.arrows
+            self.tankers=self.appearance.tankers
 
-            if self.one_count <= 0:     #one_count가 0보다 이하일 때
-                self.badguys=[]         #배드가이 사라짐
+            if self.one_count == 0:     #one_count가 0보다 이하일 때
                 self.exitcode = 1
                 self.wl.exitcode = self.exitcode    #wl의 exitcode를 1로 바꿈
                 break
@@ -98,6 +109,11 @@ class Screen:
                                         random.randint(50, self.height - 50), 16)    #위치랜덤의 속도8인 몹 객체 생성
                         self.badguys.append(badguy) #리스트에 추가
                     self.timer.badtimer=round(60/self.timer.max)
+                if self.tcheck==True:
+                    for x in range(0, self.tmax):
+                        tanker = Tanker(self.screen, 800, random.randint(50, self.height - 50), 8, 3)
+                        self.tankers.append(tanker)
+                        self.tcheck=False
 
 
             if self.healgauge < 0:
@@ -107,9 +123,9 @@ class Screen:
 
     def Starting(self):
         while True:
-            self.screen2.Start()    #스크린2 실행
+            self.screen2.Start()#스크린2 실행
             game = Screen()
-            game.Start()            #스크린1 실행
+            game.Start()#스크린1 실행
 
 
 game2 = Screen()

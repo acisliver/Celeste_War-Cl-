@@ -4,6 +4,7 @@ import threading
 
 class Timer:
     screen=None
+    tmax=0
     max=0
     count=0
     exidcode=1
