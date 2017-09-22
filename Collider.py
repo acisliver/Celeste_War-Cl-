@@ -43,13 +43,6 @@ class Collider:
                 self.iscolided = False
 
 
-        for food in self.foods:             #음식(성채)의 개수 만큼
-            for badguy in self.badguys:     #몹의 개수 만큼
-                if food.colliderect(badguy):#충돌시
-                    self.badguys.remove(badguy) #몹 삭제
-                    self.heallgauge -= 10
-                    self.heal = Healbar(self.screen, self.heallgauge)
-
         for badguy in self.badguys:
             if self.collplayer.colliderect(badguy):
                 self.badguys.remove(badguy)

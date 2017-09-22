@@ -18,7 +18,10 @@ class Timer:
     def timer(self):
         time=threading.Timer(1,self.timer)  #1초마다 반복
         if self.badtimer==0:
-            self.badtimer = round(60 / self.max)
+            if self.max==0:
+                self.badtimer=100
+            else:
+                self.badtimer = round(60 / self.max)
         self.count -= 1                     #1씩 빠짐
         self.badtimer=self.badtimer-1
 
