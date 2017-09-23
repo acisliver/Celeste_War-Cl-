@@ -117,7 +117,7 @@ class Screen2:
             Startfont = pygame.font.Font("resources/font/consola.ttf", 40)  #폰트 불러오기
             Starttext = Startfont.render("Start", True, (225, 225, 225))        #Start객체 생성
             StarttextRect = Starttext.get_rect()
-            StarttextRect.center = (700, 400)
+            StarttextRect.center = (214, 600)
             self.screen.blit(Starttext, StarttextRect)
 
             self.list = [textRect1, textRect2,ttextRect1,ttextRect2, MIRect1, MIRect2,TMIRect1,TMIRect2, StarttextRect] #list에 ^^^vvv 넣기

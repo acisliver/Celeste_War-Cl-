@@ -5,7 +5,7 @@ class Player(pygame.Rect):
     screen=None
     arrows=[]
     shot_flag = True
-    player = pygame.image.load('resources/images/dude2.png')
+    player = pygame.image.load('resources/images/spaceship.png')
 
     def __init__(self, screen, x, y):
         super().__init__(self.player.get_rect())    #상위 클래스의 함수(rect)를 사용하기 위해 super()사용
@@ -16,18 +16,18 @@ class Player(pygame.Rect):
     def move(self):                 #wasd 이동키
         pressed=pygame.key.get_pressed()
 
-        if pressed[pygame.K_w]:
-            if (0 < self.left):
-                self.left -= 20
-        if pressed[pygame.K_s]:
-            if (self.left < 760):
-                self.left += 20
-        if pressed[pygame.K_d]:
-            if (self.top < 1200):
-                self.top += 20
-        if pressed[pygame.K_a]:
+        if pressed[pygame.K_UP]:
+            if (0 < self.left-300):
+                self.left -= 15
+        if pressed[pygame.K_DOWN]:
+            if (self.left < 900):
+                self.left += 15
+        if pressed[pygame.K_RIGHT]:
+            if (self.top < 700):
+                self.top += 15
+        if pressed[pygame.K_LEFT]:
             if (0 < self.top):
-                self.top -= 20
+                self.top -= 15
         if pressed[pygame.K_SPACE]: #스페이스바를 눌렀을 경우
             if self.shot_flag:      #먼저 shot_flag의 값 확인(초기에 True로 설정)
                 self.shot()         #화살이 생성됨

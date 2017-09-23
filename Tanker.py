@@ -10,17 +10,19 @@ class Tanker(pygame.Rect):
     tmax=0
     tankers=[]
 
-    def __init__(self, screen, x, y,speed,heall):
+    def __init__(self, screen, x, y,speed,heall,time,num):
         super().__init__(self.tanker.get_rect())
         self.screen = screen
         self.top = x
         self.left = y
         self.speed = speed
         self.heall=heall
+        self.time=time
+        self.num=num
 
     def move(self):
         if random.randint(0, 1) == 0:
-            self.left -= self.speed
+            self.top -= self.speed
         else:
-            self.left += self.speed
+            self.top += self.speed
         self.screen.blit(self.tanker, (self.top, self.left))
