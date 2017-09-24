@@ -20,10 +20,10 @@ class Player(pygame.Rect):
             if (0 < self.left-300):
                 self.left -= 15
         if pressed[pygame.K_DOWN]:
-            if (self.left < 900):
+            if (self.left < 800):
                 self.left += 15
         if pressed[pygame.K_RIGHT]:
-            if (self.top < 700):
+            if (self.top < 600):
                 self.top += 15
         if pressed[pygame.K_LEFT]:
             if (0 < self.top):
@@ -42,5 +42,5 @@ class Player(pygame.Rect):
         self.screen.blit(self.player,(self.top,self.left))
 
     def shot(self):                 #화살생성함수
-        arrow = Arrow(self.screen, self.top, self.left, 30 )    #speed가 30인 화살 생성
+        arrow = Arrow(self.screen, self.top, self.left, 35 )    #speed가 30인 화살 생성
         self.arrows.append(arrow)                               #list에 arrow객체 추가

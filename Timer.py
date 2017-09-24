@@ -39,5 +39,5 @@ class Timer:
         font = pygame.font.Font("resources/font/consola.ttf", 35)
         text = font.render(str(self.count), True, (255, 0, 0))      #count를 그리는 폰트 생성
         textRect = text.get_rect()
-        textRect.center = (400, 35)
+        textRect.center = (350, 35)
         self.screen.blit(text, textRect)

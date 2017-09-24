@@ -15,4 +15,4 @@ class Arrow(pygame.Rect):
 
     def move(self):         #화살의 움직임 함수
         self.left -= self.speed
-        self.screen.blit(self.arrow,(self.top+22,self.left))
+        self.screen.blit(self.arrow,(self.top+25,self.left))

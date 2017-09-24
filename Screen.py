@@ -8,16 +8,16 @@ from WL import WL
 from Timer import Timer
 from Screen2 import Screen2
 class Screen:
-    width=800
-    height =1000
+    width=700
+    height =900
     badtimer = 10
     tbadtimer=6
     badguys=[]
     tankers=[]
     thealth=[0, 1, 2]   #탱커의 체력
     badguy=None
-    x=350
-    y=900
+    x=300
+    y=800
     exitcode = 0
     count=60
     one_count=0
@@ -94,9 +94,9 @@ class Screen:
 
             self.badtimer = self.timer.badtimer
             if self.badtimer == 0:
-                for x in range(0, 5):
+                for x in range(0, 10):
                     badguy = Badguy(self.screen,
-                                    random.randint(50, self.width - 50),0, 20,1,0)  # 위치랜덤의 속도8인 몹 객체 생성
+                                    random.randint(50, self.width - 50),0, 5,1,0)  # 위치랜덤의 속도8인 몹 객체 생성
                     self.badguys.append(badguy)  # 리스트에 추가
                 if self.timer.max==0:
                     self.timer.badtimer=100
@@ -104,7 +104,7 @@ class Screen:
                     self.timer.badtimer = round(60 / self.timer.max)
             if self.tcheck == True:
                 for x in range(0, self.tmax):
-                    tanker = Tanker(self.screen, random.randint(50, self.width - 50),200, 8, 1,1,0)
+                    tanker = Tanker(self.screen, random.randint(50, self.width - 50),200, 1, 5,1,0)
                     self.tankers.append(tanker)
                     self.tcheck = False
 
