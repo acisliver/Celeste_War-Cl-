@@ -17,13 +17,13 @@ class Screen:
     thealth=[0, 1, 2]   #탱커의 체력
     badguy=None
     x=300
-    y=800
+    y=900
     exitcode = 0
-    count=60
+    count=67
     one_count=0
     tcheck=False
     tmax=0
-    bX=0
+    rsX=-50
     bY=0
 
     background = pygame.image.load('resources/images/background.png')
@@ -61,6 +61,16 @@ class Screen:
         for tanker in tankers:  # 탱커 만큼
             tanker.move()  # 탱커 무브
         pygame.display.update()
+    def StartPrint(self,timer):
+        pygame.font.init()
+        font = pygame.font.Font("resources/font/consola.ttf", 50)
+        if timer > 61:
+            text = font.render(str(timer - 61), True, (255, 0, 0))  # count를 그리는 폰트 생성
+        else:
+            text = font.render(str("Start"), True, (255, 0, 0))  # count를 그리는 폰트 생성
+        textRect = text.get_rect()
+        textRect.center = (350, 500)
+        self.screen.blit(text, textRect)
 
     def Start(self):
         self.badguys=[]
@@ -78,44 +88,50 @@ class Screen:
 
             game=Screen()
             game.Drow_background(self.bY)
+            self.player.move()  # 플레이어 무브함수
             self.bY += 10
             if self.bY==1000:
                 self.bY=0
 
-            self.timer.print()      #타이머 그리기
-            self.player.move()      #플레이어 무브함수
-            self.collider.collide() #충돌 함수
-            self.collider.badguys = self.badguys
-            self.collider.arrows = self.player.arrows
-            self.healgauge = self.collider.heallgauge
+            if self.timer.count>60:
+                game.StartPrint(self.timer.count)
+                if self.player.left > 800:
+                    self.player.left -= 1
 
-            game.Move(self.badguys,self.tankers)
-            pygame.display.update()
+            else:
+                self.timer.print()  # 타이머 그리기
+                self.collider.collide()  # 충돌 함수
+                self.collider.badguys = self.badguys
+                self.collider.arrows = self.player.arrows
+                self.healgauge = self.collider.heallgauge
 
-            self.badtimer = self.timer.badtimer
-            if self.badtimer == 0:
-                for x in range(0, 10):
-                    badguy = Badguy(self.screen,
-                                    random.randint(50, self.width - 50),0, 5,1,0)  # 위치랜덤의 속도8인 몹 객체 생성
-                    self.badguys.append(badguy)  # 리스트에 추가
-                if self.timer.max==0:
-                    self.timer.badtimer=100
-                else:
-                    self.timer.badtimer = round(60 / self.timer.max)
-            if self.tcheck == True:
-                for x in range(0, self.tmax):
-                    tanker = Tanker(self.screen, random.randint(50, self.width - 50),200, 1, 5,1,0)
-                    self.tankers.append(tanker)
-                    self.tcheck = False
+                game.Move(self.badguys, self.tankers)
+                pygame.display.update()
 
-            self.one_count = self.timer.count  # 타이머의 count와 같은 one_count
-            if self.one_count == 0:     #one_count가 0보다 이하일 때
-                self.exitcode = 1
-                self.wl.exitcode = self.exitcode    #wl의 exitcode를 1로 바꿈
-                break
+                self.badtimer = self.timer.badtimer
+                if self.badtimer == 0:
+                    for x in range(0, 10):
+                        badguy = Badguy(self.screen,
+                                        random.randint(50, self.width - 50), 0, 5, 1, 0)  # 위치랜덤의 속도8인 몹 객체 생성
+                        self.badguys.append(badguy)  # 리스트에 추가
+                    if self.timer.max == 0:
+                        self.timer.badtimer = 100
+                    else:
+                        self.timer.badtimer = round(60 / self.timer.max)
+                if self.tcheck == True:
+                    for x in range(0, self.tmax):
+                        tanker = Tanker(self.screen, random.randint(50, self.width - 50), 200, 1, 5, 1, 0)
+                        self.tankers.append(tanker)
+                        self.tcheck = False
 
-            if self.healgauge < 0:
-                break
+                self.one_count = self.timer.count  # 타이머의 count와 같은 one_count
+                if self.one_count == 0:  # one_count가 0보다 이하일 때
+                    self.exitcode = 1
+                    self.wl.exitcode = self.exitcode  # wl의 exitcode를 1로 바꿈
+                    break
+
+                if self.healgauge < 0:
+                    break
         if self.healgauge < 0:  #체력게이지가 0보다 작으면
             self.wl.print()     #win or lose 출력
 

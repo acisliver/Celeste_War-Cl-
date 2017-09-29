@@ -151,8 +151,9 @@ class Screen2:
                                 self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
                                 Timer.max = self.max
                                 Timer.tmax=self.tmax
-                                drow.numlist = [0, 0, 0]    #numlist 초기화
-                                drow.tnumlist=[0,0,0]
+                                self.numlist=[0,0]
+                                self.tnumlist=[0,0]
+                                drow = Screen2.Drow(self.list, self.numlist, self.tnumlist, self.screen, self.degree)#numlist 초기화
                                 finished=1                  #while문 종료
                                 break
 
