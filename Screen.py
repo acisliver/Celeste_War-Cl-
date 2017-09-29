@@ -23,8 +23,10 @@ class Screen:
     one_count=0
     tcheck=False
     tmax=0
-    rsX=-50
+    rsX=50
+    alpha=255
     bY=0
+    playercheck=False
 
     background = pygame.image.load('resources/images/background.png')
     gameover = pygame.image.load("resources/images/gameover.png")
@@ -61,13 +63,16 @@ class Screen:
         for tanker in tankers:  # 탱커 만큼
             tanker.move()  # 탱커 무브
         pygame.display.update()
-    def StartPrint(self,timer):
+
+    def StartPrint(self,timer,rsX ,alpha):
         pygame.font.init()
         font = pygame.font.Font("resources/font/consola.ttf", 50)
         if timer > 61:
             text = font.render(str(timer - 61), True, (255, 0, 0))  # count를 그리는 폰트 생성
         else:
-            text = font.render(str("Start"), True, (255, 0, 0))  # count를 그리는 폰트 생성
+            font = pygame.font.Font("resources/font/consola.ttf",rsX)
+            text = font.render(str("Start"), False, (255, 0, 0))  # count를 그리는 폰트 생성
+            text.set_alpha(alpha)
         textRect = text.get_rect()
         textRect.center = (350, 500)
         self.screen.blit(text, textRect)
@@ -88,17 +93,26 @@ class Screen:
 
             game=Screen()
             game.Drow_background(self.bY)
-            self.player.move()  # 플레이어 무브함수
+
             self.bY += 10
             if self.bY==1000:
                 self.bY=0
 
             if self.timer.count>60:
-                game.StartPrint(self.timer.count)
-                if self.player.left > 800:
+                self.screen.blit(self.player.player,(self.player.top,self.player.left))
+                if self.player.left<=750:
+                    self.playercheck=True
+                game.StartPrint(self.timer.count,self.rsX,self.alpha)
+                if self.timer.count<=61:
+                    self.rsX += 4
+                    self.alpha -= 6
+                if self.playercheck==False:
                     self.player.left -= 1
+                elif self.playercheck==True and 800>self.player.left:
+                    self.player.left+=1
 
             else:
+                self.player.move()  # 플레이어 무브함수
                 self.timer.print()  # 타이머 그리기
                 self.collider.collide()  # 충돌 함수
                 self.collider.badguys = self.badguys
