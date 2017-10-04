@@ -6,11 +6,13 @@ class Screen2:
     height = 0
     screen = None
     tcheck=False
-    numlist = [0, 0]
-    tnumlist=[0,0]
+    numlist = [0,0]
+    tnumlist = [0,0]
+    anumlist = [0,0]
     list = []
     max=0 #숫자의 최종값
     tmax=0
+    amax = 0
     degree=0
     bY=0
 
@@ -18,15 +20,18 @@ class Screen2:
         self.width=width
         self.screen=screen
         self.height=height
+
     class Drow:
-        def __init__(self,list,numlist,tnumlist,screen,degree):
+        def __init__(self,list,numlist,tnumlist,anumlist, screen,degree):
             self.list=list
             self.numlist=numlist
             self.tnumlist=tnumlist
+            self.anumlist = anumlist
             self.screen=screen
             self.background = pygame.image.load('resources/images/background.png')
             self.badguyimg = pygame.image.load("resources/images/Mob/Mob1.png")
             self.tanker=pygame.image.load("resources/images/Mob/tanker.png")
+            self.abadguy = pygame.image.load("resources/images/Mob/abadguy.png")
             self.degree = degree
 
         def Drow_font(self):
@@ -34,33 +39,47 @@ class Screen2:
             font = pygame.font.Font("resources/font/consola.ttf", 40)  # 폰트 불러오기
             text = font.render(str(("%d%d" % (self.numlist[0], self.numlist[1]))), True, (225, 225, 225))  # numlist폰트 객체 생성
             textRect = text.get_rect()  # numlist폰트 위치 불러오기
-            textRect.center = (225, 425)  # numlist폰트 중앙 좌표 지정
+            textRect.center = (225, 330)  # numlist폰트 중앙 좌표 지정
 
             ttext = font.render(str("%d%d" % (self.tnumlist[0], self.tnumlist[1])), True, (225, 225, 225))
             ttextRect = ttext.get_rect()
-            ttextRect.center = (225, 500)
+            ttextRect.center = (225, 410)
+
+            tttext = font.render(str("%d%d " % (self.anumlist[0], self.anumlist[1])), True, (225, 225, 225))
+            tttextRect = tttext.get_rect()
+            tttextRect.center = (235, 500)
+
             self.screen.blit(ttext, ttextRect)
-            self.screen.blit(text, textRect)  # numlist 칠하기
+            self.screen.blit(text, textRect)
+            self.screen.blit(tttext, tttextRect)    # numlist 칠하기
 
             text1 = font.render("^", True, (225, 225, 225))  # ^폰트 객체 생성
             textRect1 = text1.get_rect()
             textRect2 = text1.get_rect()
             ttextRect1 = text1.get_rect()
             ttextRect2 = text1.get_rect()
-            textRect1.center = (233, 405)
-            textRect2.center = (216, 405)
-            ttextRect1.center = (233, 480)
-            ttextRect2.center = (216, 480)
+            tttextRect1 = text1.get_rect()
+            tttextRect2 = text1.get_rect()
+            textRect1.center = (233, 315)
+            textRect2.center = (216, 315)
+            ttextRect1.center = (233, 390)
+            ttextRect2.center = (216, 390)
+            tttextRect1.center = (233, 480)
+            tttextRect2.center = (216, 480)
 
             text2 = font.render("v", True, (225, 225, 225))  # v폰트 객체 생성
             MIRect1 = text2.get_rect()
             MIRect2 = text2.get_rect()
             TMIRect1 = text2.get_rect()
             TMIRect2 = text2.get_rect()
-            MIRect1.center = (231, 445)
-            MIRect2.center = (214, 445)
-            TMIRect1.center = (231, 520)
-            TMIRect2.center = (214, 520)
+            AMIRect1 = text2.get_rect()
+            AMIRect2 = text2.get_rect()
+            MIRect1.center = (231, 355)
+            MIRect2.center = (216, 355)
+            TMIRect1.center = (231, 430)
+            TMIRect2.center = (216, 430)
+            AMIRect1.center = (232, 520)
+            AMIRect2.center = (215, 520)
 
             Startfont = pygame.font.Font("resources/font/consola.ttf", 40)  # 폰트 불러오기
             Starttext = Startfont.render("Start", True, (225, 225, 225))  # Start객체 생성
@@ -68,12 +87,11 @@ class Screen2:
             StarttextRect.center = (214, 600)
             self.screen.blit(Starttext, StarttextRect)
 
-            self.list = [textRect1, textRect2, ttextRect1, ttextRect2, MIRect1, MIRect2, TMIRect1, TMIRect2,
-                    StarttextRect]  # list에 ^^^vvv 넣기
+            self.list = [textRect1, textRect2, ttextRect1, ttextRect2, tttextRect1, tttextRect2, MIRect1, MIRect2, TMIRect1, TMIRect2, AMIRect1, AMIRect2, StarttextRect]  # list에 ^^^vvv 넣기
 
-            for y in range(0, 4):  # ^^^그리기
+            for y in range(0, 6):  # ^^^그리기
                 self.screen.blit(text1, self.list[y])
-            for x in range(4, 8):  # vvv그리기기
+            for x in range(6, 12):  # vvv그리기기
                 self.screen.blit(text2, self.list[x])
             pygame.display.flip()  # 화면 전체 업데이트
 
@@ -85,13 +103,15 @@ class Screen2:
         def Drow_Mob(self,degree):
             rotated = pygame.transform.rotate(self.badguyimg, self.degree)
             rect = rotated.get_rect()
-            rect.center = (170,410)
+            rect.center = (170,330)
             self.screen.blit(rotated, rect)
 
             rotated = pygame.transform.rotate(self.tanker, self.degree)
             rect = rotated.get_rect()
-            rect.center = (170, 500)
+            rect.center = (170, 400)
             self.screen.blit(rotated, rect)
+
+            self.screen.blit(self.abadguy, (100,450))
 
     def Start(self):
         finished=0
@@ -125,40 +145,59 @@ class Screen2:
                                 if drow.tnumlist[0] < 5:
                                     drow.tnumlist[0] = drow.tnumlist[0] + 1
                                     break
-                        if lists == drow.list[4]:               #100의 자리 더하기
+                        if lists == drow.list[4]:
+                            if lists.collidepoint(event.pos):
+                                if drow.anumlist[1] < 5:
+                                    drow.anumlist[1] = drow.anumlist[0] + 1
+                        if lists == drow.list[5]:
+                            if lists.collidepoint(event.pos):
+                                if drow.anumlist[0] < 9:
+                                    drow.anumlist[0] = drow.anumlist[0] + 1
+                        if lists == drow.list[6]:
                             if lists.collidepoint(event.pos):
                                 if drow.numlist[1] > 0:
                                     drow.numlist[1] = drow.numlist[1] - 1
                                     break
-                        if lists == drow.list[5]:               #1의 자리 빼기
+                        if lists == drow.list[7]:               #1의 자리 빼기
                             if lists.collidepoint(event.pos):
                                 if drow.numlist[0] > 0:
                                     drow.numlist[0] = drow.numlist[0] - 1
                                     break
-                        if lists == drow.list[6]:               #100의 자리 더하기
+                        if lists == drow.list[8]:               #100의 자리 더하기
                             if lists.collidepoint(event.pos):
                                 if drow.tnumlist[1] > 0:
                                     drow.tnumlist[1] = drow.tnumlist[1] - 1
                                     break
-                        if lists == drow.list[7]:               #100의 자리 더하기
+                        if lists == drow.list[9]:               #100의 자리 더하기
                             if lists.collidepoint(event.pos):
                                 if drow.tnumlist[0] > 0:
                                     drow.tnumlist[0] = drow.tnumlist[0] - 1
                                     break
-                        if lists == drow.list[8]:
+                        if lists == drow.list[10]:
+                            if lists.collidepoint(event.pos):
+                                if drow.anumlist[1] > 0:
+                                    drow.anumlist[1] = drow.anumlist[0] - 1
+                        if lists == drow.list[11]:
+                            if lists.collidepoint(event.pos):
+                                if drow.anumlist[0] > 0:
+                                    drow.anumlist[0] = drow.anumlist[0] - 1
+
+                        if lists == drow.list[12]:
                             if lists.collidepoint(event.pos):   #Start를 눌렀을 때
                                 self.max = (drow.numlist[0] * 10) + drow.numlist[1]    #몹의 수 총합 계산
                                 self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
+                                self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
                                 Timer.max = self.max
                                 Timer.tmax=self.tmax
-                                self.numlist=[0,0]
-                                self.tnumlist=[0,0]
-                                drow = Screen2.Drow(self.list, self.numlist, self.tnumlist, self.screen, self.degree)#numlist 초기화
+                                Timer.amax = self.amax
+                                drow.numlist = [0, 0]       #numlist 초기화
+                                drow.tnumlist = [0, 0]
+                                drow.anumlist = [0, 0]
                                 finished=1                  #while문 종료
                                 break
 
 
-            drow = Screen2.Drow(self.list, self.numlist, self.tnumlist, self.screen,self.degree)
+            drow = Screen2.Drow(self.list, self.numlist, self.tnumlist,self.anumlist, self.screen,self.degree)
             drow.Drow_font()
             drow.Drow_background(self.bY)
             self.bY += 1
