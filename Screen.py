@@ -3,6 +3,7 @@ import random
 from Player import Player
 from Badguy import Badguy
 from Tanker import Tanker
+from Abadguy import Abadguy
 from Collider import Collider
 from WL import WL
 from Timer import Timer
@@ -14,15 +15,19 @@ class Screen:
     tbadtimer=6
     badguys=[]
     tankers=[]
-    thealth=[0, 1, 2]   #탱커의 체력
+    abadguys=[]
+    thealth = None
     badguy=None
+    abadguy=None
     x=300
     y=900
     exitcode = 0
     count=67
     one_count=0
     tcheck=False
+    acheck=False
     tmax=0
+    amax=0
     rsX=50
     alpha=255
     bY=0
@@ -57,11 +62,13 @@ class Screen:
         self.screen.blit(self.background, (0,bY))
         if bY>1:
             self.screen.blit(self.background,(0,bY-1000))
-    def Move(self,badguys,tankers):
+    def Move(self,badguys,tankers, abadguys):
         for badguy in badguys:  # 몹의 객체만큼
             badguy.move()  # 몹 이동 함수
         for tanker in tankers:  # 탱커 만큼
             tanker.move()  # 탱커 무브
+        for abadguy in abadguys:    #원거리 만큼
+            abadguy.move()  #원거리 무브
         pygame.display.update()
 
     def StartPrint(self,timer,rsX ,alpha):
@@ -80,10 +87,14 @@ class Screen:
     def Start(self):
         self.badguys=[]
         self.player.arrows=[]
+        self.abadguys=[]
         self.timer.timer()
         self.tmax = self.timer.tmax
+        self.amax = self.screen2.amax
         if 1<=self.tmax:
             self.tcheck=True
+        if 1<=self.acheck:
+            self.acheck=True
         while True:
             for event in pygame.event.get():    #종료 이벤트
                 if event.type == pygame.QUIT:
@@ -119,7 +130,7 @@ class Screen:
                 self.collider.arrows = self.player.arrows
                 self.healgauge = self.collider.heallgauge
 
-                game.Move(self.badguys, self.tankers)
+                game.Move(self.badguys, self.tankers, self.abadguys)
                 pygame.display.update()
 
                 self.badtimer = self.timer.badtimer
@@ -137,7 +148,11 @@ class Screen:
                         tanker = Tanker(self.screen, random.randint(50, self.width - 50), 200, 1, 5, 1, 0)
                         self.tankers.append(tanker)
                         self.tcheck = False
-
+                if self.acheck == True:
+                    for x in range(0, self.tmax):
+                        abadguy = Abadguy(self.screen, random.randint(50, self.width - 50), 199, 5, 1, 0)
+                        self.abadguys.append(abadguy)
+                        self.acheck = True
                 self.one_count = self.timer.count  # 타이머의 count와 같은 one_count
                 if self.one_count == 0:  # one_count가 0보다 이하일 때
                     self.exitcode = 1
