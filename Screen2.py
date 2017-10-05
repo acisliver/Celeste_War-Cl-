@@ -101,6 +101,7 @@ class Screen2:
                          AMIRect2,#11
                          StarttextRect]  #12 list에 ^^^vvv 넣기
 
+
             for y in range(0, 6):  # ^^^그리기
                 self.screen.blit(text1, self.list[y])
             for x in range(6, 12):  # vvv그리기기
