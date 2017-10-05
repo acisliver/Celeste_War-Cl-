@@ -5,7 +5,11 @@ class Player(pygame.Rect):
     screen=None
     arrows=[]
     shot_flag = True
+    topBU=900
+    Num=0
+    playerMove = pygame.image.load('resources/images/PlayerMove.png')
     player = pygame.image.load('resources/images/spaceship.png')
+    playerlist = [player, playerMove]
 
     def __init__(self, screen, x, y):
         super().__init__(self.player.get_rect())    #상위 클래스의 함수(rect)를 사용하기 위해 super()사용
@@ -15,13 +19,21 @@ class Player(pygame.Rect):
 
     def move(self):                 #wasd 이동키
         pressed=pygame.key.get_pressed()
+        if self.left < self.topBU:
+            self.topBU = self.left
+            self.Num = 1
+        else:
+            self.topBU = self.left
+            self.Num = 0
+        if self.left<=800:
+            self.left+=10
 
         if pressed[pygame.K_UP]:
             if (0 < self.left-300):
-                self.left -= 15
+                self.left -= 25
         if pressed[pygame.K_DOWN]:
             if (self.left < 800):
-                self.left += 15
+                self.left += 25
         if pressed[pygame.K_RIGHT]:
             if (self.top < 600):
                 self.top += 15
@@ -39,7 +51,7 @@ class Player(pygame.Rect):
         for arrow in self.arrows:
             arrow.move()            #화살이 날아감
 
-        self.screen.blit(self.player,(self.top,self.left))
+        self.screen.blit(self.playerlist[self.Num], (self.top, self.left))
 
     def shot(self):                 #화살생성함수
         arrow = Arrow(self.screen, self.top, self.left, 35 )    #speed가 30인 화살 생성

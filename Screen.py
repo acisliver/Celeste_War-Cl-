@@ -108,22 +108,21 @@ class Screen:
             self.bY += 10
             if self.bY==1000:
                 self.bY=0
+            self.player.move()  # 플레이어 무브함수
 
             if self.timer.count>60:
-                self.screen.blit(self.player.player,(self.player.top,self.player.left))
-                if self.player.left<=750:
-                    self.playercheck=True
                 game.StartPrint(self.timer.count,self.rsX,self.alpha)
                 if self.timer.count<=61:
                     self.rsX += 4
                     self.alpha -= 6
-                if self.playercheck==False:
-                    self.player.left -= 1
-                elif self.playercheck==True and 800>self.player.left:
-                    self.player.left+=1
+                if self.player.left > 50 and self.playercheck == False:
+                    self.player.left -= 25
+                elif self.player.left <= 50 and self.playercheck == False:
+                    self.playercheck = True
+                elif self.player.left <= 800 and self.playercheck == True:
+                    self.player.left -= 5.5
 
             else:
-                self.player.move()  # 플레이어 무브함수
                 self.timer.print()  # 타이머 그리기
                 self.collider.collide()  # 충돌 함수
                 self.collider.badguys = self.badguys
