@@ -87,7 +87,19 @@ class Screen2:
             StarttextRect.center = (214, 600)
             self.screen.blit(Starttext, StarttextRect)
 
-            self.list = [textRect1, textRect2, ttextRect1, ttextRect2, tttextRect1, tttextRect2, MIRect1, MIRect2, TMIRect1, TMIRect2, AMIRect1, AMIRect2, StarttextRect]  # list에 ^^^vvv 넣기
+            self.list = [textRect1,#0
+                         textRect2,#1
+                         ttextRect1,#2
+                         ttextRect2,#3
+                         tttextRect1,#4
+                         tttextRect2,#5
+                         MIRect1,#6
+                         MIRect2,#7
+                         TMIRect1,#8
+                         TMIRect2,#9
+                         AMIRect1,#10
+                         AMIRect2,#11
+                         StarttextRect]  #12 list에 ^^^vvv 넣기
 
             for y in range(0, 6):  # ^^^그리기
                 self.screen.blit(text1, self.list[y])
@@ -147,11 +159,11 @@ class Screen2:
                                     break
                         if lists == drow.list[4]:
                             if lists.collidepoint(event.pos):
-                                if drow.anumlist[1] < 5:
-                                    drow.anumlist[1] = drow.anumlist[0] + 1
+                                if drow.anumlist[1] < 9:
+                                    drow.anumlist[1] = drow.anumlist[1] + 1
                         if lists == drow.list[5]:
                             if lists.collidepoint(event.pos):
-                                if drow.anumlist[0] < 9:
+                                if drow.anumlist[0] < 5:
                                     drow.anumlist[0] = drow.anumlist[0] + 1
                         if lists == drow.list[6]:
                             if lists.collidepoint(event.pos):
@@ -176,7 +188,7 @@ class Screen2:
                         if lists == drow.list[10]:
                             if lists.collidepoint(event.pos):
                                 if drow.anumlist[1] > 0:
-                                    drow.anumlist[1] = drow.anumlist[0] - 1
+                                    drow.anumlist[1] = drow.anumlist[1] - 1
                         if lists == drow.list[11]:
                             if lists.collidepoint(event.pos):
                                 if drow.anumlist[0] > 0:
@@ -190,9 +202,9 @@ class Screen2:
                                 Timer.max = self.max
                                 Timer.tmax=self.tmax
                                 Timer.amax = self.amax
-                                drow.numlist = [0, 0]       #numlist 초기화
-                                drow.tnumlist = [0, 0]
-                                drow.anumlist = [0, 0]
+                                self.numlist = [0, 0]       #numlist 초기화
+                                self.tnumlist = [0, 0]
+                                self.anumlist = [0, 0]
                                 finished=1                  #while문 종료
                                 break
 
