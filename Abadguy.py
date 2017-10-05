@@ -1,5 +1,4 @@
 import pygame
-import threading
 import random
 from Bullet import Bullet
 from Timer import Timer
@@ -9,42 +8,45 @@ class Abadguy(pygame.Rect):
     screen = None
     bullets = []
     abadguy = pygame.image.load("resources/images/abadguy.png")
+    wallCollX="Left"
+    wallCollY="Down"
 
 
-    def __init__(self, screen, x, y, speed, num):
+    def __init__(self, screen, x, y, speed, time,num):
         super().__init__(self.abadguy.get_rect())     #상위 클래스의 함수(rect)를 사용하기 위해 super()사용
         self.top = x
         self.left = y
         self.speed = speed
         self.screen = screen
-
+        self.time=time
         self.num = num
 
     def move(self):             #원거리몹 움직임 함수
-        time = threading.Timer(1,self.move())  #1초마다 반복
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                time.cancel()               #1초마다 반복 취소
-
-        time.start()                        #시작
-
-        if self.count<=0:
-            time.cancel()
 
         for bullet in self.bullets:
             bullet.move()
+        rotated = pygame.transform.rotate(self.abadguy, 180)
+        rect = rotated.get_rect()
+        rect.center = (self.top, self.left)
 
-        if self.left >= 0 and self.left < 200:
-            self.left += self.speed
-        if self.left > 200:
-            self.left -= self.speed
-        if self.top > 700:
-            self.top -=self.speed
-        if self.top >= 0 and self.top < 700:
-            self.top += self.top
+        if self.top>=650:
+            self.wallCollX="Right"
+        if self.top<=50:
+            self.wallCollX="Left"
+        if self.left>=130:
+            self.wallCollY="Up"
+        if self.left<=50:
+            self.wallCollY="Down"
+        if self.wallCollX=="Left":
+            self.top+=self.speed
+        if self.wallCollX=="Right":
+            self.top-=self.speed
+        if self.wallCollY=="Down":
+            self.left+=self.speed
+        if self.wallCollY=="Up":
+            self.left-=self.speed
 
-        self.screen.blit(self.abadguy, (self.top, self.left))
+        self.screen.blit(rotated, rect)
 
 
 

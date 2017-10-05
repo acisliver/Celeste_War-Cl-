@@ -90,10 +90,10 @@ class Screen:
         self.abadguys=[]
         self.timer.timer()
         self.tmax = self.timer.tmax
-        self.amax = self.screen2.amax
+        self.amax = self.timer.amax
         if 1<=self.tmax:
             self.tcheck=True
-        if 1<=self.acheck:
+        if 1<=self.amax:
             self.acheck=True
         while True:
             for event in pygame.event.get():    #종료 이벤트
@@ -149,10 +149,10 @@ class Screen:
                         self.tankers.append(tanker)
                         self.tcheck = False
                 if self.acheck == True:
-                    for x in range(0, self.tmax):
-                        abadguy = Abadguy(self.screen, random.randint(50, self.width - 50), 199, 5, 1, 0)
+                    for x in range(0, self.amax):
+                        abadguy = Abadguy(self.screen, random.randint(50, self.width - 50), 199, 3, 1, 0)
                         self.abadguys.append(abadguy)
-                        self.acheck = True
+                        self.acheck = False
                 self.one_count = self.timer.count  # 타이머의 count와 같은 one_count
                 if self.one_count == 0:  # one_count가 0보다 이하일 때
                     self.exitcode = 1
