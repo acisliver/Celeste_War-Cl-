@@ -1,7 +1,7 @@
 import pygame
 import math
 
-class Sector1(pygame.Rect):
+class Sector2(pygame.Rect):
     speed = 0
     screen = None
     s_a = pygame.image.load("resources/images/sector_a1.png")
