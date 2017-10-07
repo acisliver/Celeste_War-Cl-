@@ -15,7 +15,7 @@ class Sector1(pygame.Rect):
 
     def move(self):
         self.left += self.speed
-        self.screen.blit(self.sector_arrow(self.top + 25, self.left))
+        self.screen.blit(self.sector_arrow,(self.top + 25, self.left))
 
 
 
