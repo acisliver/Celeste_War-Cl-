@@ -53,7 +53,7 @@ class Screen:
 
     def __init__(self):
         self.player = Player(self.screen ,self.x,self.y)
-        self.collider=Collider(self.screen,self.player.arrows,self.badguys,self.tankers, self.thealth, self.player)
+        self.collider=Collider(self.screen,self.player.arrows,self.badguys,self.tankers,self.abadguys, self.thealth, self.player)
         self.wl=WL(self.screen,self.exitcode)
         self.timer=Timer(self.screen,self.count)
         self.screen2=Screen2(self.screen,self.width,self.height)
@@ -119,13 +119,16 @@ class Screen:
                     self.player.left -= 25
                 elif self.player.left <= 50 and self.playercheck == False:
                     self.playercheck = True
-                elif self.player.left <= 800 and self.playercheck == True:
+                elif self.player.left < 799 and self.playercheck == True:
                     self.player.left -= 5.5
+                elif self.player.left>300 and self.playercheck==True:
+                    self.player.Start = False
 
             else:
                 self.timer.print()  # 타이머 그리기
                 self.collider.collide()  # 충돌 함수
                 self.collider.badguys = self.badguys
+                self.collider.abadguys=self.abadguys
                 self.collider.arrows = self.player.arrows
                 self.healgauge = self.collider.heallgauge
 

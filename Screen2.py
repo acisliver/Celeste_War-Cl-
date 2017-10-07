@@ -221,12 +221,12 @@ class Screen2:
                             if lists.collidepoint(event.pos):
                                 if drow.n_flag == False:
                                     drow.n_flag = True
-                                    drow.n_color = (0, 255, 255)
+                                    self.n_color = (0, 255, 255)
                         if lists == drow.list[13]:
                             if lists.collidepoint(event.pos):
                                 if drow.s_flag == False:
                                     drow.s_flag = True
-                                    drow.s_color = (0, 255, 255)
+                                    self.s_color = (0, 255, 255)
                         if lists == drow.list[14]:
                             if lists.collidepoint(event.pos):   #Start를 눌렀을 때
                                 self.max = (drow.numlist[0] * 10) + drow.numlist[1]    #몹의 수 총합 계산
