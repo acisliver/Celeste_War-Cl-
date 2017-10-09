@@ -8,7 +8,6 @@ from Sector3 import Sector3
 class Player(pygame.Rect):
     screen=None
     arrows=[]
-    sectors = []
     shot_flag = True
     topBU=900
     Num=0
@@ -69,9 +68,6 @@ class Player(pygame.Rect):
         for arrow in self.arrows:
             arrow.move()            #화살이 날아감
 
-        for sector1 in self.sectors:
-            sector1.move()
-
 
         self.screen.blit(self.playerlist[self.Num], (self.top, self.left))
 
@@ -81,8 +77,8 @@ class Player(pygame.Rect):
 
     def sector_shot(self):
         sector1 = Sector1(self.screen, self.top, self.left, 20)
-        self.sectors.append(sector1)
+        self.arrows.append(sector1)
         sector2 = Sector2(self.screen, self.top, self.left, 20)
-        self.sectors.append(sector2)
+        self.arrows.append(sector2)
         sector3 = Sector3(self.screen, self.top, self.left, 20)
-        self.sectors.append(sector3)
+        self.arrows.append(sector3)
