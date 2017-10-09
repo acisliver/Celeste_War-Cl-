@@ -121,10 +121,9 @@ class Screen:
                     self.playercheck = True
                 elif self.player.left < 799 and self.playercheck == True:
                     self.player.left -= 5.5
-                elif self.player.left>300 and self.playercheck==True:
-                    self.player.Start = False
 
             else:
+                self.player.Start = False
                 self.timer.print()  # 타이머 그리기
                 self.collider.collide()  # 충돌 함수
                 self.collider.badguys = self.badguys

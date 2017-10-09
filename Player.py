@@ -16,6 +16,7 @@ class Player(pygame.Rect):
     player = pygame.image.load('resources/images/spaceship.png')
     playerlist = [player, playerMove]
     Start=True
+    weapon="string"
 
     def __init__(self, screen, x, y):
         super().__init__(self.player.get_rect())    #상위 클래스의 함수(rect)를 사용하기 위해 super()사용
@@ -52,7 +53,10 @@ class Player(pygame.Rect):
                     self.top -= 15
             if pressed[pygame.K_SPACE]:  # 스페이스바를 눌렀을 경우
                 if self.shot_flag:  # 먼저 shot_flag의 값 확인(초기에 True로 설정)
-                    self.shot()  # 화살이 생성됨
+                    if self.weapon=="Sector":
+                        self.sector_shot()
+                    else:
+                        self.shot()  # 화살이 생성됨
                     self.shot_flag = False  # shot_flag를 False로 바꿔줌
             else:  # 스페이스바를 누르지 않고있을 경우
                 self.shot_flag = True  # shot_flag를 다시 True로 바꿔줌
@@ -67,10 +71,7 @@ class Player(pygame.Rect):
 
         for sector1 in self.sectors:
             sector1.move()
-        for sector2 in self.sectors:
-            sector2.move()
-        for sector3 in self.sectors:
-            sector3.move()
+
 
         self.screen.blit(self.playerlist[self.Num], (self.top, self.left))
 

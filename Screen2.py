@@ -1,5 +1,6 @@
 import pygame
 from Timer import Timer
+from Player import Player
 
 class Screen2:
     width = 0
@@ -240,6 +241,10 @@ class Screen2:
                                 self.anumlist = [0, 0]
                                 self.n_flag = False
                                 self.s_flag = False
+                                if self.s_color==(0,255,255):
+                                    Player.weapon="Sector"
+                                else:
+                                    Player.weapon="Arrow"
                                 self.n_color = (255, 255, 255)
                                 self.s_color = (255, 255, 255)
                                 finished=1                  #while문 종료

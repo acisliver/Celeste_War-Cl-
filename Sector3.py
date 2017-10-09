@@ -8,7 +8,7 @@ class Sector3(pygame.Rect):
     sector_arrow = pygame.transform.rotate(s_a, 330)
 
     def __init__(self, screen, x, y, speed):
-        super().__init__(self.arrow.get_rect())
+        super().__init__(self.sector_arrow.get_rect())
         self.screen = screen
         self.top = x
         self.left = y
