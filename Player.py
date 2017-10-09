@@ -1,9 +1,14 @@
 #플레이어
 import pygame
 from Arrow import Arrow
+from Sector1 import Sector1
+from Sector2 import Sector2
+from Sector3 import Sector3
+
 class Player(pygame.Rect):
     screen=None
     arrows=[]
+    sectors = []
     shot_flag = True
     topBU=900
     Num=0
@@ -60,8 +65,23 @@ class Player(pygame.Rect):
         for arrow in self.arrows:
             arrow.move()            #화살이 날아감
 
+        for sector1 in self.sectors:
+            sector1.move()
+        for sector2 in self.sectors:
+            sector2.move()
+        for sector3 in self.sectors:
+            sector3.move()
+
         self.screen.blit(self.playerlist[self.Num], (self.top, self.left))
 
     def shot(self):                 #화살생성함수
         arrow = Arrow(self.screen, self.top, self.left, 35 )    #speed가 30인 화살 생성
         self.arrows.append(arrow)                               #list에 arrow객체 추가
+
+    def sector_shot(self):
+        sector1 = Sector1(self.screen, self.top, self.left, 20)
+        self.sectors.append(sector1)
+        sector2 = Sector2(self.screen, self.top, self.left, 20)
+        self.sectors.append(sector2)
+        sector3 = Sector3(self.screen, self.top, self.left, 20)
+        self.sectors.append(sector3)
