@@ -66,6 +66,9 @@ class Player(pygame.Rect):
 
                                      # shot_flag가 True일 경우에만 화살이 나가게 함(눌렀다 때야 다시 눌렀을 경우 화살이 날아감)
         for arrow in self.arrows:
+            if self.weapon=="Sector":
+                if arrow.timer==8:
+                    self.arrows.remove(arrow)
             arrow.move()            #화살이 날아감
 
 
@@ -76,9 +79,9 @@ class Player(pygame.Rect):
         self.arrows.append(arrow)                               #list에 arrow객체 추가
 
     def sector_shot(self):
-        sector1 = Sector1(self.screen, self.top, self.left, 20)
+        sector1 = Sector1(self.screen, self.top, self.left, 35,0)
         self.arrows.append(sector1)
-        sector2 = Sector2(self.screen, self.top, self.left, 20)
+        sector2 = Sector2(self.screen, self.top, self.left, 35,0)
         self.arrows.append(sector2)
-        sector3 = Sector3(self.screen, self.top, self.left, 20)
+        sector3 = Sector3(self.screen, self.top, self.left, 35,0)
         self.arrows.append(sector3)

@@ -14,7 +14,7 @@ class Abadguy(pygame.Rect):
 
     def __init__(self, screen, x, y, speed, time,num):
         super().__init__(self.abadguy.get_rect())     #상위 클래스의 함수(rect)를 사용하기 위해 super()사용
-        self.top = x
+        self.top = x-50
         self.left = y
         self.speed = speed
         self.screen = screen
@@ -27,7 +27,7 @@ class Abadguy(pygame.Rect):
             bullet.move()
         rotated = pygame.transform.rotate(self.abadguy, 180)
         rect = rotated.get_rect()
-        rect.center = (self.top, self.left)
+        rect.center = (self.top+50, self.left)
 
         if self.top>=650:
             self.wallCollX="Right"
