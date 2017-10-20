@@ -17,6 +17,8 @@ class Collider:
     boom = pygame.image.load("resources/images/boom.png")
     boomlist = []
     backup=[]
+    playtimer=50
+    playercheck=True
     for y in range(8):
         for x in range(9):
             boomlist.append((x * 100, y * 100, 100, 100))
@@ -71,9 +73,16 @@ class Collider:
                 self.iscolided = False
 
 
-        for badguy in self.badguys:
-            if self.collplayer.colliderect(badguy):
-                self.badguys.remove(badguy)
-                self.heallgauge -= 10
-                self.heal = Healbar(self.screen, self.heallgauge)
+        if self.playercheck==True:
+            for badguy in self.badguys:
+                if self.collplayer.colliderect(badguy):
+                    self.badguys.remove(badguy)
+                    self.heallgauge -= 10
+                    self.heal = Healbar(self.screen, self.heallgauge)
+                    self.playercheck=False
+        elif self.playtimer>0:
+            self.playtimer-=1
+        else:
+            self.playercheck=True
+            self.playtimer=50
         self.heal.drow()

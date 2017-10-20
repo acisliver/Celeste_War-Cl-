@@ -15,6 +15,7 @@ class Player(pygame.Rect):
     player = pygame.image.load('resources/images/spaceship.png')
     playerlist = [player, playerMove]
     Start=True
+    alpha=255
     weapon="string"
 
     def __init__(self, screen, x, y):
@@ -22,6 +23,8 @@ class Player(pygame.Rect):
         self.screen=screen
         self.top = x
         self.left =y
+        self.collidercheck=True
+        self.playertimer=5
 
     def move(self):                 #wasd 이동키
         pressed=pygame.key.get_pressed()
@@ -59,6 +62,8 @@ class Player(pygame.Rect):
                     self.shot_flag = False  # shot_flag를 False로 바꿔줌
             else:  # 스페이스바를 누르지 않고있을 경우
                 self.shot_flag = True  # shot_flag를 다시 True로 바꿔줌
+        elif self.Start==True:
+            self.left+=0
         else:
             if self.left <= 800:
                 self.left += 10
@@ -71,8 +76,22 @@ class Player(pygame.Rect):
                     self.arrows.remove(arrow)
             arrow.move()            #화살이 날아감
 
+        if self.collidercheck==False:
+            if self.alpha==255 and self.playertimer==0:
+                self.alpha=0
+                self.playertimer=7
+            else:
+                self.playertimer-=1
+                self.alpha=255
+        elif self.collidercheck==True:
+            self.alpha=255
 
-        self.screen.blit(self.playerlist[self.Num], (self.top, self.left))
+        image = pygame.Surface((100, 100))
+        image.blit(self.playerlist[self.Num],(0,0))
+        image.set_colorkey((0,0,0))
+        image.set_alpha(self.alpha)
+
+        self.screen.blit(image, (self.top, self.left))
 
     def shot(self):                 #화살생성함수
         arrow = Arrow(self.screen, self.top, self.left, 35 )    #speed가 30인 화살 생성
