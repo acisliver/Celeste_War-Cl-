@@ -132,6 +132,7 @@ class Screen:
             for event in pygame.event.get():    #종료 이벤트
                 if event.type == pygame.QUIT:
                     pygame.quit()
+                    self.timer.exidcode=0
                     exit(0)
             pygame.display.update() #업데이트
 

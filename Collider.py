@@ -72,15 +72,14 @@ class Collider:
                 self.arrows.remove(arrow)   #화살 삭제
                 self.iscolided = False
 
-
-        if self.playercheck==True:
-            for badguy in self.badguys:
-                if self.collplayer.colliderect(badguy):
-                    self.badguys.remove(badguy)
+        for badguy in self.badguys:
+            if self.collplayer.colliderect(badguy):
+                self.badguys.remove(badguy)
+                if self.playercheck == True:
                     self.heallgauge -= 10
                     self.heal = Healbar(self.screen, self.heallgauge)
-                    self.playercheck=False
-        elif self.playtimer>0:
+                    self.playercheck = False
+        if self.playtimer>0 and self.playercheck==False:
             self.playtimer-=1
         else:
             self.playercheck=True

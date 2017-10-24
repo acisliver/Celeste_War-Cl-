@@ -77,21 +77,21 @@ class Player(pygame.Rect):
             arrow.move()            #화살이 날아감
 
         if self.collidercheck==False:
+            image = pygame.Surface((100, 100))
+            image.blit(self.playerlist[self.Num], (0, 0))
+            image.set_colorkey((0, 0, 0))
+            image.set_alpha(self.alpha)
+            self.screen.blit(image, (self.top, self.left))
             if self.alpha==255 and self.playertimer==0:
                 self.alpha=0
-                self.playertimer=7
+                self.playertimer=3
             else:
                 self.playertimer-=1
                 self.alpha=255
         elif self.collidercheck==True:
-            self.alpha=255
+            self.screen.blit(self.playerlist[self.Num], (self.top, self.left))
 
-        image = pygame.Surface((100, 100))
-        image.blit(self.playerlist[self.Num],(0,0))
-        image.set_colorkey((0,0,0))
-        image.set_alpha(self.alpha)
 
-        self.screen.blit(image, (self.top, self.left))
 
     def shot(self):                 #화살생성함수
         arrow = Arrow(self.screen, self.top, self.left, 35 )    #speed가 30인 화살 생성
