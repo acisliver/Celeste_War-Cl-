@@ -1,6 +1,6 @@
 import threading, queue
 import ServerClientBase as SCB
-
+import json
 
 
 send_queues = {}
@@ -10,7 +10,7 @@ class Server():
     HOST = '127.0.0.1' #이거 설정해두면 이 IP가진것만 클라이언트로 받을 수 있다
     PORT = 4040   #정수형으로 아무거나
     send_msg = ''
-    recv_msg = ''
+    recv_msg = [0]
     flag_isfirst = True
 
     #초기화하면서 소켓하나 만들고 클라이언트 받는거 대기
@@ -46,8 +46,10 @@ class Server():
                 self.recv_msg, rest = SCB.recv_msgs(sock)
                 ##################################
                 #이부분 수정하면 된다
-                print(self.recv_msg)
+                self.recv_msg = json.loads(self.recv_msg[0])
+                # print(self.recv_msg)
                 #########################
+
             except (EOFError, ConnectionError):
                 self.handle_disconnect(sock, addr)
                 break
@@ -63,7 +65,7 @@ class Server():
                     break
 
     def sendStatus(self, msg):
-        self.send_msg = msg
+        self.send_msg = json.dumps(msg)
         self.flag_isfirst = True
 
     # def broadcast_msg(self, msg):
@@ -90,10 +92,13 @@ class Server():
 if __name__ == '__main__':
     server = Server()
     while(1):
-        x = input()
+        x = [1,2,3]
         server.sendStatus(x)
-
-
+        y = server.recv_msg
+        try:
+            print(y)
+        except:
+            pass
 
 #쓰레드가 handle_client 함수를 자동으로 실행시킬 것이다.                             #daemon 파생된 스레드가 메인스레드와 같이 소멸할지를 결정
 # thread = threading.Thread(target = handle_client, args=[client_sock, addr], daemon = True)
