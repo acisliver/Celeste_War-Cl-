@@ -17,15 +17,18 @@ class Collider:
     boom = pygame.image.load("resources/images/boom.png")
     boomlist = []
     backup=[]
+    playtimer=50
+    playercheck=True
     for y in range(8):
         for x in range(9):
             boomlist.append((x * 100, y * 100, 100, 100))
 
-    def __init__(self,sceen,arrows,badguys,tankers, thealth, player):
+    def __init__(self,sceen,arrows,badguys,tankers,abadguys, thealth, player):
         self.screen=sceen
         self.arrows=arrows
         self.badguys=badguys
         self.tankers = tankers
+        self.abadguys=abadguys
         self.thealth = thealth
         self.collplayer=player
 
@@ -59,14 +62,26 @@ class Collider:
                     self.backup.append(badguy)
                     self.badguys.remove(badguy) #몹 삭제
                     self.iscolided = True
+
+            for abadguy in self.abadguys:
+                if arrow.colliderect(abadguy):
+                    self.backup.append(abadguy)
+                    self.abadguys.remove(abadguy)
+                    self.iscolided=True
             if self.iscolided == True:
                 self.arrows.remove(arrow)   #화살 삭제
                 self.iscolided = False
 
-
         for badguy in self.badguys:
             if self.collplayer.colliderect(badguy):
                 self.badguys.remove(badguy)
-                self.heallgauge -= 10
-                self.heal = Healbar(self.screen, self.heallgauge)
+                if self.playercheck == True:
+                    self.heallgauge -= 10
+                    self.heal = Healbar(self.screen, self.heallgauge)
+                    self.playercheck = False
+        if self.playtimer>0 and self.playercheck==False:
+            self.playtimer-=1
+        else:
+            self.playercheck=True
+            self.playtimer=50
         self.heal.drow()

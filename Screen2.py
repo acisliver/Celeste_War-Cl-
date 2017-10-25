@@ -1,5 +1,6 @@
 import pygame
 from Timer import Timer
+from Player import Player
 
 class Screen2:
     width = 0
@@ -9,6 +10,10 @@ class Screen2:
     numlist = [0,0]
     tnumlist = [0,0]
     anumlist = [0,0]
+    n_flag = False
+    s_flag = False
+    n_color = (255, 255, 255)
+    s_color = (255, 255, 255)
     list = []
     max=0 #숫자의 최종값
     tmax=0
@@ -22,11 +27,15 @@ class Screen2:
         self.height=height
 
     class Drow:
-        def __init__(self,list,numlist,tnumlist,anumlist, screen,degree):
+        def __init__(self,list,numlist,tnumlist,anumlist, n_flag, s_flag, n_color, s_color, screen,degree):
             self.list=list
             self.numlist=numlist
             self.tnumlist=tnumlist
             self.anumlist = anumlist
+            self.n_flag = n_flag
+            self.s_flag = s_flag
+            self.n_color = n_color
+            self.s_color = s_color
             self.screen=screen
             self.background = pygame.image.load('resources/images/background.png')
             self.badguyimg = pygame.image.load("resources/images/Mob/Mob1.png")
@@ -81,13 +90,40 @@ class Screen2:
             AMIRect1.center = (232, 520)
             AMIRect2.center = (215, 520)
 
+            weaponfont = pygame.font.Font("resources/font/consola.ttf", 30)
+            weapontext = weaponfont.render("Normal", True, self.n_color)
+            weapontextRect = weapontext.get_rect()
+            weapontextRect.center = (214, 650)
+            self.screen.blit(weapontext, weapontextRect)
+
+            s_weaponfont = pygame.font.Font("resources/font/consola.ttf", 30)
+            s_weapontext = s_weaponfont.render("Sector", True, self.s_color)
+            s_weapontextRect = s_weapontext.get_rect()
+            s_weapontextRect.center = (344, 650)
+            self.screen.blit(s_weapontext, s_weapontextRect)
+
             Startfont = pygame.font.Font("resources/font/consola.ttf", 40)  # 폰트 불러오기
             Starttext = Startfont.render("Start", True, (225, 225, 225))  # Start객체 생성
             StarttextRect = Starttext.get_rect()
             StarttextRect.center = (214, 600)
             self.screen.blit(Starttext, StarttextRect)
 
-            self.list = [textRect1, textRect2, ttextRect1, ttextRect2, tttextRect1, tttextRect2, MIRect1, MIRect2, TMIRect1, TMIRect2, AMIRect1, AMIRect2, StarttextRect]  # list에 ^^^vvv 넣기
+            self.list = [textRect1,#0
+                         textRect2,#1
+                         ttextRect1,#2
+                         ttextRect2,#3
+                         tttextRect1,#4
+                         tttextRect2,#5
+                         MIRect1,#6
+                         MIRect2,#7
+                         TMIRect1,#8
+                         TMIRect2,#9
+                         AMIRect1,#10
+                         AMIRect2,#11
+                         weapontextRect,#12
+                         s_weapontextRect,#13
+                         StarttextRect]  #14 list에 ^^^vvv 넣기
+
 
             for y in range(0, 6):  # ^^^그리기
                 self.screen.blit(text1, self.list[y])
@@ -147,11 +183,11 @@ class Screen2:
                                     break
                         if lists == drow.list[4]:
                             if lists.collidepoint(event.pos):
-                                if drow.anumlist[1] < 5:
-                                    drow.anumlist[1] = drow.anumlist[0] + 1
+                                if drow.anumlist[1] < 9:
+                                    drow.anumlist[1] = drow.anumlist[1] + 1
                         if lists == drow.list[5]:
                             if lists.collidepoint(event.pos):
-                                if drow.anumlist[0] < 9:
+                                if drow.anumlist[0] < 5:
                                     drow.anumlist[0] = drow.anumlist[0] + 1
                         if lists == drow.list[6]:
                             if lists.collidepoint(event.pos):
@@ -176,13 +212,23 @@ class Screen2:
                         if lists == drow.list[10]:
                             if lists.collidepoint(event.pos):
                                 if drow.anumlist[1] > 0:
-                                    drow.anumlist[1] = drow.anumlist[0] - 1
+                                    drow.anumlist[1] = drow.anumlist[1] - 1
                         if lists == drow.list[11]:
                             if lists.collidepoint(event.pos):
                                 if drow.anumlist[0] > 0:
                                     drow.anumlist[0] = drow.anumlist[0] - 1
 
                         if lists == drow.list[12]:
+                            if lists.collidepoint(event.pos):
+                                if drow.n_flag == False:
+                                    drow.n_flag = True
+                                    self.n_color = (0, 255, 255)
+                        if lists == drow.list[13]:
+                            if lists.collidepoint(event.pos):
+                                if drow.s_flag == False:
+                                    drow.s_flag = True
+                                    self.s_color = (0, 255, 255)
+                        if lists == drow.list[14]:
                             if lists.collidepoint(event.pos):   #Start를 눌렀을 때
                                 self.max = (drow.numlist[0] * 10) + drow.numlist[1]    #몹의 수 총합 계산
                                 self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
@@ -190,14 +236,22 @@ class Screen2:
                                 Timer.max = self.max
                                 Timer.tmax=self.tmax
                                 Timer.amax = self.amax
-                                drow.numlist = [0, 0]       #numlist 초기화
-                                drow.tnumlist = [0, 0]
-                                drow.anumlist = [0, 0]
+                                self.numlist = [0, 0]       #numlist 초기화
+                                self.tnumlist = [0, 0]
+                                self.anumlist = [0, 0]
+                                self.n_flag = False
+                                self.s_flag = False
+                                if self.s_color==(0,255,255):
+                                    Player.weapon="Sector"
+                                else:
+                                    Player.weapon="Arrow"
+                                self.n_color = (255, 255, 255)
+                                self.s_color = (255, 255, 255)
                                 finished=1                  #while문 종료
                                 break
 
 
-            drow = Screen2.Drow(self.list, self.numlist, self.tnumlist,self.anumlist, self.screen,self.degree)
+            drow = Screen2.Drow(self.list, self.numlist, self.tnumlist,self.anumlist, self.n_flag, self.s_flag, self.n_color, self.s_color, self.screen,self.degree)
             drow.Drow_font()
             drow.Drow_background(self.bY)
             self.bY += 1

@@ -25,9 +25,8 @@ class Timer:
         self.count -= 1                     #1씩 빠짐
         self.badtimer=self.badtimer-1
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                time.cancel()               #1초마다 반복 취소
+        if self.exidcode==0:
+            time.cancel()    #1초마다 반복 취소
 
         time.start()                        #시작
 
