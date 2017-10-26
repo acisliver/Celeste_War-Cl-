@@ -114,8 +114,8 @@ class Player(pygame.Rect):
 
     def sector_shot(self):
         sector1 = Sector1(self.screen, self.top, self.left, 35,0)
-        self.arrows.append(sector1)
+        self.sectors.append(sector1)
         sector2 = Sector2(self.screen, self.top, self.left, 35,0)
-        self.arrows.append(sector2)
+        self.sectors.append(sector2)
         sector3 = Sector3(self.screen, self.top, self.left, 35,0)
-        self.arrows.append(sector3)
+        self.sectors.append(sector3)

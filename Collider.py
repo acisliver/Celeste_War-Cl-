@@ -66,6 +66,7 @@ class Collider:
 
             for abadguy in self.abadguys:
                 if arrow.colliderect(abadguy):
+                    abadguy.time=1
                     self.backup.append(abadguy)
                     self.abadguys.remove(abadguy)
                     self.iscolided=True

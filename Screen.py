@@ -9,6 +9,7 @@ from Collider import Collider
 from WL import WL
 from Timer import Timer
 from Screen2 import Screen2
+from Bullet import Bullet
 class Screen:
     width=700
     height =900
@@ -57,7 +58,7 @@ class Screen:
 
     def __init__(self):
         self.player = Player(self.screen, self.x, self.y)
-        self.collider=Collider(self.screen,self.player.arrows,self.badguys,self.tankers,self.abadguys, self.thealth, self.player)
+        self.collider=Collider(self.screen,self.player.arrows+self.player.sectors,self.badguys,self.tankers,self.abadguys, self.thealth, self.player)
         self.wl=WL(self.screen,self.exitcode)
         self.timer=Timer(self.screen,self.count)
         self.screen2=Screen2(self.screen,self.width,self.height)
@@ -123,6 +124,7 @@ class Screen:
     def Start(self):
         self.badguys=[]
         self.player.arrows=[]
+        self.player.sectors=[]
         self.abadguys=[]
         self.timer.timer()
         self.tmax = self.timer.tmax
@@ -183,7 +185,7 @@ class Screen:
                 self.player.collidercheck=self.collider.playercheck
                 self.collider.badguys = self.badguys
                 self.collider.abadguys=self.abadguys
-                self.collider.arrows = self.player.arrows
+                self.collider.arrows = self.player.arrows+self.player.sectors
                 self.healgauge = self.collider.heallgauge
 
                 game.Move(self.badguys, self.tankers, self.abadguys)
@@ -206,7 +208,7 @@ class Screen:
                         self.tcheck = False
                 if self.acheck == True:
                     for x in range(0, self.amax):
-                        abadguy = Abadguy(self.screen, random.randint(50, self.width - 50), 199, 3, 1, 0,0)
+                        abadguy = Abadguy(self.screen, random.randint(50, self.width - 50), 199, 3, random.randint(0,7), -1,0)
                         self.abadguys.append(abadguy)
                         self.acheck = False
                 self.one_count = self.timer.count  # 타이머의 count와 같은 one_count
@@ -225,7 +227,6 @@ class Screen:
             self.screen2.Start()#스크린2 실행
             game = Screen()
             game.Start()#스크린1 실행
-
 
 game2 = Screen()
 game2.Starting()            #실행부

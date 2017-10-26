@@ -6,7 +6,7 @@ from Timer import Timer
 class Abadguy(pygame.Rect):
     speed=0
     screen = None
-    bullets = []
+
     abadguy = pygame.image.load("resources/images/abadguy.png")
     wallCollX="Left"
     wallCollY="Down"
@@ -21,6 +21,7 @@ class Abadguy(pygame.Rect):
         self.time=time
         self.num = num
         self.round=round
+        self.bullets = []
 
     def startmove(self, sinx):
         rotated = pygame.transform.rotate(self.abadguy, sinx)
@@ -29,7 +30,11 @@ class Abadguy(pygame.Rect):
         self.screen.blit(rotated, rect)
 
     def move(self):             #원거리몹 움직임 함수
-
+        if self.time==0 and self.num==-1:
+            self.shot()
+            self.time=random.randint(0,100)
+        else:
+            self.time-=1
         for bullet in self.bullets:
             bullet.move()
         rotated = pygame.transform.rotate(self.abadguy, 180)
@@ -40,7 +45,7 @@ class Abadguy(pygame.Rect):
             self.wallCollX="Right"
         if self.top<=50:
             self.wallCollX="Left"
-        if self.left>=130:
+        if self.left>=200:
             self.wallCollY="Up"
         if self.left<=50:
             self.wallCollY="Down"
