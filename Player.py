@@ -4,11 +4,14 @@ from Arrow import Arrow
 from Sector1 import Sector1
 from Sector2 import Sector2
 from Sector3 import Sector3
+#from Laser import Laser
 
 class Player(pygame.Rect):
     screen=None
     arrows=[]
     shot_flag = True
+    weapon = "Normal"
+    weapon_flag = True
     topBU=900
     Num=0
     playerMove = pygame.image.load('resources/images/PlayerMove.png')
@@ -16,7 +19,6 @@ class Player(pygame.Rect):
     playerlist = [player, playerMove]
     Start=True
     alpha=255
-    weapon="string"
 
     def __init__(self, screen, x, y):
         super().__init__(self.player.get_rect())    #상위 클래스의 함수(rect)를 사용하기 위해 super()사용
@@ -57,11 +59,23 @@ class Player(pygame.Rect):
                 if self.shot_flag:  # 먼저 shot_flag의 값 확인(초기에 True로 설정)
                     if self.weapon=="Sector":
                         self.sector_shot()
-                    else:
+                    elif self.weapon=="Normal":
                         self.shot()  # 화살이 생성됨
                     self.shot_flag = False  # shot_flag를 False로 바꿔줌
+                print(self.weapon)
             else:  # 스페이스바를 누르지 않고있을 경우
                 self.shot_flag = True  # shot_flag를 다시 True로 바꿔줌
+
+            if pressed[pygame.K_z]:
+                if self.weapon_flag:
+                    if self.weapon=="Sector":
+                        self.weapon = "Normal"
+                    elif self.weapon=="Normal":
+                        self.weapon = "Sector"
+                    self.weapon_flag = False
+            else:
+                self.weapon_flag = True
+
         elif self.Start==True:
             self.left+=0
         else:
@@ -93,7 +107,7 @@ class Player(pygame.Rect):
 
 
 
-    def shot(self):                 #화살생성함수
+    def shot(self):         #화살생성함수
         arrow = Arrow(self.screen, self.top, self.left, 35 )    #speed가 30인 화살 생성
         self.arrows.append(arrow)                               #list에 arrow객체 추가
 

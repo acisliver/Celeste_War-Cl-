@@ -254,7 +254,7 @@ class Screen2:
                                 if self.s_color==(0,255,255):
                                     Player.weapon="Sector"
                                 else:
-                                    Player.weapon="Arrow"
+                                    Player.weapon="Normal"
                                 self.n_color = (255, 255, 255)
                                 self.s_color = (255, 255, 255)
                                 finished=1                  #while문 종료
