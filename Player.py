@@ -57,22 +57,29 @@ class Player(pygame.Rect):
                 if (0 < self.top):
                     self.top -= 15
             if pressed[pygame.K_SPACE]:  # 스페이스바를 눌렀을 경우
+                print(self.shot_flag)
                 if self.shot_flag:  # 먼저 shot_flag의 값 확인(초기에 True로 설정)
                     if self.weapon=="Sector":
                         self.sector_shot()
                     elif self.weapon=="Normal":
                         self.shot()  # 화살이 생성됨
                     self.shot_flag = False  # shot_flag를 False로 바꿔줌
-                print(self.weapon)
+                else:
+                    self.laser_charge()
             else:  # 스페이스바를 누르지 않고있을 경우
                 self.shot_flag = True  # shot_flag를 다시 True로 바꿔줌
                                         # shot_flag가 True일 경우에만 화살이 나가게 함(눌렀다 때야 다시 눌렀을 경우 화살이 날아감)
             if pressed[pygame.K_z]:
                 if self.weapon_flag and self.shot_flag:
-                    if self.weapon=="Sector":
-                        self.weapon = "Normal"
-                    elif self.weapon=="Normal":
+                    if self.weapon=="Normal":
                         self.weapon = "Sector"
+                        self.shot_flag = True
+                    elif self.weapon=="Sector":
+                        self.weapon = "Laser"
+                        self.shot_flag = False
+                    elif self.weapon == "Laser":
+                        self.weapon == "Normal"
+                        self.shot_flag = True
                     self.weapon_flag = False
             else:
                 self.weapon_flag = True
@@ -119,3 +126,9 @@ class Player(pygame.Rect):
         self.sectors.append(sector2)
         sector3 = Sector3(self.screen, self.top, self.left, 35,0)
         self.sectors.append(sector3)
+
+    def laser_charge(self):
+        print(1)
+
+    def laser_shot(self):
+        print(2)
