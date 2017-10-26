@@ -9,6 +9,7 @@ from Sector3 import Sector3
 class Player(pygame.Rect):
     screen=None
     arrows=[]
+    sectors=[]
     shot_flag = True
     weapon = "Normal"
     weapon_flag = True
@@ -65,7 +66,7 @@ class Player(pygame.Rect):
                 print(self.weapon)
             else:  # 스페이스바를 누르지 않고있을 경우
                 self.shot_flag = True  # shot_flag를 다시 True로 바꿔줌
-
+                                        # shot_flag가 True일 경우에만 화살이 나가게 함(눌렀다 때야 다시 눌렀을 경우 화살이 날아감)
             if pressed[pygame.K_z]:
                 if self.weapon_flag:
                     if self.weapon=="Sector":
@@ -82,12 +83,12 @@ class Player(pygame.Rect):
             if self.left <= 800:
                 self.left += 10
 
+        for sector in self.sectors:
+            if sector.timer == 8:
+                self.sectors.remove(sector)
+            sector.move()
 
-                                     # shot_flag가 True일 경우에만 화살이 나가게 함(눌렀다 때야 다시 눌렀을 경우 화살이 날아감)
         for arrow in self.arrows:
-            if self.weapon=="Sector":
-                if arrow.timer==8:
-                    self.arrows.remove(arrow)
             arrow.move()            #화살이 날아감
 
         if self.collidercheck==False:
@@ -113,8 +114,8 @@ class Player(pygame.Rect):
 
     def sector_shot(self):
         sector1 = Sector1(self.screen, self.top, self.left, 35,0)
-        self.arrows.append(sector1)
+        self.sectors.append(sector1)
         sector2 = Sector2(self.screen, self.top, self.left, 35,0)
-        self.arrows.append(sector2)
+        self.sectors.append(sector2)
         sector3 = Sector3(self.screen, self.top, self.left, 35,0)
-        self.arrows.append(sector3)
+        self.sectors.append(sector3)
