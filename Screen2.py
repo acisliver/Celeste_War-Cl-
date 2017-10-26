@@ -18,6 +18,7 @@ class Screen2:
     max=0 #숫자의 최종값
     tmax=0
     amax = 0
+    mobs = 0
     degree=0
     bY=0
 
@@ -27,7 +28,7 @@ class Screen2:
         self.height=height
 
     class Drow:
-        def __init__(self,list,numlist,tnumlist,anumlist, n_flag, s_flag, n_color, s_color, screen,degree):
+        def __init__(self,list,numlist,tnumlist,anumlist, n_flag, s_flag, n_color, s_color, mobs, screen,degree):
             self.list=list
             self.numlist=numlist
             self.tnumlist=tnumlist
@@ -36,6 +37,7 @@ class Screen2:
             self.s_flag = s_flag
             self.n_color = n_color
             self.s_color = s_color
+            self.mobs = mobs
             self.screen=screen
             self.background = pygame.image.load('resources/images/background.png')
             self.badguyimg = pygame.image.load("resources/images/Mob/Mob1.png")
@@ -108,6 +110,12 @@ class Screen2:
             StarttextRect.center = (214, 600)
             self.screen.blit(Starttext, StarttextRect)
 
+            mobstextfont = pygame.font.Font("resources/font/consola.ttf", 25)
+            mobstext = mobstextfont.render(str(("%d" % (self.mobs))), True, (225, 225, 225))
+            mobstextRect = mobstext.get_rect()
+            mobstextRect.center = (500, 500)
+            self.screen.blit(mobstext, mobstextRect)
+
             self.list = [textRect1,#0
                          textRect2,#1
                          ttextRect1,#2
@@ -122,7 +130,8 @@ class Screen2:
                          AMIRect2,#11
                          weapontextRect,#12
                          s_weapontextRect,#13
-                         StarttextRect]  #14 list에 ^^^vvv 넣기
+                         StarttextRect, #14
+                         mobstextRect]  #15
 
 
             for y in range(0, 6):  # ^^^그리기
@@ -161,6 +170,11 @@ class Screen2:
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     for lists in drow.list:
+                        self.max = (drow.numlist[0] * 10) + drow.numlist[1]  # 몹의 수 총합 계산
+                        self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
+                        self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
+                        self.mobs = self.max + 2 * self.amax + 3 * self.tmax
+
                         if lists == drow.list[0]:               #list = ^
                             if lists.collidepoint(event.pos):   #^와 마우스가 충돌했을 경우
                                 if drow.numlist[1] < 9:         #1의 자리가 9보다 작으면
@@ -228,6 +242,7 @@ class Screen2:
                                 if drow.s_flag == False:
                                     drow.s_flag = True
                                     self.s_color = (0, 255, 255)
+
                         if lists == drow.list[14]:
                             if lists.collidepoint(event.pos):   #Start를 눌렀을 때
                                 self.max = (drow.numlist[0] * 10) + drow.numlist[1]    #몹의 수 총합 계산
@@ -251,7 +266,7 @@ class Screen2:
                                 break
 
 
-            drow = Screen2.Drow(self.list, self.numlist, self.tnumlist,self.anumlist, self.n_flag, self.s_flag, self.n_color, self.s_color, self.screen,self.degree)
+            drow = Screen2.Drow(self.list, self.numlist, self.tnumlist,self.anumlist, self.n_flag, self.s_flag, self.n_color, self.s_color, self.mobs, self.screen,self.degree)
             drow.Drow_font()
             drow.Drow_background(self.bY)
             self.bY += 1
