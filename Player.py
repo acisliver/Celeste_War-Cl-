@@ -68,7 +68,7 @@ class Player(pygame.Rect):
                 self.shot_flag = True  # shot_flag를 다시 True로 바꿔줌
                                         # shot_flag가 True일 경우에만 화살이 나가게 함(눌렀다 때야 다시 눌렀을 경우 화살이 날아감)
             if pressed[pygame.K_z]:
-                if self.weapon_flag:
+                if self.weapon_flag and self.shot_flag:
                     if self.weapon=="Sector":
                         self.weapon = "Normal"
                     elif self.weapon=="Normal":
@@ -114,8 +114,8 @@ class Player(pygame.Rect):
 
     def sector_shot(self):
         sector1 = Sector1(self.screen, self.top, self.left, 35,0)
-        self.sectors.append(sector1)
+        self.arrows.append(sector1)
         sector2 = Sector2(self.screen, self.top, self.left, 35,0)
-        self.sectors.append(sector2)
+        self.arrows.append(sector2)
         sector3 = Sector3(self.screen, self.top, self.left, 35,0)
-        self.sectors.append(sector3)
+        self.arrows.append(sector3)

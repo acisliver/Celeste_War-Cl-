@@ -16,4 +16,3 @@ class Laser():
     def move(self):
         self.screen.blit(self.bim,(self.top+25,self.left))
         self.screen.blit(self.charge, (self.top + 25, self.left))
-
