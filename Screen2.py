@@ -172,31 +172,31 @@ class Screen2:
                     for lists in drow.list:
                         if lists == drow.list[0]:               #list = ^
                             if lists.collidepoint(event.pos):   #^와 마우스가 충돌했을 경우
-                                if drow.numlist[1] < 9:         #1의 자리가 9보다 작으면
+                                if drow.numlist[1] < 9 and self.mobs<=59:         #1의 자리가 9보다 작으면
                                     drow.numlist[1] = self.numlist[1] + 1   #1더하기
                                     break
                         if lists == drow.list[1]:               #10의 자리 더하기
                             if lists.collidepoint(event.pos):
-                                if drow.numlist[0] < 5:
+                                if drow.numlist[0] < 5 and self.mobs<=50:
                                     drow.numlist[0] = self.numlist[0] + 1
                                     break
                         if lists == drow.list[2]:               #10의 자리 더하기
                             if lists.collidepoint(event.pos):
-                                if drow.tnumlist[1] < 9:
+                                if drow.tnumlist[1] < 9 and self.mobs<=57:
                                     drow.tnumlist[1] = drow.tnumlist[1] + 1
                                     break
                         if lists == drow.list[3]:               #10의 자리 더하기
                             if lists.collidepoint(event.pos):
-                                if drow.tnumlist[0] < 5:
+                                if drow.tnumlist[0] < 5 and self.mobs<=30:
                                     drow.tnumlist[0] = drow.tnumlist[0] + 1
                                     break
                         if lists == drow.list[4]:
                             if lists.collidepoint(event.pos):
-                                if drow.anumlist[1] < 9:
+                                if drow.anumlist[1] < 9 and self.mobs<=58:
                                     drow.anumlist[1] = drow.anumlist[1] + 1
                         if lists == drow.list[5]:
                             if lists.collidepoint(event.pos):
-                                if drow.anumlist[0] < 5:
+                                if drow.anumlist[0] < 5 and self.mobs<=40:
                                     drow.anumlist[0] = drow.anumlist[0] + 1
                         if lists == drow.list[6]:
                             if lists.collidepoint(event.pos):
@@ -254,7 +254,7 @@ class Screen2:
                                 if self.s_color==(0,255,255):
                                     Player.weapon="Sector"
                                 else:
-                                    Player.weapon="Arrow"
+                                    Player.weapon="Normal"
                                 self.n_color = (255, 255, 255)
                                 self.s_color = (255, 255, 255)
                                 finished=1                  #while문 종료
@@ -265,7 +265,9 @@ class Screen2:
             self.max = (drow.numlist[0] * 10) + drow.numlist[1]  # 몹의 수 총합 계산
             self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
             self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
-            self.mobs = self.max + 2 * self.amax + 3 * self.tmax
+            mobs= self.max + 2 * self.amax + 3 * self.tmax
+            if mobs<=60:
+                self.mobs = self.max + 2 * self.amax + 3 * self.tmax
             drow.Drow_font()
             drow.Drow_background(self.bY)
             self.bY += 1
@@ -273,4 +275,3 @@ class Screen2:
                 self.bY = 0
             self.degree += 5
             drow.Drow_Mob(self.degree)  # 몹 칠하기
-
