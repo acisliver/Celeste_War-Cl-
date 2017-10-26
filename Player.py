@@ -44,7 +44,7 @@ class Player(pygame.Rect):
                 if self.left <= 800:
                     self.left += 10
             if pressed[pygame.K_UP]:
-                if (300 < self.left):
+                if (400 < self.left):
                     self.left -= 15
             if pressed[pygame.K_DOWN]:
                 if (self.left < 800):

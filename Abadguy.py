@@ -30,34 +30,36 @@ class Abadguy(pygame.Rect):
         self.screen.blit(rotated, rect)
 
     def move(self):             #원거리몹 움직임 함수
-        if self.time==0 and self.num==-1:
+
+        if self.left<199:
+            self.left+=2
+        if self.time == 0 and self.num == -1:
             self.shot()
-            self.time=random.randint(0,100)
+            self.time = random.randint(0, 100)
         else:
-            self.time-=1
+            self.time -= 1
         for bullet in self.bullets:
             bullet.move()
+        if self.top >= 650:
+            self.wallCollX = "Right"
+        if self.top <= 50:
+            self.wallCollX = "Left"
+        if self.left >= 200:
+            self.wallCollY = "Up"
+        if self.left <= 50:
+            self.wallCollY = "Down"
+        if self.wallCollX == "Left":
+            self.top += self.speed
+        if self.wallCollX == "Right":
+            self.top -= self.speed
+        if self.wallCollY == "Down":
+            self.left += self.speed
+        if self.wallCollY == "Up":
+            self.left -= self.speed
+
         rotated = pygame.transform.rotate(self.abadguy, 180)
         rect = rotated.get_rect()
-        rect.center = (self.top+50, self.left+75)
-
-        if self.top>=650:
-            self.wallCollX="Right"
-        if self.top<=50:
-            self.wallCollX="Left"
-        if self.left>=200:
-            self.wallCollY="Up"
-        if self.left<=50:
-            self.wallCollY="Down"
-        if self.wallCollX=="Left":
-            self.top+=self.speed
-        if self.wallCollX=="Right":
-            self.top-=self.speed
-        if self.wallCollY=="Down":
-            self.left+=self.speed
-        if self.wallCollY=="Up":
-            self.left-=self.speed
-
+        rect.center = (self.top + 50, self.left + 75)
         self.screen.blit(rotated, rect)
 
 

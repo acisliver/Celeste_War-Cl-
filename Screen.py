@@ -203,12 +203,12 @@ class Screen:
                         self.timer.badtimer = round(60 / self.timer.max)
                 if self.tcheck == True:
                     for x in range(0, self.tmax):
-                        tanker = Tanker(self.screen, random.randint(50, self.width - 50), 200, 1, 5, 1, 0)
+                        tanker = Tanker(self.screen, random.randint(50, self.width - 50), 0, 1, 5, 1, 0)
                         self.tankers.append(tanker)
                         self.tcheck = False
                 if self.acheck == True:
                     for x in range(0, self.amax):
-                        abadguy = Abadguy(self.screen, random.randint(50, self.width - 50), 199, 3, random.randint(0,7), -1,0)
+                        abadguy = Abadguy(self.screen, random.randint(50, self.width - 50), 0, 3, random.randint(0,7), -1,0)
                         self.abadguys.append(abadguy)
                         self.acheck = False
                 self.one_count = self.timer.count  # 타이머의 count와 같은 one_count
