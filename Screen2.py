@@ -170,11 +170,6 @@ class Screen2:
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     for lists in drow.list:
-                        self.max = (drow.numlist[0] * 10) + drow.numlist[1]  # 몹의 수 총합 계산
-                        self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
-                        self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
-                        self.mobs = self.max + 2 * self.amax + 3 * self.tmax
-
                         if lists == drow.list[0]:               #list = ^
                             if lists.collidepoint(event.pos):   #^와 마우스가 충돌했을 경우
                                 if drow.numlist[1] < 9:         #1의 자리가 9보다 작으면
@@ -267,6 +262,10 @@ class Screen2:
 
 
             drow = Screen2.Drow(self.list, self.numlist, self.tnumlist,self.anumlist, self.n_flag, self.s_flag, self.n_color, self.s_color, self.mobs, self.screen,self.degree)
+            self.max = (drow.numlist[0] * 10) + drow.numlist[1]  # 몹의 수 총합 계산
+            self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
+            self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
+            self.mobs = self.max + 2 * self.amax + 3 * self.tmax
             drow.Drow_font()
             drow.Drow_background(self.bY)
             self.bY += 1
