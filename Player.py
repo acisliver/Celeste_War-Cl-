@@ -15,6 +15,7 @@ class Player(pygame.Rect):
     weapon_flag = True
     topBU=900
     Num=0
+    charge=50
     playerMove = pygame.image.load('resources/images/PlayerMove.png')
     player = pygame.image.load('resources/images/spaceship.png')
     playerlist = [player, playerMove]
@@ -61,30 +62,30 @@ class Player(pygame.Rect):
                 if self.shot_flag:  # 먼저 shot_flag의 값 확인(초기에 True로 설정)
                     if self.weapon=="Sector":
                         self.sector_shot()
+                        self.shot_flag = False
                     elif self.weapon=="Normal":
                         self.shot()  # 화살이 생성됨
-                    self.shot_flag = False  # shot_flag를 False로 바꿔줌
-                else:
-                    self.laser_charge()
-            else:  # 스페이스바를 누르지 않고있을 경우
-                if self.weapon=="Normal":
-                    self.shot_flag = True  # shot_flag를 다시 True로 바꿔줌
-                elif self.weapon=="Sector":
-                    self.shot_flag = True
-                elif self.weapon=="Laser":
-                    self.laser_shot()
+                        self.shot_flag=False
+                    elif self.weapon=="Laser":
+                        if self.charge==0:
+                            self.shot()
+                            self.charge=50
+                            self.shot_flag=False
+                        else:
+                            self.laser_charge()
+                            self.charge-=1
+            else:
+                self.shot_flag = True
+
                     
             if pressed[pygame.K_z]:
-                if self.weapon_flag and self.shot_flag:
+                if self.weapon_flag:
                     if self.weapon=="Normal":
                         self.weapon = "Sector"
-                        self.shot_flag = True
                     elif self.weapon=="Sector":
                         self.weapon = "Laser"
-                        self.shot_flag = False
                     elif self.weapon == "Laser":
-                        self.weapon == "Normal"
-                        self.shot_flag = True
+                        self.weapon = "Normal"
                     self.weapon_flag = False
             else:
                 self.weapon_flag = True
@@ -133,7 +134,7 @@ class Player(pygame.Rect):
         self.sectors.append(sector3)
 
     def laser_charge(self):
-        print(1)
+        print(self.charge)
 
     def laser_shot(self):
         print(2)
