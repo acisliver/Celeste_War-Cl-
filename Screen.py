@@ -68,7 +68,10 @@ class Screen:
             self.screen.blit(self.background,(0,bY-1000))
     def Move(self,badguys,tankers, abadguys):
         for badguy in badguys:  # 몹의 객체만큼
-            badguy.move()  # 몹 이동 함수
+            if badguy.time==0:
+                badguy.move()  # 몹 이동 함수
+            else:
+                badguy.time-=1
         for tanker in tankers:  # 탱커 만큼
             tanker.move()  # 탱커 무브
         for abadguy in abadguys:    #원거리 만큼
@@ -190,7 +193,7 @@ class Screen:
                 if self.badtimer == 0:
                     for x in range(0, 10):
                         badguy = Badguy(self.screen,
-                                        random.randint(50, self.width - 50), 0, self.bYplus-5, 1, 0)  # 위치랜덤의 속도8인 몹 객체 생성
+                                        random.randint(50, self.width - 50), 0, self.bYplus-5, random.randint(0,20), 0)  # 위치랜덤의 속도8인 몹 객체 생성
                         self.badguys.append(badguy)  # 리스트에 추가
                     if self.timer.max == 0:
                         self.timer.badtimer = 100

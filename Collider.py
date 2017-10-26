@@ -59,6 +59,7 @@ class Collider:
 
             for badguy in self.badguys:     #몹의 개수 만큼 실행
                 if arrow.colliderect(badguy):   #충돌시
+                    badguy.time=1
                     self.backup.append(badguy)
                     self.badguys.remove(badguy) #몹 삭제
                     self.iscolided = True
