@@ -67,8 +67,13 @@ class Player(pygame.Rect):
                 else:
                     self.laser_charge()
             else:  # 스페이스바를 누르지 않고있을 경우
-                self.shot_flag = True  # shot_flag를 다시 True로 바꿔줌
-                                        # shot_flag가 True일 경우에만 화살이 나가게 함(눌렀다 때야 다시 눌렀을 경우 화살이 날아감)
+                if self.weapon=="Normal":
+                    self.shot_flag = True  # shot_flag를 다시 True로 바꿔줌
+                elif self.weapon=="Sector":
+                    self.shot_flag = True
+                elif self.weapon=="Laser":
+                    self.laser_shot()
+                    
             if pressed[pygame.K_z]:
                 if self.weapon_flag and self.shot_flag:
                     if self.weapon=="Normal":
