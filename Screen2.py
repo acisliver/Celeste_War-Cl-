@@ -253,6 +253,8 @@ class Screen2:
                                 self.anumlist = [0, 0]
                                 self.n_flag = False
                                 self.s_flag = False
+                                self.mobs = 0
+                                self.mobs_color = (255, 255, 255)
                                 if self.s_color==(0,255,255):
                                     Player.weapon="Sector"
                                 else:
@@ -272,6 +274,8 @@ class Screen2:
                 self.mobs = self.max + 2 * self.amax + 3 * self.tmax
             if self.mobs==60:
                 self.mobs_color = (255, 0, 0)
+            else:
+                self.mobs_color = (255, 255, 255)
             drow.Drow_font()
             drow.Drow_background(self.bY)
             self.bY += 1
