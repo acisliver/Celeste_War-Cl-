@@ -185,7 +185,7 @@ class Screen:
                 self.player.collidercheck=self.collider.playercheck
                 self.collider.badguys = self.badguys
                 self.collider.abadguys=self.abadguys
-                self.collider.arrows = self.player.arrows+self.player.sectors
+                self.collider.arrows = self.player.arrows
                 self.healgauge = self.collider.heallgauge
 
                 game.Move(self.badguys, self.tankers, self.abadguys)

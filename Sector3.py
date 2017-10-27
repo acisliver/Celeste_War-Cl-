@@ -14,8 +14,10 @@ class Sector3(pygame.Rect):
         self.left = y
         self.speed = speed
         self.timer = timer
+        self.name = "Sector"
 
     def move(self):
+
         self.timer += 1
         self.top += self.speed/2
         self.left -= self.speed/2 * math.sqrt(3)

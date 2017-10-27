@@ -2,7 +2,7 @@ import pygame
 import random
 from Bullet import Bullet
 from Timer import Timer
-
+from Collider import Collider
 class Abadguy(pygame.Rect):
     speed=0
     screen = None
@@ -22,7 +22,6 @@ class Abadguy(pygame.Rect):
         self.num = num
         self.round=round
         self.bullets = []
-
     def startmove(self, sinx):
         rotated = pygame.transform.rotate(self.abadguy, sinx)
         rect = rotated.get_rect()
@@ -30,7 +29,6 @@ class Abadguy(pygame.Rect):
         self.screen.blit(rotated, rect)
 
     def move(self):             #원거리몹 움직임 함수
-
         if self.left<199:
             self.left+=2
         if self.time == 0 and self.num == -1:

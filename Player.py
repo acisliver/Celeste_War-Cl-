@@ -58,7 +58,6 @@ class Player(pygame.Rect):
                 if (0 < self.top):
                     self.top -= 15
             if pressed[pygame.K_SPACE]:  # 스페이스바를 눌렀을 경우
-                print(self.shot_flag)
                 if self.shot_flag:  # 먼저 shot_flag의 값 확인(초기에 True로 설정)
                     if self.weapon=="Sector":
                         self.sector_shot()
@@ -96,10 +95,10 @@ class Player(pygame.Rect):
             if self.left <= 800:
                 self.left += 10
 
-        for sector in self.sectors:
-            if sector.timer == 8:
-                self.sectors.remove(sector)
-            sector.move()
+        for sector in self.arrows:
+            if sector.name == "Sector":
+                if sector.timer>=8:
+                    self.arrows.remove(sector)
 
         for arrow in self.arrows:
             arrow.move()            #화살이 날아감
@@ -127,11 +126,11 @@ class Player(pygame.Rect):
 
     def sector_shot(self):
         sector1 = Sector1(self.screen, self.top, self.left, 35,0)
-        self.sectors.append(sector1)
+        self.arrows.append(sector1)
         sector2 = Sector2(self.screen, self.top, self.left, 35,0)
-        self.sectors.append(sector2)
+        self.arrows.append(sector2)
         sector3 = Sector3(self.screen, self.top, self.left, 35,0)
-        self.sectors.append(sector3)
+        self.arrows.append(sector3)
 
     def laser_charge(self):
         print(self.charge)
