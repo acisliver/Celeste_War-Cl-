@@ -14,6 +14,7 @@ class Screen2:
     s_flag = False
     n_color = (255, 255, 255)
     s_color = (255, 255, 255)
+    mobs_color = (255, 255, 255)
     list = []
     max=0 #숫자의 최종값
     tmax=0
@@ -28,7 +29,7 @@ class Screen2:
         self.height=height
 
     class Drow:
-        def __init__(self,list,numlist,tnumlist,anumlist, n_flag, s_flag, n_color, s_color, mobs, screen,degree):
+        def __init__(self,list,numlist,tnumlist,anumlist, n_flag, s_flag, n_color, s_color, mobs, mobs_color, screen,degree):
             self.list=list
             self.numlist=numlist
             self.tnumlist=tnumlist
@@ -38,6 +39,7 @@ class Screen2:
             self.n_color = n_color
             self.s_color = s_color
             self.mobs = mobs
+            self.mobs_color = mobs_color
             self.screen=screen
             self.background = pygame.image.load('resources/images/background.png')
             self.badguyimg = pygame.image.load("resources/images/Mob/Mob1.png")
@@ -111,7 +113,7 @@ class Screen2:
             self.screen.blit(Starttext, StarttextRect)
 
             mobstextfont = pygame.font.Font("resources/font/consola.ttf", 25)
-            mobstext = mobstextfont.render(str(("%d" % (self.mobs))), True, (225, 225, 225))
+            mobstext = mobstextfont.render(str(("%d/60" % (self.mobs))), True, self.mobs_color)
             mobstextRect = mobstext.get_rect()
             mobstextRect.center = (500, 500)
             self.screen.blit(mobstext, mobstextRect)
@@ -261,13 +263,15 @@ class Screen2:
                                 break
 
 
-            drow = Screen2.Drow(self.list, self.numlist, self.tnumlist,self.anumlist, self.n_flag, self.s_flag, self.n_color, self.s_color, self.mobs, self.screen,self.degree)
+            drow = Screen2.Drow(self.list, self.numlist, self.tnumlist,self.anumlist, self.n_flag, self.s_flag, self.n_color, self.s_color, self.mobs, self.mobs_color, self.screen,self.degree)
             self.max = (drow.numlist[0] * 10) + drow.numlist[1]  # 몹의 수 총합 계산
             self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
             self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
-            mobs= self.max + 2 * self.amax + 3 * self.tmax
-            if mobs<=60:
+            self.mobs= self.max + 2 * self.amax + 3 * self.tmax
+            if self.mobs<=60:
                 self.mobs = self.max + 2 * self.amax + 3 * self.tmax
+            if self.mobs==60:
+                self.mobs_color = (255, 0, 0)
             drow.Drow_font()
             drow.Drow_background(self.bY)
             self.bY += 1
