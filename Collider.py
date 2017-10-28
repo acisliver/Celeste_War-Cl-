@@ -31,6 +31,7 @@ class Collider:
         self.abadguys=abadguys
         self.thealth = thealth
         self.collplayer=player
+        self.bullet=[]
 
     def collide(self):
         self.heal = Healbar(self.screen, self.heallgauge)
@@ -59,12 +60,18 @@ class Collider:
 
             for badguy in self.badguys:     #몹의 개수 만큼 실행
                 if arrow.colliderect(badguy):   #충돌시
+                    badguy.time=1
                     self.backup.append(badguy)
                     self.badguys.remove(badguy) #몹 삭제
                     self.iscolided = True
 
             for abadguy in self.abadguys:
+                for bullet in abadguy.bullets:
+                    if arrow.colliderect(bullet):
+                        abadguy.bullets.remove(bullet)
+                        self.iscolided=True
                 if arrow.colliderect(abadguy):
+                    abadguy.time=1
                     self.backup.append(abadguy)
                     self.abadguys.remove(abadguy)
                     self.iscolided=True
@@ -76,12 +83,22 @@ class Collider:
             if self.collplayer.colliderect(badguy):
                 self.badguys.remove(badguy)
                 if self.playercheck == True:
-                    self.heallgauge -= 10
+                    self.heallgauge -= int(194/5)
                     self.heal = Healbar(self.screen, self.heallgauge)
                     self.playercheck = False
+        for abad in self.abadguys:
+            for bullet in abad.bullets:
+                if self.collplayer.colliderect(bullet):
+                    abad.bullets.remove(bullet)
+                    if self.playercheck == True:
+                        self.heallgauge -= int(194 / 5)
+                        self.heal = Healbar(self.screen, self.heallgauge)
+                        self.playercheck = False
+
         if self.playtimer>0 and self.playercheck==False:
             self.playtimer-=1
         else:
             self.playercheck=True
             self.playtimer=50
+
         self.heal.drow()

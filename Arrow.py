@@ -12,6 +12,7 @@ class Arrow(pygame.Rect):
         self.left=y
         self.speed=speed
         self.screen=screen
+        self.name='Arrow'
 
     def move(self):         #화살의 움직임 함수
         self.left -= self.speed

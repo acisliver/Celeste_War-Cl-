@@ -4,19 +4,23 @@ from Arrow import Arrow
 from Sector1 import Sector1
 from Sector2 import Sector2
 from Sector3 import Sector3
+#from Laser import Laser
 
 class Player(pygame.Rect):
     screen=None
     arrows=[]
+    sectors=[]
     shot_flag = True
+    weapon = "Normal"
+    weapon_flag = True
     topBU=900
     Num=0
+    charge=50
     playerMove = pygame.image.load('resources/images/PlayerMove.png')
     player = pygame.image.load('resources/images/spaceship.png')
     playerlist = [player, playerMove]
     Start=True
     alpha=255
-    weapon="string"
 
     def __init__(self, screen, x, y):
         super().__init__(self.player.get_rect())    #상위 클래스의 함수(rect)를 사용하기 위해 super()사용
@@ -41,7 +45,7 @@ class Player(pygame.Rect):
                 if self.left <= 800:
                     self.left += 10
             if pressed[pygame.K_UP]:
-                if (300 < self.left):
+                if (400 < self.left):
                     self.left -= 15
             if pressed[pygame.K_DOWN]:
                 if (self.left < 800):
@@ -57,23 +61,46 @@ class Player(pygame.Rect):
                 if self.shot_flag:  # 먼저 shot_flag의 값 확인(초기에 True로 설정)
                     if self.weapon=="Sector":
                         self.sector_shot()
-                    else:
+                        self.shot_flag = False
+                    elif self.weapon=="Normal":
                         self.shot()  # 화살이 생성됨
-                    self.shot_flag = False  # shot_flag를 False로 바꿔줌
-            else:  # 스페이스바를 누르지 않고있을 경우
-                self.shot_flag = True  # shot_flag를 다시 True로 바꿔줌
+                        self.shot_flag=False
+                    elif self.weapon=="Laser":
+                        if self.charge==0:
+                            self.shot()
+                            self.charge=50
+                            self.shot_flag=False
+                        else:
+                            self.laser_charge()
+                            self.charge-=1
+            else:
+                self.shot_flag = True
+
+                    
+            if pressed[pygame.K_z]:
+                if self.weapon_flag:
+                    if self.weapon=="Normal":
+                        self.weapon = "Sector"
+                    elif self.weapon=="Sector":
+                        self.weapon = "Laser"
+                    elif self.weapon == "Laser":
+                        self.weapon = "Normal"
+                    self.weapon_flag = False
+            else:
+                self.weapon_flag = True
+
         elif self.Start==True:
             self.left+=0
         else:
             if self.left <= 800:
                 self.left += 10
 
+        for sector in self.arrows:
+            if sector.name == "Sector":
+                if sector.timer>=8:
+                    self.arrows.remove(sector)
 
-                                     # shot_flag가 True일 경우에만 화살이 나가게 함(눌렀다 때야 다시 눌렀을 경우 화살이 날아감)
         for arrow in self.arrows:
-            if self.weapon=="Sector":
-                if arrow.timer==8:
-                    self.arrows.remove(arrow)
             arrow.move()            #화살이 날아감
 
         if self.collidercheck==False:
@@ -93,7 +120,7 @@ class Player(pygame.Rect):
 
 
 
-    def shot(self):                 #화살생성함수
+    def shot(self):         #화살생성함수
         arrow = Arrow(self.screen, self.top, self.left, 35 )    #speed가 30인 화살 생성
         self.arrows.append(arrow)                               #list에 arrow객체 추가
 
@@ -104,3 +131,9 @@ class Player(pygame.Rect):
         self.arrows.append(sector2)
         sector3 = Sector3(self.screen, self.top, self.left, 35,0)
         self.arrows.append(sector3)
+
+    def laser_charge(self):
+        print(self.charge)
+
+    def laser_shot(self):
+        print(2)

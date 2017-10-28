@@ -9,6 +9,7 @@ from Collider import Collider
 from WL import WL
 from Timer import Timer
 from Screen2 import Screen2
+from Bullet import Bullet
 class Screen:
     width=700
     height =900
@@ -57,7 +58,7 @@ class Screen:
 
     def __init__(self):
         self.player = Player(self.screen, self.x, self.y)
-        self.collider=Collider(self.screen,self.player.arrows,self.badguys,self.tankers,self.abadguys, self.thealth, self.player)
+        self.collider=Collider(self.screen,self.player.arrows+self.player.sectors,self.badguys,self.tankers,self.abadguys, self.thealth, self.player)
         self.wl=WL(self.screen,self.exitcode)
         self.timer=Timer(self.screen,self.count)
         self.screen2=Screen2(self.screen,self.width,self.height)
@@ -68,7 +69,10 @@ class Screen:
             self.screen.blit(self.background,(0,bY-1000))
     def Move(self,badguys,tankers, abadguys):
         for badguy in badguys:  # 몹의 객체만큼
-            badguy.move()  # 몹 이동 함수
+            if badguy.time==0:
+                badguy.move()  # 몹 이동 함수
+            else:
+                badguy.time-=1
         for tanker in tankers:  # 탱커 만큼
             tanker.move()  # 탱커 무브
         for abadguy in abadguys:    #원거리 만큼
@@ -120,6 +124,7 @@ class Screen:
     def Start(self):
         self.badguys=[]
         self.player.arrows=[]
+        self.player.sectors=[]
         self.abadguys=[]
         self.timer.timer()
         self.tmax = self.timer.tmax
@@ -190,7 +195,7 @@ class Screen:
                 if self.badtimer == 0:
                     for x in range(0, 10):
                         badguy = Badguy(self.screen,
-                                        random.randint(50, self.width - 50), 0, self.bYplus-5, 1, 0)  # 위치랜덤의 속도8인 몹 객체 생성
+                                        random.randint(50, self.width - 50), 0, self.bYplus-5, random.randint(0,20), 0)  # 위치랜덤의 속도8인 몹 객체 생성
                         self.badguys.append(badguy)  # 리스트에 추가
                     if self.timer.max == 0:
                         self.timer.badtimer = 100
@@ -198,12 +203,12 @@ class Screen:
                         self.timer.badtimer = round(60 / self.timer.max)
                 if self.tcheck == True:
                     for x in range(0, self.tmax):
-                        tanker = Tanker(self.screen, random.randint(50, self.width - 50), 200, 1, 5, 1, 0)
+                        tanker = Tanker(self.screen, random.randint(50, self.width - 50), 0, 1, 5, 1, 0)
                         self.tankers.append(tanker)
                         self.tcheck = False
                 if self.acheck == True:
                     for x in range(0, self.amax):
-                        abadguy = Abadguy(self.screen, random.randint(50, self.width - 50), 199, 3, 1, 0,0)
+                        abadguy = Abadguy(self.screen, random.randint(50, self.width - 50), 0, 3, random.randint(0,7), -1,0)
                         self.abadguys.append(abadguy)
                         self.acheck = False
                 self.one_count = self.timer.count  # 타이머의 count와 같은 one_count
@@ -222,7 +227,6 @@ class Screen:
             self.screen2.Start()#스크린2 실행
             game = Screen()
             game.Start()#스크린1 실행
-
 
 game2 = Screen()
 game2.Starting()            #실행부
