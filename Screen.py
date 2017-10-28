@@ -35,6 +35,8 @@ class Screen:
     alpha=255
     bY=0
     bYplus=10
+    num=0
+    collidercheck=False
     playercheck=False
     startcheck=True
 
@@ -58,10 +60,12 @@ class Screen:
 
     def __init__(self):
         self.player = Player(self.screen, self.x, self.y)
-        self.collider=Collider(self.screen,self.player.arrows+self.player.sectors,self.badguys,self.tankers,self.abadguys, self.thealth, self.player)
+        self.healgauge=194
+        self.collider=Collider(self.screen,self.player.arrows+self.player.sectors,self.badguys,self.tankers,self.abadguys, self.thealth, self.player,self.healgauge)
         self.wl=WL(self.screen,self.exitcode)
         self.timer=Timer(self.screen,self.count)
         self.screen2=Screen2(self.screen,self.width,self.height)
+
 
     def Drow_background(self,bY):
         self.screen.blit(self.background, (0,bY))
@@ -140,7 +144,6 @@ class Screen:
                     self.timer.exidcode=0
                     exit(0)
             pygame.display.update() #업데이트
-
             game=Screen()
             game.Drow_background(self.bY)
 
@@ -187,6 +190,8 @@ class Screen:
                 self.collider.abadguys=self.abadguys
                 self.collider.arrows = self.player.arrows
                 self.healgauge = self.collider.heallgauge
+                if self.collider.playercheck==False:
+                    self.collidercheck=True
 
                 game.Move(self.badguys, self.tankers, self.abadguys)
                 pygame.display.update()
@@ -220,7 +225,17 @@ class Screen:
                 if self.healgauge < 0:
                     break
         if self.healgauge < 0:  #체력게이지가 0보다 작으면
-            self.wl.print()     #win or lose 출력
+            while 1:
+                for event in pygame.event.get():  # 종료 이벤트
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        exit(0)
+                self.wl.print()  # win or lose 출력
+                x=self.collider.colltext(self.wl.regame)
+                if x==0:
+                    return
+
+
 
     def Starting(self):
         while True:

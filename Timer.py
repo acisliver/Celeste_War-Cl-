@@ -1,11 +1,13 @@
 #타이머(게임 남은 시간)
 import pygame
 import threading
+from Server import Server
 
 class Timer:
     screen=None
     tmax=0
     max=0
+    amax=0
     count=0
     exidcode=1
     badtimer=0
@@ -24,7 +26,6 @@ class Timer:
                 self.badtimer = round(60 / self.max)
         self.count -= 1                     #1씩 빠짐
         self.badtimer=self.badtimer-1
-
         if self.exidcode==0:
             time.cancel()    #1초마다 반복 취소
 

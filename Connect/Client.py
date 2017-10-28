@@ -34,9 +34,7 @@ class Client():
 
     def recv_msgs(self, data=bytes()):
         while(1):
-            print("대기중")
             recvd = self.sock.recv(4096)
-            print("대기끝")
 
             if not recvd:
                 raise ConnectionError()
@@ -66,7 +64,7 @@ class Client():
 if '__main__' == __name__:
     client = Client()
     while(1):
-        x = [1,2,3]
+        x=[4,5,6]
         client.sendstate(x)
         youuse = client.recv_msg
         print(youuse)

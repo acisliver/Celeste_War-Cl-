@@ -2,6 +2,7 @@ import pygame
 from Timer import Timer
 from Player import Player
 
+
 class Screen2:
     width = 0
     height = 0
@@ -21,6 +22,7 @@ class Screen2:
     amax = 0
     mobs = 0
     degree=0
+    what=[0]
     bY=0
 
     def __init__(self,screen,width,height):
@@ -157,14 +159,13 @@ class Screen2:
             rect = rotated.get_rect()
             rect.center = (170, 400)
             self.screen.blit(rotated, rect)
-
             self.screen.blit(self.abadguy, (100,450))
 
     def Start(self):
         finished=0
         while not finished:
-            position = pygame.mouse.get_pos()   #마우스 위치 불러오기
 
+            position = pygame.mouse.get_pos()   #마우스 위치 불러오기
             for event in pygame.event.get():    #종료 이벤트
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -246,8 +247,9 @@ class Screen2:
                                 self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
                                 self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
                                 Timer.max = self.max
-                                Timer.tmax=self.tmax
+                                Timer.tmax = self.tmax
                                 Timer.amax = self.amax
+                                self.what = [1,self.max,self.tmax,self.amax]
                                 self.numlist = [0, 0]       #numlist 초기화
                                 self.tnumlist = [0, 0]
                                 self.anumlist = [0, 0]

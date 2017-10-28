@@ -3,6 +3,7 @@ import ServerClientBase as SCB
 import json
 
 
+
 send_queues = {}
 lock = threading.Lock()
 
@@ -87,12 +88,10 @@ class Server():
 
 
 
-
-
 if __name__ == '__main__':
     server = Server()
     while(1):
-        x = [1,2,3]
+        x=[1,2,3]
         server.sendStatus(x)
         y = server.recv_msg
         try:

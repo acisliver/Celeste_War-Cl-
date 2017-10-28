@@ -32,7 +32,7 @@ class Player(pygame.Rect):
 
     def move(self):                 #wasd 이동키
         pressed=pygame.key.get_pressed()
-        if self.left<=300 and self.Start==False:
+        if self.left<=400 and self.Start==False:
             self.Num=1
         elif self.left < self.topBU:
             self.topBU = self.left

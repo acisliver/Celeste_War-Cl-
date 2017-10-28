@@ -8,7 +8,6 @@ class Collider:
     tankers=[]
     thealth=[]
     collplayer=[]
-    heallgauge=194
     heal=None
     iscolided=False
     current_frame = 0
@@ -23,7 +22,7 @@ class Collider:
         for x in range(9):
             boomlist.append((x * 100, y * 100, 100, 100))
 
-    def __init__(self,sceen,arrows,badguys,tankers,abadguys, thealth, player):
+    def __init__(self,sceen,arrows,badguys,tankers,abadguys, thealth, player,healgauge):
         self.screen=sceen
         self.arrows=arrows
         self.badguys=badguys
@@ -32,6 +31,10 @@ class Collider:
         self.thealth = thealth
         self.collplayer=player
         self.bullet=[]
+        self.num=0
+        self.heallgauge =healgauge
+    def returns(self):
+        print(self.num)
 
     def collide(self):
         self.heal = Healbar(self.screen, self.heallgauge)
@@ -67,9 +70,10 @@ class Collider:
 
             for abadguy in self.abadguys:
                 for bullet in abadguy.bullets:
-                    if arrow.colliderect(bullet):
-                        abadguy.bullets.remove(bullet)
-                        self.iscolided=True
+                    if arrow.name!="Sector":
+                        if arrow.colliderect(bullet):
+                            abadguy.bullets.remove(bullet)
+                            self.iscolided = True
                 if arrow.colliderect(abadguy):
                     abadguy.time=1
                     self.backup.append(abadguy)
@@ -83,6 +87,7 @@ class Collider:
             if self.collplayer.colliderect(badguy):
                 self.badguys.remove(badguy)
                 if self.playercheck == True:
+                    self.num += 1
                     self.heallgauge -= int(194/5)
                     self.heal = Healbar(self.screen, self.heallgauge)
                     self.playercheck = False
@@ -91,6 +96,7 @@ class Collider:
                 if self.collplayer.colliderect(bullet):
                     abad.bullets.remove(bullet)
                     if self.playercheck == True:
+                        self.num+=1
                         self.heallgauge -= int(194 / 5)
                         self.heal = Healbar(self.screen, self.heallgauge)
                         self.playercheck = False
@@ -102,3 +108,12 @@ class Collider:
             self.playtimer=50
 
         self.heal.drow()
+
+    def colltext(self,regamet):
+        x=[regamet]
+        position = pygame.mouse.get_pos()
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for regame in x:
+                    if regame.collidepoint(event.pos):  # ^와 마우스가 충돌했을 경우
+                        return 0
