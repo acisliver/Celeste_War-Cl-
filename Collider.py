@@ -54,31 +54,51 @@ class Collider:
             for tanker in self.tankers:
                 if arrow.colliderect(tanker):
                     if tanker.heall == 0:
+                        arrow.num = 0
                         self.backup.append(tanker)
                         self.tankers.remove(tanker)
-                        self.iscolided = True
+                        if arrow.name == "Laser":
+                            pass
+                        else:
+                            self.iscolided = True
                     else:
-                        tanker.heall = tanker.heall - 1
-                        self.iscolided = True
+                        if arrow.name == "Laser":
+                            if arrow.num==1:
+                                pass
+                            else:
+                                arrow.num=1
+                                tanker.heall = tanker.heall - 1
+                        else:
+                            tanker.heall = tanker.heall - 1
+                            self.iscolided = True
 
             for badguy in self.badguys:     #몹의 개수 만큼 실행
                 if arrow.colliderect(badguy):   #충돌시
                     badguy.time=1
                     self.backup.append(badguy)
                     self.badguys.remove(badguy) #몹 삭제
-                    self.iscolided = True
+                    if arrow.name == "Laser":
+                        pass
+                    else:
+                        self.iscolided = True
 
             for abadguy in self.abadguys:
                 for bullet in abadguy.bullets:
                     if arrow.name!="Sector":
                         if arrow.colliderect(bullet):
                             abadguy.bullets.remove(bullet)
-                            self.iscolided = True
+                            if arrow.name=="Laser":
+                                pass
+                            else:
+                                self.iscolided = True
                 if arrow.colliderect(abadguy):
                     abadguy.time=1
                     self.backup.append(abadguy)
                     self.abadguys.remove(abadguy)
-                    self.iscolided=True
+                    if arrow.name == "Laser":
+                        pass
+                    else:
+                        self.iscolided = True
             if self.iscolided == True:
                 self.arrows.remove(arrow)   #화살 삭제
                 self.iscolided = False

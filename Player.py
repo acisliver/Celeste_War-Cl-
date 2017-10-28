@@ -70,8 +70,9 @@ class Player(pygame.Rect):
                         self.shot()  # 화살이 생성됨
                         self.shot_flag=False
                     elif self.weapon=="Laser":
+                        laser = Laser(self.screen, self.top, self.left, self.lasertime, self.lasernum)
                         if self.charge==0:
-                            self.shot()
+                            self.laser_shot()
                             self.charge=50
                             self.shot_flag=False
                             self.lasertime = 2
@@ -84,10 +85,12 @@ class Player(pygame.Rect):
                                 self.lasertime -= 1
                             if self.lasernum == 13:
                                 self.lasernum = 0
-                            laser = Laser(self.screen, self.top, self.left, self.lasertime, self.lasernum)
                             laser.charge()
                             self.charge-=1
             else:
+                self.charge = 50
+                self.lasertime = 2
+                self.lasernum = 0
                 self.shot_flag = True
 
                     
@@ -150,4 +153,5 @@ class Player(pygame.Rect):
         print(self.charge)
 
     def laser_shot(self):
-        print(2)
+        laser = Laser(self.screen, self.top, self.left, self.lasertime, self.lasernum)
+        self.arrows.append(laser)

@@ -1,7 +1,7 @@
 #관통 레이저
 import pygame
 
-class Laser():
+class Laser(pygame.Rect):
     screen = None
     bim =  pygame.image.load("resources/images/arrow1.png")
     charge1 = pygame.image.load("resources/images/laser/laserani1.png")
@@ -19,6 +19,7 @@ class Laser():
     charge13 = pygame.image.load("resources/images/laser/laserani13.png")
 
     def __init__(self, screen, x ,y,time,num):
+        super().__init__(self.bim.get_rect())
         self.top = x
         self.left = y
         self.screen = screen
@@ -37,8 +38,10 @@ class Laser():
                          self.charge13,]
         self.time=time
         self.num=num
+        self.name="Laser"
 
     def move(self):
+        self.left -= 30
         self.screen.blit(self.bim,(self.top+25,self.left))
 
     def charge(self):

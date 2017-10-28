@@ -22,6 +22,7 @@ class Tanker(pygame.Rect):
         self.num=num
 
     def move(self):
+        print(self.heall)
         rotated = pygame.transform.rotate(self.tanker, self.degree)
         rect = rotated.get_rect()
         rect.center = (self.top+50, self.left)
