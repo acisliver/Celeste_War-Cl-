@@ -4,6 +4,7 @@ from Arrow import Arrow
 from Sector1 import Sector1
 from Sector2 import Sector2
 from Sector3 import Sector3
+from Laser import Laser
 #from Laser import Laser
 
 class Player(pygame.Rect):
@@ -21,6 +22,8 @@ class Player(pygame.Rect):
     playerlist = [player, playerMove]
     Start=True
     alpha=255
+    lasertime=1
+    lasernum=0
 
     def __init__(self, screen, x, y):
         super().__init__(self.player.get_rect())    #상위 클래스의 함수(rect)를 사용하기 위해 super()사용
@@ -29,6 +32,7 @@ class Player(pygame.Rect):
         self.left =y
         self.collidercheck=True
         self.playertimer=5
+
 
     def move(self):                 #wasd 이동키
         pressed=pygame.key.get_pressed()
@@ -70,8 +74,18 @@ class Player(pygame.Rect):
                             self.shot()
                             self.charge=50
                             self.shot_flag=False
+                            self.lasertime = 2
+                            self.lasernum = 0
                         else:
-                            self.laser_charge()
+                            if self.lasertime == 0:
+                                self.lasernum += 1
+                                self.lasertime = 1
+                            else:
+                                self.lasertime -= 1
+                            if self.lasernum == 13:
+                                self.lasernum = 0
+                            laser = Laser(self.screen, self.top, self.left, self.lasertime, self.lasernum)
+                            laser.charge()
                             self.charge-=1
             else:
                 self.shot_flag = True
