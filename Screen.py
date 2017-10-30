@@ -173,6 +173,12 @@ class Screen:
                     self.alpha -= 6
                     for abad in self.abadguys:
                         self.abadguys.remove(abad)
+                    for badguy in self.badguys:
+                        self.badguys.remove(badguy)
+                    for tanker in self.tankers:
+                        self.tankers.remove(tanker) 
+                    for Bu in self.collider.backup:
+                        self.collider.backup.remove(Bu)
                 if self.player.left <= 740:
                     self.playercheck = True
 
@@ -208,7 +214,7 @@ class Screen:
                         self.timer.badtimer = round(60 / self.timer.max)
                 if self.tcheck == True:
                     for x in range(0, self.tmax):
-                        tanker = Tanker(self.screen, random.randint(50, self.width - 50), 0, 1, 5, 1, 0)
+                        tanker = Tanker(self.screen, random.randint(50, self.width - 50), 0, 1, 7, 1, 0)
                         self.tankers.append(tanker)
                         self.tcheck = False
                 if self.acheck == True:

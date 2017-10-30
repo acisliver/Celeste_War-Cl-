@@ -1,7 +1,7 @@
 #타이머(게임 남은 시간)
 import pygame
 import threading
-from Server import Server
+
 
 class Timer:
     screen=None

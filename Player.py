@@ -75,12 +75,12 @@ class Player(pygame.Rect):
                             self.laser_shot()
                             self.charge=50
                             self.shot_flag=False
-                            self.lasertime = 2
+                            self.lasertime = 1
                             self.lasernum = 0
                         else:
                             if self.lasertime == 0:
                                 self.lasernum += 1
-                                self.lasertime = 1
+                                self.lasertime = 2
                             else:
                                 self.lasertime -= 1
                             if self.lasernum == 13:
