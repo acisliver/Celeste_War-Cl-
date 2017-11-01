@@ -3,7 +3,8 @@ import pygame
 
 class Laser(pygame.Rect):
     screen = None
-    bim =  pygame.image.load("resources/images/trail_00.png")
+    degree=0
+    bim =  pygame.image.load("resources/images/히오스.png")
     charge1 = pygame.image.load("resources/images/laser/laserani1.png")
     charge2 = pygame.image.load("resources/images/laser/laserani2.png")
     charge3 = pygame.image.load("resources/images/laser/laserani3.png")
@@ -19,7 +20,7 @@ class Laser(pygame.Rect):
     charge13 = pygame.image.load("resources/images/laser/laserani13.png")
 
     def __init__(self, screen, x ,y,time,num):
-        super().__init__(self.bim.get_rect())
+        super().__init__(self.bim.get_rect(center=(x+25,y)))
         self.top = x
         self.left = y
         self.screen = screen
@@ -41,8 +42,12 @@ class Laser(pygame.Rect):
         self.name="Laser"
 
     def move(self):
-        self.left -= 30
-        self.screen.blit(self.bim,(self.top+25,self.left))
+        self.left -= 9
+        self.degree -= 30
+        rotated = pygame.transform.rotate(self.bim, self.degree)
+        rect = rotated.get_rect()
+        rect.center = (self.top + 50, self.left)
+        self.screen.blit(rotated, rect)
 
     def charge(self):
         self.screen.blit(self.chargelist[self.num], (self.top + 13, self.left - 50))

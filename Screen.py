@@ -49,7 +49,6 @@ class Screen:
     wl = None
     heallvalue=None
     timer=None
-
     fpsClock = pygame.time.Clock()
     FPS = 100
 
@@ -204,7 +203,7 @@ class Screen:
 
                 self.badtimer = self.timer.badtimer
                 if self.badtimer == 0:
-                    for x in range(0, 10):
+                    for x in range(0, 2):
                         badguy = Badguy(self.screen,
                                         random.randint(50, self.width - 50), 0, self.bYplus-5, random.randint(0,20), 0)  # 위치랜덤의 속도8인 몹 객체 생성
                         self.badguys.append(badguy)  # 리스트에 추가

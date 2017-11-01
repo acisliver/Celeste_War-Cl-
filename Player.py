@@ -26,15 +26,17 @@ class Player(pygame.Rect):
     lasernum=0
 
     def __init__(self, screen, x, y):
-        super().__init__(self.player.get_rect())    #상위 클래스의 함수(rect)를 사용하기 위해 super()사용
+        super().__init__(self.player.get_rect(center=(x,y)))    #상위 클래스의 함수(rect)를 사용하기 위해 super()사용
+        self.height=50
         self.screen=screen
-        self.top = x
+        self.top = x+25
         self.left =y
         self.collidercheck=True
         self.playertimer=5
 
 
     def move(self):                 #wasd 이동키
+        print(self.left)
         pressed=pygame.key.get_pressed()
         if self.left<=400 and self.Start==False:
             self.Num=1
@@ -94,7 +96,7 @@ class Player(pygame.Rect):
                 self.shot_flag = True
 
                     
-            if pressed[pygame.K_z]:
+            if pressed[pygame.K_x]:
                 if self.weapon_flag:
                     if self.weapon=="Normal":
                         self.weapon = "Sector"
@@ -102,6 +104,15 @@ class Player(pygame.Rect):
                         self.weapon = "Laser"
                     elif self.weapon == "Laser":
                         self.weapon = "Normal"
+                    self.weapon_flag = False
+            elif pressed[pygame.K_z]:
+                if self.weapon_flag:
+                    if self.weapon=="Normal":
+                        self.weapon = "Laser"
+                    elif self.weapon=="Sector":
+                        self.weapon = "Normal"
+                    elif self.weapon == "Laser":
+                        self.weapon = "Sector"
                     self.weapon_flag = False
             else:
                 self.weapon_flag = True
@@ -125,7 +136,7 @@ class Player(pygame.Rect):
             image.blit(self.playerlist[self.Num], (0, 0))
             image.set_colorkey((0, 0, 0))
             image.set_alpha(self.alpha)
-            self.screen.blit(image, (self.top, self.left))
+            self.screen.blit(image, (self.top-25, self.left))
             if self.alpha==255 and self.playertimer==0:
                 self.alpha=0
                 self.playertimer=3
@@ -133,7 +144,7 @@ class Player(pygame.Rect):
                 self.playertimer-=1
                 self.alpha=255
         elif self.collidercheck==True:
-            self.screen.blit(self.playerlist[self.Num], (self.top, self.left))
+            self.screen.blit(self.playerlist[self.Num], (self.top-25, self.left))
 
 
 
