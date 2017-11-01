@@ -54,7 +54,7 @@ class Collider:
             for tanker in self.tankers:
                 if arrow.colliderect(tanker):
                     if tanker.heall == 0:
-                        arrow.num = 0
+                        tanker.num = 0
                         self.backup.append(tanker)
                         self.tankers.remove(tanker)
                         if arrow.name == "Laser":
@@ -63,14 +63,18 @@ class Collider:
                             self.iscolided = True
                     else:
                         if arrow.name == "Laser":
-                            if arrow.num==1:
+                            if arrow.num==1 and tanker.num==1:
                                 pass
+
                             else:
+                                tanker.num=1
                                 arrow.num=1
                                 tanker.heall = tanker.heall - 1
                         else:
                             tanker.heall = tanker.heall - 1
                             self.iscolided = True
+                else:
+                    tanker.num = 0
 
             for badguy in self.badguys:     #몹의 개수 만큼 실행
                 if arrow.colliderect(badguy):   #충돌시

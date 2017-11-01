@@ -3,7 +3,7 @@ import pygame
 
 class Laser(pygame.Rect):
     screen = None
-    bim =  pygame.image.load("resources/images/arrow1.png")
+    bim =  pygame.image.load("resources/images/trail_00.png")
     charge1 = pygame.image.load("resources/images/laser/laserani1.png")
     charge2 = pygame.image.load("resources/images/laser/laserani2.png")
     charge3 = pygame.image.load("resources/images/laser/laserani3.png")
