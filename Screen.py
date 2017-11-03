@@ -9,6 +9,7 @@ from Collider import Collider
 from WL import WL
 from Timer import Timer
 from Screen2 import Screen2
+from Menu import Menu
 from Bullet import Bullet
 class Screen:
     width=700
@@ -197,9 +198,9 @@ class Screen:
                 self.healgauge = self.collider.heallgauge
                 if self.collider.playercheck==False:
                     self.collidercheck=True
-
                 game.Move(self.badguys, self.tankers, self.abadguys)
-                self.player.MenuDrow()
+                menu=Menu(self.screen,self.player.menuX)
+                menu.drow()
                 pygame.display.update()
 
                 self.badtimer = self.timer.badtimer

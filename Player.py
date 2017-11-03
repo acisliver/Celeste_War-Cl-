@@ -5,7 +5,7 @@ from Sector1 import Sector1
 from Sector2 import Sector2
 from Sector3 import Sector3
 from Laser import Laser
-from Menu import Menu
+
 #from Laser import Laser
 
 class Player(pygame.Rect):
@@ -39,7 +39,6 @@ class Player(pygame.Rect):
 
 
     def move(self):                 #wasd 이동키
-        menu = Menu(self.screen, self.menuX)
         pressed=pygame.key.get_pressed()
         if self.left<=400 and self.Start==False:
             self.Num=1
@@ -161,10 +160,6 @@ class Player(pygame.Rect):
     def shot(self):         #화살생성함수
         arrow = Arrow(self.screen, self.top-25, self.left, 35 )    #speed가 30인 화살 생성
         self.arrows.append(arrow)                               #list에 arrow객체 추가
-
-    def MenuDrow(self):
-        menu = Menu(self.screen, self.menuX)
-        menu.drow()
 
     def sector_shot(self):
         sector1 = Sector1(self.screen, self.top-25, self.left, 35,0)
