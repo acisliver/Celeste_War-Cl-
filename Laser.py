@@ -28,6 +28,7 @@ class Laser(pygame.Rect):
         self.top = x
         self.left = y
         self.height=100
+        self.width=100
         self.screen = screen
         self.chargelist=[self.charge1,
                          self.charge2,
