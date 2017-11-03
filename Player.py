@@ -5,6 +5,7 @@ from Sector1 import Sector1
 from Sector2 import Sector2
 from Sector3 import Sector3
 from Laser import Laser
+from Menu import Menu
 #from Laser import Laser
 
 class Player(pygame.Rect):
@@ -14,6 +15,7 @@ class Player(pygame.Rect):
     shot_flag = True
     weapon = "Normal"
     weapon_flag = True
+    menuX=530
     topBU=900
     Num=0
     charge=50
@@ -35,8 +37,9 @@ class Player(pygame.Rect):
         self.playertimer=5
 
 
-    def move(self):                 #wasd 이동키
 
+    def move(self):                 #wasd 이동키
+        menu = Menu(self.screen, self.menuX)
         pressed=pygame.key.get_pressed()
         if self.left<=400 and self.Start==False:
             self.Num=1
@@ -100,19 +103,25 @@ class Player(pygame.Rect):
             if pressed[pygame.K_x]:
                 if self.weapon_flag:
                     if self.weapon=="Normal":
+                        self.menuX = 580
                         self.weapon = "Sector"
                     elif self.weapon=="Sector":
+                        self.menuX = 630
                         self.weapon = "Laser"
                     elif self.weapon == "Laser":
+                        self.menuX = 530
                         self.weapon = "Normal"
                     self.weapon_flag = False
             elif pressed[pygame.K_z]:
                 if self.weapon_flag:
                     if self.weapon=="Normal":
+                        self.menuX=630
                         self.weapon = "Laser"
                     elif self.weapon=="Sector":
+                        self.menuX=530
                         self.weapon = "Normal"
                     elif self.weapon == "Laser":
+                        self.menuX = 580
                         self.weapon = "Sector"
                     self.weapon_flag = False
             else:
@@ -152,6 +161,10 @@ class Player(pygame.Rect):
     def shot(self):         #화살생성함수
         arrow = Arrow(self.screen, self.top-25, self.left, 35 )    #speed가 30인 화살 생성
         self.arrows.append(arrow)                               #list에 arrow객체 추가
+
+    def MenuDrow(self):
+        menu = Menu(self.screen, self.menuX)
+        menu.drow()
 
     def sector_shot(self):
         sector1 = Sector1(self.screen, self.top-25, self.left, 35,0)

@@ -58,6 +58,6 @@ class Laser(pygame.Rect):
         image.set_colorkey((0, 0, 0))
         self.left-=9
         self.screen.blit(image, (self.top,self.left))
-
+        
     def charge(self):
         self.screen.blit(self.chargelist[self.num], (self.top + 13, self.left - 50))

@@ -199,6 +199,7 @@ class Screen:
                     self.collidercheck=True
 
                 game.Move(self.badguys, self.tankers, self.abadguys)
+                self.player.MenuDrow()
                 pygame.display.update()
 
                 self.badtimer = self.timer.badtimer
@@ -229,6 +230,7 @@ class Screen:
 
                 if self.healgauge < 0:
                     break
+
         if self.healgauge < 0:  #체력게이지가 0보다 작으면
             while 1:
                 for event in pygame.event.get():  # 종료 이벤트

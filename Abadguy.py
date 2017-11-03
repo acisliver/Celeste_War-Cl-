@@ -40,7 +40,7 @@ class Abadguy(pygame.Rect):
             bullet.move()
         if self.top >= 650:
             self.wallCollX = "Right"
-        if self.top <= 1:
+        if self.top <= -1:
             self.wallCollX = "Left"
         if self.left >= 200:
             self.wallCollY = "Up"
