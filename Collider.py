@@ -63,12 +63,12 @@ class Collider:
                             self.iscolided = True
                     else:
                         if arrow.name == "Laser":
-                            if arrow.num==1 and tanker.num==1:
+                            if arrow.chek==True and tanker.num==1:
                                 pass
 
                             else:
                                 tanker.num=1
-                                arrow.num=1
+                                arrow.chek=True
                                 tanker.heall = tanker.heall - 1
                         else:
                             tanker.heall = tanker.heall - 1

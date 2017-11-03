@@ -36,7 +36,7 @@ class Player(pygame.Rect):
 
 
     def move(self):                 #wasd 이동키
-        print(self.left)
+
         pressed=pygame.key.get_pressed()
         if self.left<=400 and self.Start==False:
             self.Num=1
@@ -72,13 +72,14 @@ class Player(pygame.Rect):
                         self.shot()  # 화살이 생성됨
                         self.shot_flag=False
                     elif self.weapon=="Laser":
-                        laser = Laser(self.screen, self.top, self.left, self.lasertime, self.lasernum)
+                        laser = Laser(self.screen, self.top-25, self.left, self.lasertime, self.lasernum)
                         if self.charge==0:
                             self.laser_shot()
                             self.charge=50
                             self.shot_flag=False
-                            self.lasertime = 1
-                            self.lasernum = 0
+                            if self.lasertime!=2:
+                                self.lasertime = 2
+                                self.lasernum = 0
                         else:
                             if self.lasertime == 0:
                                 self.lasernum += 1
@@ -149,20 +150,20 @@ class Player(pygame.Rect):
 
 
     def shot(self):         #화살생성함수
-        arrow = Arrow(self.screen, self.top, self.left, 35 )    #speed가 30인 화살 생성
+        arrow = Arrow(self.screen, self.top-25, self.left, 35 )    #speed가 30인 화살 생성
         self.arrows.append(arrow)                               #list에 arrow객체 추가
 
     def sector_shot(self):
-        sector1 = Sector1(self.screen, self.top, self.left, 35,0)
+        sector1 = Sector1(self.screen, self.top-25, self.left, 35,0)
         self.arrows.append(sector1)
-        sector2 = Sector2(self.screen, self.top, self.left, 35,0)
+        sector2 = Sector2(self.screen, self.top-25, self.left, 35,0)
         self.arrows.append(sector2)
-        sector3 = Sector3(self.screen, self.top, self.left, 35,0)
+        sector3 = Sector3(self.screen, self.top-25, self.left, 35,0)
         self.arrows.append(sector3)
 
     def laser_charge(self):
         print(self.charge)
 
     def laser_shot(self):
-        laser = Laser(self.screen, self.top, self.left, self.lasertime, self.lasernum)
+        laser = Laser(self.screen, self.top-25, self.left, self.lasertime, self.lasernum)
         self.arrows.append(laser)
