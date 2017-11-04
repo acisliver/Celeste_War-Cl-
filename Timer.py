@@ -3,6 +3,7 @@ import pygame
 import threading
 
 
+
 class Timer:
     screen=None
     tmax=0
@@ -16,6 +17,7 @@ class Timer:
     def __init__(self,screen,count):
         self.screen=screen
         self.count=count
+
 
     def timer(self):
         time=threading.Timer(1,self.timer)  #1초마다 반복

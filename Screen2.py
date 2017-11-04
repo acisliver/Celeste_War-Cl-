@@ -1,6 +1,8 @@
 import pygame
 from Timer import Timer
 from Player import Player
+from Client import Client
+
 
 
 class Screen2:
@@ -29,6 +31,7 @@ class Screen2:
         self.width=width
         self.screen=screen
         self.height=height
+        self.cl = Client()
 
     class Drow:
         def __init__(self,list,numlist,tnumlist,anumlist, n_flag, s_flag, n_color, s_color, mobs, mobs_color, screen,degree):
@@ -48,6 +51,7 @@ class Screen2:
             self.tanker=pygame.image.load("resources/images/Mob/tanker.png")
             self.abadguy = pygame.image.load("resources/images/Mob/abadguy.png")
             self.degree = degree
+
 
         def Drow_font(self):
             pygame.font.init()  # 폰트 초기화

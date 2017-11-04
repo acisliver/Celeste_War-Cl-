@@ -5,7 +5,7 @@ import ServerClientBase as SCB
 
 
 class Client():
-    HOST = '127.0.0.1'
+    HOST = '218.149.168.65'
     PORT = SCB.PORT
     send_msg = ''
     recv_msg = ''
@@ -28,7 +28,7 @@ class Client():
                     SCB.send_msg(sock, self.send_msg)
                     self.flag_isfirst = False
                 except ConnectionError:
-                    print('Socket error')
+                    #print('Socket error')
                     break
 
 
@@ -61,10 +61,11 @@ class Client():
         self.send_msg = json.dumps(sendlist)
         self.flag_isfirst = True
 
-if '__main__' == __name__:
+'''if '__main__' == __name__:
     client = Client()
     while(1):
         x=[4,5,6]
         client.sendstate(x)
         youuse = client.recv_msg
         print(youuse)
+'''

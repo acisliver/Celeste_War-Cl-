@@ -10,6 +10,7 @@ from WL import WL
 from Timer import Timer
 from Screen2 import Screen2
 from Menu import Menu
+from Client import Client
 from Bullet import Bullet
 class Screen:
     width=700
@@ -65,6 +66,7 @@ class Screen:
         self.wl=WL(self.screen,self.exitcode)
         self.timer=Timer(self.screen,self.count)
         self.screen2=Screen2(self.screen,self.width,self.height)
+        self.cl=Client()
 
     def Drow_background(self,bY):
         self.screen.blit(self.background, (0,bY))
@@ -144,8 +146,8 @@ class Screen:
                     self.timer.exidcode=0
                     exit(0)
             pygame.display.update() #업데이트
-            game=Screen()
             game.Drow_background(self.bY)
+            self.cl.sendstate([0])
 
             self.bY += self.bYplus
             if self.bY>=1000:
@@ -246,8 +248,7 @@ class Screen:
     def Starting(self):
         while True:
             self.screen2.Start()#스크린2 실행
-            game = Screen()
             game.Start()#스크린1 실행
 
-game2 = Screen()
-game2.Starting()            #실행부
+game = Screen()
+game.Starting()            #실행부
