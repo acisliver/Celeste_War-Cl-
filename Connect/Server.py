@@ -14,13 +14,13 @@ class Server():
     recv_msg = ''
     clientAddr = ''
     flag_isfirst = True
-
+    listen_sock = None
     #초기화하면서 소켓하나 만들고 클라이언트 받는거 대기
     #1:1통신이라 이렇게 짰지만 다중 환경 지원하려면 다르게 짜야함
     def __init__(self):
         listen_sock = SCB.create_listen_socket(self.HOST, self.PORT)
         self.clientAddr = listen_sock.getsockname()
-        print('Listening on {}'.format(clientAddr))
+        print('Listening on {}'.format(self.clientAddr))
         self.listen_client(listen_sock)
 
     def listen_client(self, sock):
@@ -65,7 +65,7 @@ class Server():
 
     def sendStatus(self, msg):
         self.send_msg = json.dumps(msg)
-        self.handle_client_send(self.sock, self.clientAddr)
+        self.handle_client_send(self.listen_sock, self.clientAddr)
         self.flag_isfirst = True
 
     # def broadcast_msg(self, msg):
