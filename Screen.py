@@ -246,6 +246,8 @@ class Screen:
     def Starting(self):
         cl=Client()
         while True:
+            cl.sendstate(1)
+            y = cl.recv_msg
             self.screen2.Start(cl)#스크린2 실행
             game.Start()#스크린1 실행
 

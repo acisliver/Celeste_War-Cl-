@@ -228,8 +228,7 @@ class Screen2:
                                 self.start_color=(0,255,255)
 
 
-            cl.sendstate(self.what)
-            y = cl.recv_msg
+
             if self.s_flag==1 and y[0]==1:
                 self.numlist = [0, 0]  # numlist 초기화
                 self.tnumlist = [0, 0]

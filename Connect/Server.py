@@ -26,6 +26,7 @@ class Server():
     def listen_client(self, sock):
         client_sock, addr = sock.accept()  # 메인 쓰레드는 어셉트 상황에서 기다리고 잡히면 서브 쓰레드를 하나 만드는 것이다.
                                            # 위에서 프로그램이 대기하니까 이걸 쓰레드 처리하면 여러 클라이언트를 처리할수 있음
+        self.listen_sock = client_sock
 
 
         # 다중클라이언트 처리할 필요가 없어서 아래부분 삭제 broadcast_msgs 함수도 삭제
