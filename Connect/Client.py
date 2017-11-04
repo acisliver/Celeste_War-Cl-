@@ -13,23 +13,25 @@ class Client():
     flag_isfirst = False
 
     def __init__(self):
+
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect((self.HOST, self.PORT))
         # 반드시 스레드를 통해서 실행시킬것
-        thread_send = threading.Thread(target=self.handle_input, args=[self.sock], daemon=True)
-        thread_recv = threading.Thread(target=self.recv_msgs, args = [bytes()], daemon= True)
-        thread_send.start()
+        # thread_send = threading.Thread(target=self.handle_input, args=[self.sock], daemon = True)
+        thread_recv = threading.Thread(target=self.recv_msgs, args = [bytes()], daemon = True)
+        # thread_send.start()
         thread_recv.start()
 
     def handle_input(self, sock):
-        while True:
-            if self.flag_isfirst:
-                try:
-                    SCB.send_msg(sock, self.send_msg)
-                    self.flag_isfirst = False
-                except ConnectionError:
-                    #print('Socket error')
-                    break
+        # while True:
+        #     # print(threading.active_count())
+        #     if self.flag_isfirst:
+        try:
+            SCB.send_msg(sock, self.send_msg)
+            # self.flag_isfirst = False
+        except ConnectionError:
+            print('Socket error')
+                    # break
 
 
     def recv_msgs(self, data=bytes()):
@@ -59,6 +61,7 @@ class Client():
 
     def sendstate(self, sendlist):
         self.send_msg = json.dumps(sendlist)
+        self.handle_input(self.sock)
         self.flag_isfirst = True
 
 '''if '__main__' == __name__:
