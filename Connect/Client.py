@@ -5,7 +5,7 @@ import ServerClientBase as SCB
 
 
 class Client():
-    HOST = '218.149.168.65'
+    HOST = '218.149.168.37'
     PORT = SCB.PORT
     send_msg = ''
     recv_msg = ''
@@ -64,11 +64,10 @@ class Client():
         self.handle_input(self.sock)
         self.flag_isfirst = True
 
-'''if '__main__' == __name__:
+if '__main__' == __name__:
     client = Client()
     while(1):
         x=[4,5,6]
         client.sendstate(x)
         youuse = client.recv_msg
         print(youuse)
-'''

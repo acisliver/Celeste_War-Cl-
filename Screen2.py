@@ -1,8 +1,6 @@
 import pygame
 from Timer import Timer
 from Player import Player
-from Client import Client
-
 
 
 class Screen2:
@@ -13,11 +11,8 @@ class Screen2:
     numlist = [0,0]
     tnumlist = [0,0]
     anumlist = [0,0]
-    n_flag = False
-    s_flag = False
-    n_color = (255, 255, 255)
-    s_color = (255, 255, 255)
     mobs_color = (255, 255, 255)
+    start_color=(255,255,255)
     list = []
     max=0 #숫자의 최종값
     tmax=0
@@ -27,31 +22,29 @@ class Screen2:
     what=[0]
     bY=0
 
+
     def __init__(self,screen,width,height):
         self.width=width
         self.screen=screen
         self.height=height
-        self.cl = Client()
+        self.n_flag=0
+        self.s_flag = 0
 
     class Drow:
-        def __init__(self,list,numlist,tnumlist,anumlist, n_flag, s_flag, n_color, s_color, mobs, mobs_color, screen,degree):
+        def __init__(self,list,numlist,tnumlist,anumlist, mobs, mobs_color,start_color, screen,degree):
             self.list=list
             self.numlist=numlist
             self.tnumlist=tnumlist
             self.anumlist = anumlist
-            self.n_flag = n_flag
-            self.s_flag = s_flag
-            self.n_color = n_color
-            self.s_color = s_color
             self.mobs = mobs
             self.mobs_color = mobs_color
+            self.start_color=start_color
             self.screen=screen
+            self.degree = degree
             self.background = pygame.image.load('resources/images/background.png')
             self.badguyimg = pygame.image.load("resources/images/Mob/Mob1.png")
-            self.tanker=pygame.image.load("resources/images/Mob/tanker.png")
+            self.tanker = pygame.image.load("resources/images/Mob/tanker.png")
             self.abadguy = pygame.image.load("resources/images/Mob/abadguy.png")
-            self.degree = degree
-
 
         def Drow_font(self):
             pygame.font.init()  # 폰트 초기화
@@ -100,20 +93,9 @@ class Screen2:
             AMIRect1.center = (232, 520)
             AMIRect2.center = (215, 520)
 
-            weaponfont = pygame.font.Font("resources/font/consola.ttf", 30)
-            weapontext = weaponfont.render("Normal", True, self.n_color)
-            weapontextRect = weapontext.get_rect()
-            weapontextRect.center = (214, 650)
-            self.screen.blit(weapontext, weapontextRect)
-
-            s_weaponfont = pygame.font.Font("resources/font/consola.ttf", 30)
-            s_weapontext = s_weaponfont.render("Sector", True, self.s_color)
-            s_weapontextRect = s_weapontext.get_rect()
-            s_weapontextRect.center = (344, 650)
-            self.screen.blit(s_weapontext, s_weapontextRect)
 
             Startfont = pygame.font.Font("resources/font/consola.ttf", 40)  # 폰트 불러오기
-            Starttext = Startfont.render("Start", True, (225, 225, 225))  # Start객체 생성
+            Starttext = Startfont.render("Start", True, self.start_color)  # Start객체 생성
             StarttextRect = Starttext.get_rect()
             StarttextRect.center = (214, 600)
             self.screen.blit(Starttext, StarttextRect)
@@ -136,10 +118,8 @@ class Screen2:
                          TMIRect2,#9
                          AMIRect1,#10
                          AMIRect2,#11
-                         weapontextRect,#12
-                         s_weapontextRect,#13
-                         StarttextRect, #14
-                         mobstextRect]  #15
+                         StarttextRect, #12
+                         mobstextRect]  #13
 
 
             for y in range(0, 6):  # ^^^그리기
@@ -165,8 +145,9 @@ class Screen2:
             self.screen.blit(rotated, rect)
             self.screen.blit(self.abadguy, (100,450))
 
-    def Start(self):
+    def Start(self,cl):
         finished=0
+        self.what=[0]
         while not finished:
 
             position = pygame.mouse.get_pos()   #마우스 위치 불러오기
@@ -235,17 +216,6 @@ class Screen2:
                                     drow.anumlist[0] = drow.anumlist[0] - 1
 
                         if lists == drow.list[12]:
-                            if lists.collidepoint(event.pos):
-                                if drow.n_flag == False:
-                                    drow.n_flag = True
-                                    self.n_color = (0, 255, 255)
-                        if lists == drow.list[13]:
-                            if lists.collidepoint(event.pos):
-                                if drow.s_flag == False:
-                                    drow.s_flag = True
-                                    self.s_color = (0, 255, 255)
-
-                        if lists == drow.list[14]:
                             if lists.collidepoint(event.pos):   #Start를 눌렀을 때
                                 self.max = (drow.numlist[0] * 10) + drow.numlist[1]    #몹의 수 총합 계산
                                 self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
@@ -253,25 +223,23 @@ class Screen2:
                                 Timer.max = self.max
                                 Timer.tmax = self.tmax
                                 Timer.amax = self.amax
-                                self.what = [1,self.max,self.tmax,self.amax]
-                                self.numlist = [0, 0]       #numlist 초기화
-                                self.tnumlist = [0, 0]
-                                self.anumlist = [0, 0]
-                                self.n_flag = False
-                                self.s_flag = False
-                                self.mobs = 0
-                                self.mobs_color = (255, 255, 255)
-                                if self.s_color==(0,255,255):
-                                    Player.weapon="Sector"
-                                else:
-                                    Player.weapon="Normal"
-                                self.n_color = (255, 255, 255)
-                                self.s_color = (255, 255, 255)
-                                finished=1                  #while문 종료
-                                break
+                                self.s_flag = 1
+                                self.what = [self.s_flag,self.max,self.tmax,self.amax]
+                                self.start_color=(0,255,255)
 
 
-            drow = Screen2.Drow(self.list, self.numlist, self.tnumlist,self.anumlist, self.n_flag, self.s_flag, self.n_color, self.s_color, self.mobs, self.mobs_color, self.screen,self.degree)
+            cl.sendstate(self.what)
+            y = cl.recv_msg
+            if self.s_flag==1 and y[0]==1:
+                self.numlist = [0, 0]  # numlist 초기화
+                self.tnumlist = [0, 0]
+                self.anumlist = [0, 0]
+                self.mobs = 0
+                self.mobs_color = (255, 255, 255)
+                finished = 1  # while문 종료
+                break
+
+            drow = Screen2.Drow(self.list, self.numlist, self.tnumlist,self.anumlist, self.mobs, self.mobs_color,self.start_color, self.screen,self.degree)
             self.max = (drow.numlist[0] * 10) + drow.numlist[1]  # 몹의 수 총합 계산
             self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
             self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]

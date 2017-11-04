@@ -66,7 +66,6 @@ class Screen:
         self.wl=WL(self.screen,self.exitcode)
         self.timer=Timer(self.screen,self.count)
         self.screen2=Screen2(self.screen,self.width,self.height)
-        self.cl=Client()
 
     def Drow_background(self,bY):
         self.screen.blit(self.background, (0,bY))
@@ -147,7 +146,6 @@ class Screen:
                     exit(0)
             pygame.display.update() #업데이트
             game.Drow_background(self.bY)
-            self.cl.sendstate([0])
 
             self.bY += self.bYplus
             if self.bY>=1000:
@@ -246,8 +244,9 @@ class Screen:
                     return
 
     def Starting(self):
+        cl=Client()
         while True:
-            self.screen2.Start()#스크린2 실행
+            self.screen2.Start(cl)#스크린2 실행
             game.Start()#스크린1 실행
 
 game = Screen()
