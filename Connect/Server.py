@@ -12,14 +12,15 @@ class Server():
     PORT = 4040   #정수형으로 아무거나
     send_msg = ''
     recv_msg = ''
+    clientAddr = ''
     flag_isfirst = True
 
     #초기화하면서 소켓하나 만들고 클라이언트 받는거 대기
     #1:1통신이라 이렇게 짰지만 다중 환경 지원하려면 다르게 짜야함
     def __init__(self):
         listen_sock = SCB.create_listen_socket(self.HOST, self.PORT)
-        addr = listen_sock.getsockname()
-        print('Listening on {}'.format(addr))
+        self.clientAddr = listen_sock.getsockname()
+        print('Listening on {}'.format(clientAddr))
         self.listen_client(listen_sock)
 
     def listen_client(self, sock):
@@ -34,10 +35,10 @@ class Server():
         #     send_queues[client_sock.fileno()] = q
 
         recv_thread = threading.Thread(target=self.handle_client_recv, args=[client_sock, addr], daemon=True)
-        send_thread = threading.Thread(target=self.handle_client_send, args=[client_sock, addr], daemon=True)
+        # send_thread = threading.Thread(target=self.handle_client_send, args=[client_sock, addr], daemon=True)
 
         recv_thread.start()
-        send_thread.start()
+        # send_thread.start()
 
     #메시지 받고 출력하는 함수
     def handle_client_recv(self, sock, addr):
@@ -56,17 +57,15 @@ class Server():
                 break
 
     def handle_client_send(self, sock, addr):
-        while True:
-            if self.flag_isfirst:
-                try:
-                    SCB.send_msg(sock, self.send_msg)
-                    self.flag_isfirst = False
-                except (ConnectionError, BrokenPipeError):
-                    self.handle_disconnect(sock, addr)
-                    break
+        try:
+            SCB.send_msg(sock, self.send_msg)
+            self.flag_isfirst = False
+        except (ConnectionError, BrokenPipeError):
+            self.handle_disconnect(sock, addr)
 
     def sendStatus(self, msg):
         self.send_msg = json.dumps(msg)
+        self.handle_client_send(self.sock, self.clientAddr)
         self.flag_isfirst = True
 
     # def broadcast_msg(self, msg):
