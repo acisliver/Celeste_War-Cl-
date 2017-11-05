@@ -26,7 +26,7 @@ class Tanker(pygame.Rect):
         rect = rotated.get_rect()
         rect.center = (self.top+50, self.left)
         if self.left<350:
-            self.left+=4
+            self.left+=9
         if random.randint(0, 1) == 0:
             self.top -= self.speed
         else:

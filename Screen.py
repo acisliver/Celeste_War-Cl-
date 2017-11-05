@@ -243,13 +243,11 @@ class Screen:
                         self.acheck = False
                 self.one_count = self.timer.count  # 타이머의 count와 같은 one_count
                 if self.yourheal[len(self.yourheal)-1] <= 0:  # one_count가 0보다 이하일 때
-                    print("win")
                     self.exitcode = 1
                     self.wl.exitcode = self.exitcode  # wl의 exitcode를 1로 바꿈
                     break
 
                 if self.healgauge < 0:
-                    print("heal")
                     break
             if self.timer.count<=0:
                 break
@@ -261,11 +259,11 @@ class Screen:
                         pygame.quit()
                         exit(0)
                 scwhat[len(scwhat) - 1] = self.healgauge
+                scwhat[0] = 0
                 cl.sendstate(scwhat)
                 self.wl.printf()  # win or lose 출력
                 x=self.collider.colltext(self.wl.regame)
                 if x==0:
-                    print("타이머")
                     cl.sendstate([0])
                     return
 
