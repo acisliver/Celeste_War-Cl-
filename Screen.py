@@ -136,8 +136,6 @@ class Screen:
         self.abadguys=[]
         msg=cl.recv_msg
         scwhat = what
-        self.rxX = 50
-        self.alpha = 255
         self.timer.timer()
         if msg[1]!=0:
             self.badtimer = round(60 / msg[1])
@@ -275,8 +273,8 @@ class Screen:
         cl=Client()
         while True:
             cl.sendstate([0])
-            print("-----------------------")
             self.screen2.Start(cl)#스크린2 실행
+            game = Screen()
             game.Start(cl,self.screen2.what)#스크린1 실행
 
 
