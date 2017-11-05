@@ -30,7 +30,7 @@ class Screen:
     exitcode = 0
     count=67
     one_count=0
-    yourheal=0
+
     tcheck=False
     acheck=False
     tmax=0
@@ -68,6 +68,7 @@ class Screen:
         self.wl=WL(self.screen,self.exitcode)
         self.timer=Timer(self.screen,self.count)
         self.screen2=Screen2(self.screen,self.width,self.height)
+        self.yourheal=1
 
     def Drow_background(self,bY):
         self.screen.blit(self.background, (0,bY))
@@ -128,16 +129,20 @@ class Screen:
             else:
                 abad.startmove(270 - b)
 
-    def Start(self,msg,cl):
+    def Start(self,cl,what):
         self.badguys=[]
         self.player.arrows=[]
         self.player.sectors=[]
         self.abadguys=[]
+        msg=cl.recv_msg
+        scwhat = what
+        self.rxX = 50
+        self.alpha = 255
         self.timer.timer()
         if msg[1]!=0:
             self.badtimer = round(60 / msg[1])
         else:
-            self.badtimer=1000
+            self.badtimer=100
         self.butimer = self.badtimer
         self.tmax = msg[2]
         self.amax = msg[3]
@@ -153,8 +158,9 @@ class Screen:
                     exit(0)
             pygame.display.update() #업데이트
             game.Drow_background(self.bY)
-            cl.sendstate([self.healgauge])
-            self.yourheal=cl.recv_msg
+            scwhat[len(scwhat)-1]=self.healgauge
+            cl.sendstate(scwhat)
+            self.yourheal = cl.recv_msg
 
 
             self.bY += self.bYplus
@@ -199,7 +205,7 @@ class Screen:
 
             else :
                 self.player.Start = False
-                self.timer.print()  # 타이머 그리기
+                self.timer.printf()  # 타이머 그리기
                 self.collider.collide()  # 충돌 함수
                 self.player.collidercheck=self.collider.playercheck
                 self.collider.badguys = self.badguys
@@ -212,7 +218,6 @@ class Screen:
                 menu=Menu(self.screen,self.player.menuX)
                 menu.drow()
                 pygame.display.update()
-                print(self.badtimer)
 
 
 
@@ -239,36 +244,41 @@ class Screen:
                         self.abadguys.append(abadguy)
                         self.acheck = False
                 self.one_count = self.timer.count  # 타이머의 count와 같은 one_count
-                if self.yourheal[0] <= 0:  # one_count가 0보다 이하일 때
+                if self.yourheal[len(self.yourheal)-1] <= 0:  # one_count가 0보다 이하일 때
+                    print("win")
                     self.exitcode = 1
                     self.wl.exitcode = self.exitcode  # wl의 exitcode를 1로 바꿈
                     break
 
                 if self.healgauge < 0:
+                    print("heal")
                     break
             if self.timer.count<=0:
                 break
 
-        if self.healgauge < 0 or self.yourheal<0:  #체력게이지가 0보다 작으면
+        if self.healgauge < 0 or self.yourheal[len(self.yourheal)-1]<0:  #체력게이지가 0보다 작으면
             while 1:
                 for event in pygame.event.get():  # 종료 이벤트
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         exit(0)
-                cl.sendstate([self.healgauge])
-                self.wl.print()  # win or lose 출력
+                scwhat[len(scwhat) - 1] = self.healgauge
+                cl.sendstate(scwhat)
+                self.wl.printf()  # win or lose 출력
                 x=self.collider.colltext(self.wl.regame)
                 if x==0:
+                    print("타이머")
+                    cl.sendstate([0])
                     return
 
     def Starting(self):
         cl=Client()
         while True:
             cl.sendstate([0])
+            print("-----------------------")
             self.screen2.Start(cl)#스크린2 실행
-            cl.sendstate(self.screen2.what)
-            game.Start(cl.recv_msg,cl)#스크린1 실행
-            continue
+            game.Start(cl,self.screen2.what)#스크린1 실행
+
 
 
 game = Screen()

@@ -221,17 +221,18 @@ class Screen2:
                                 self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
                                 self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
                                 self.s_flag = 1
-                                self.what = [self.s_flag,self.max,self.tmax,self.amax]
+                                self.what = [self.s_flag,self.max,self.tmax,self.amax,1]
                                 self.start_color=(0,255,255)
             cl.sendstate(self.what)
             y = cl.recv_msg
-            print(y)
             if self.s_flag==1 and y[0]==1:
+                self.s_flag = 0
                 self.numlist = [0, 0]  # numlist 초기화
                 self.tnumlist = [0, 0]
                 self.anumlist = [0, 0]
                 self.mobs = 0
                 self.mobs_color = (255, 255, 255)
+                self.start_color = (255, 255, 255)
                 finished = 1  # while문 종료
                 break
 

@@ -24,10 +24,11 @@ class Timer:
 
         time.start()                        #시작
 
-        if self.count<=0:
+        if self.count<0:
+            self.count = 67
             time.cancel()
 
-    def print(self):
+    def printf(self):
         pygame.font.init()
         font = pygame.font.Font("resources/font/consola.ttf", 35)
         text = font.render(str(self.count), True, (255, 0, 0))      #count를 그리는 폰트 생성

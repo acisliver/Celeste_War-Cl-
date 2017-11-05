@@ -10,7 +10,7 @@ class WL:
         self.exitcode=exitcode
         self.regame=None
 
-    def print(self):
+    def printf(self):
         if self.exitcode == 0:              #exitcode는
             pygame.font.init()              #폰트 초기화
             font=pygame.font.Font("resources/font/consola.ttf",100)     #폰트 불러오기

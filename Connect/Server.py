@@ -8,7 +8,7 @@ send_queues = {}
 lock = threading.Lock()
 
 class Server():
-    HOST = '218.149.168.37' #이거 설정해두면 이 IP가진것만 클라이언트로 받을 수 있다
+    HOST = '172.30.1.59' #이거 설정해두면 이 IP가진것만 클라이언트로 받을 수 있다
     PORT = 4040   #정수형으로 아무거나
     send_msg = ''
     recv_msg = ''
@@ -88,17 +88,18 @@ class Server():
 
 
 
-'''if __name__ == '__main__':
+if __name__ == '__main__':
     server = Server()
     while(1):
         x=[1,2,3]
+        x=input()
         server.sendStatus(x)
         y = server.recv_msg
         try:
             print(y)
         except:
             pass
-            '''
+
 
 #쓰레드가 handle_client 함수를 자동으로 실행시킬 것이다.                             #daemon 파생된 스레드가 메인스레드와 같이 소멸할지를 결정
 # thread = threading.Thread(target = handle_client, args=[client_sock, addr], daemon = True)
