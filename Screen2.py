@@ -220,15 +220,12 @@ class Screen2:
                                 self.max = (drow.numlist[0] * 10) + drow.numlist[1]    #몹의 수 총합 계산
                                 self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
                                 self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
-                                Timer.max = self.max
-                                Timer.tmax = self.tmax
-                                Timer.amax = self.amax
                                 self.s_flag = 1
                                 self.what = [self.s_flag,self.max,self.tmax,self.amax]
                                 self.start_color=(0,255,255)
-
-
-
+            cl.sendstate(self.what)
+            y = cl.recv_msg
+            print(y)
             if self.s_flag==1 and y[0]==1:
                 self.numlist = [0, 0]  # numlist 초기화
                 self.tnumlist = [0, 0]

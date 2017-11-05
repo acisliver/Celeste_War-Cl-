@@ -40,7 +40,7 @@ class Client():
 
             if not recvd:
                 raise ConnectionError()
-            data = data + recvd
+            data = recvd
             # print(recvd)
             xxx = recvd
             (xxx, rest) = SCB.parse_recvd_data(data)
@@ -55,6 +55,7 @@ class Client():
                 string += x
             try:
                 self.recv_msg = json.loads(string)
+
             except:
                 pass
         return self.recv_msg
@@ -64,10 +65,10 @@ class Client():
         self.handle_input(self.sock)
         self.flag_isfirst = True
 
-if '__main__' == __name__:
+'''if '__main__' == __name__:
     client = Client()
     while(1):
         x=[4,5,6]
         client.sendstate(x)
         youuse = client.recv_msg
-        print(youuse)
+        print(youuse)'''

@@ -19,12 +19,6 @@ class WL:
             textRect.center=(350,400)       #폰트 위치 지정
             self.screen.blit(text,textRect)                                 #폰트 블릿
 
-            regame = pygame.font.Font("resources/font/consola.ttf", 30)
-            regametext = regame.render("Regame", True, (255, 255, 255))
-            regametextRect = regametext.get_rect()
-            regametextRect.center = (350, 500)
-            self.regame =regametextRect
-            self.screen.blit(regametext, regametextRect)
         else:
             pygame.font.init()                                              #위와 같은 과정
             font = pygame.font.Font("resources/font/consola.ttf", 100)
@@ -32,6 +26,13 @@ class WL:
             textRect = text.get_rect()
             textRect.center = (300, 400)
             self.screen.blit(text, textRect)
+
+        regame = pygame.font.Font("resources/font/consola.ttf", 30)
+        regametext = regame.render("Regame", True, (255, 255, 255))
+        regametextRect = regametext.get_rect()
+        regametextRect.center = (350, 500)
+        self.regame = regametextRect
+        self.screen.blit(regametext, regametextRect)
 
 
 

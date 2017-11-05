@@ -6,9 +6,7 @@ import threading
 
 class Timer:
     screen=None
-    tmax=0
     max=0
-    amax=0
     count=0
     exidcode=1
     badtimer=0
@@ -18,16 +16,9 @@ class Timer:
         self.screen=screen
         self.count=count
 
-
     def timer(self):
         time=threading.Timer(1,self.timer)  #1초마다 반복
-        if self.badtimer==0:
-            if self.max==0:
-                self.badtimer=100
-            else:
-                self.badtimer = round(60 / self.max)
         self.count -= 1                     #1씩 빠짐
-        self.badtimer=self.badtimer-1
         if self.exidcode==0:
             time.cancel()    #1초마다 반복 취소
 

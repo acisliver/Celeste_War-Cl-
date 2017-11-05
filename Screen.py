@@ -16,6 +16,7 @@ class Screen:
     width=700
     height =900
     badtimer = 10
+    butimer=0
     tbadtimer=6
     bYtimer=200
     badguys=[]
@@ -29,6 +30,7 @@ class Screen:
     exitcode = 0
     count=67
     one_count=0
+    yourheal=0
     tcheck=False
     acheck=False
     tmax=0
@@ -126,14 +128,19 @@ class Screen:
             else:
                 abad.startmove(270 - b)
 
-    def Start(self):
+    def Start(self,msg,cl):
         self.badguys=[]
         self.player.arrows=[]
         self.player.sectors=[]
         self.abadguys=[]
         self.timer.timer()
-        self.tmax = self.timer.tmax
-        self.amax = self.timer.amax
+        if msg[1]!=0:
+            self.badtimer = round(60 / msg[1])
+        else:
+            self.badtimer=1000
+        self.butimer = self.badtimer
+        self.tmax = msg[2]
+        self.amax = msg[3]
         if 1<=self.tmax:
             self.tcheck=True
         if 1<=self.amax:
@@ -146,6 +153,9 @@ class Screen:
                     exit(0)
             pygame.display.update() #업데이트
             game.Drow_background(self.bY)
+            cl.sendstate([self.healgauge])
+            self.yourheal=cl.recv_msg
+
 
             self.bY += self.bYplus
             if self.bY>=1000:
@@ -187,7 +197,7 @@ class Screen:
                 elif self.playercheck == True and 800 > self.player.left:
                     self.player.left += 1
 
-            else:
+            else :
                 self.player.Start = False
                 self.timer.print()  # 타이머 그리기
                 self.collider.collide()  # 충돌 함수
@@ -202,17 +212,22 @@ class Screen:
                 menu=Menu(self.screen,self.player.menuX)
                 menu.drow()
                 pygame.display.update()
+                print(self.badtimer)
 
-                self.badtimer = self.timer.badtimer
+
+
                 if self.badtimer == 0:
                     for x in range(0, 10):
                         badguy = Badguy(self.screen,
                                         random.randint(50, self.width - 50), 0, self.bYplus-5, random.randint(0,20), 0)  # 위치랜덤의 속도8인 몹 객체 생성
                         self.badguys.append(badguy)  # 리스트에 추가
-                    if self.timer.max == 0:
-                        self.timer.badtimer = 100
+                    if msg[1]==0:
+                        self.badtimer=1000
                     else:
-                        self.timer.badtimer = round(60 / self.timer.max)
+                        self.badtimer = round(60 / msg[1])
+                elif self.timer.count != self.butimer:
+                    self.badtimer -= 1
+                self.butimer = self.timer.count
                 if self.tcheck == True:
                     for x in range(0, self.tmax):
                         tanker = Tanker(self.screen, random.randint(50, self.width - 50), 0, 1, 7, 1, 0)
@@ -224,20 +239,23 @@ class Screen:
                         self.abadguys.append(abadguy)
                         self.acheck = False
                 self.one_count = self.timer.count  # 타이머의 count와 같은 one_count
-                if self.one_count == 0:  # one_count가 0보다 이하일 때
+                if self.yourheal[0] <= 0:  # one_count가 0보다 이하일 때
                     self.exitcode = 1
                     self.wl.exitcode = self.exitcode  # wl의 exitcode를 1로 바꿈
                     break
 
                 if self.healgauge < 0:
                     break
+            if self.timer.count<=0:
+                break
 
-        if self.healgauge < 0:  #체력게이지가 0보다 작으면
+        if self.healgauge < 0 or self.yourheal<0:  #체력게이지가 0보다 작으면
             while 1:
                 for event in pygame.event.get():  # 종료 이벤트
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         exit(0)
+                cl.sendstate([self.healgauge])
                 self.wl.print()  # win or lose 출력
                 x=self.collider.colltext(self.wl.regame)
                 if x==0:
@@ -246,10 +264,12 @@ class Screen:
     def Starting(self):
         cl=Client()
         while True:
-            cl.sendstate(1)
-            y = cl.recv_msg
+            cl.sendstate([0])
             self.screen2.Start(cl)#스크린2 실행
-            game.Start()#스크린1 실행
+            cl.sendstate(self.screen2.what)
+            game.Start(cl.recv_msg,cl)#스크린1 실행
+            continue
+
 
 game = Screen()
 game.Starting()            #실행부

@@ -8,13 +8,14 @@ send_queues = {}
 lock = threading.Lock()
 
 class Server():
-    HOST = '218.149.168.36' #이거 설정해두면 이 IP가진것만 클라이언트로 받을 수 있다
+    HOST = '218.149.168.37' #이거 설정해두면 이 IP가진것만 클라이언트로 받을 수 있다
     PORT = 4040   #정수형으로 아무거나
     send_msg = ''
     recv_msg = ''
     clientAddr = ''
     flag_isfirst = True
     listen_sock = None
+
     #초기화하면서 소켓하나 만들고 클라이언트 받는거 대기
     #1:1통신이라 이렇게 짰지만 다중 환경 지원하려면 다르게 짜야함
     def __init__(self):
@@ -27,7 +28,6 @@ class Server():
         client_sock, addr = sock.accept()  # 메인 쓰레드는 어셉트 상황에서 기다리고 잡히면 서브 쓰레드를 하나 만드는 것이다.
                                            # 위에서 프로그램이 대기하니까 이걸 쓰레드 처리하면 여러 클라이언트를 처리할수 있음
         self.listen_sock = client_sock
-
 
         # 다중클라이언트 처리할 필요가 없어서 아래부분 삭제 broadcast_msgs 함수도 삭제
         # dict타입의 queue는 thread safe가 아니다. 그래서 lock을 걸어 그 operation에 그 쓰레드만 쓰게끔 할 수 있다.
@@ -88,7 +88,7 @@ class Server():
 
 
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
     server = Server()
     while(1):
         x=[1,2,3]
@@ -98,6 +98,7 @@ if __name__ == '__main__':
             print(y)
         except:
             pass
+            '''
 
 #쓰레드가 handle_client 함수를 자동으로 실행시킬 것이다.                             #daemon 파생된 스레드가 메인스레드와 같이 소멸할지를 결정
 # thread = threading.Thread(target = handle_client, args=[client_sock, addr], daemon = True)
