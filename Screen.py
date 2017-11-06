@@ -12,6 +12,8 @@ from Screen2 import Screen2
 from Menu import Menu
 from Client import Client
 from Bullet import Bullet
+
+
 class Screen:
     width=700
     height =900
@@ -31,6 +33,7 @@ class Screen:
     count=67
     one_count=0
 
+
     tcheck=False
     acheck=False
     tmax=0
@@ -40,9 +43,11 @@ class Screen:
     bY=0
     bYplus=10
     num=0
+    healgauge = 100
     collidercheck=False
     playercheck=False
     startcheck=True
+    regame=False
 
     background = pygame.image.load('resources/images/background.png')
     gameover = pygame.image.load("resources/images/gameover.png")
@@ -61,9 +66,9 @@ class Screen:
     bg_rows = background.get_height()                       #화면 높이 불러오기
     pygame.display.set_caption("Celeste_War")
 
-    def __init__(self):
+    def __init__(self,heal):
         self.player = Player(self.screen, self.x, self.y)
-        self.healgauge=194
+        self.healgauge=heal
         self.collider=Collider(self.screen,self.player.arrows+self.player.sectors,self.badguys,self.tankers,self.abadguys, self.thealth, self.player,self.healgauge)
         self.wl=WL(self.screen,self.exitcode)
         self.timer=Timer(self.screen,self.count)
@@ -155,11 +160,10 @@ class Screen:
                     self.timer.exidcode=0
                     exit(0)
             pygame.display.update() #업데이트
-            game.Drow_background(self.bY)
+            self.Drow_background(self.bY)
             scwhat[len(scwhat)-1]=self.healgauge
             cl.sendstate(scwhat)
             self.yourheal = cl.recv_msg
-
 
             self.bY += self.bYplus
             if self.bY>=1000:
@@ -180,8 +184,8 @@ class Screen:
                         abadguy = Abadguy(self.screen, 0, 900, 3, x * 10, 0, 345)
                         self.abadguys.append(abadguy)
                     self.startcheck=False
-                game.StartAbadmove(self.abadguys)
-                game.StartPrint(self.timer.count,self.rsX,self.alpha)
+                self.StartAbadmove(self.abadguys)
+                self.StartPrint(self.timer.count,self.rsX,self.alpha)
                 if self.timer.count<=61:
                     self.rsX += 4
                     self.alpha -= 6
@@ -210,9 +214,10 @@ class Screen:
                 self.collider.abadguys=self.abadguys
                 self.collider.arrows = self.player.arrows
                 self.healgauge = self.collider.heallgauge
+                self.buHeal=self.collider.heallgauge
                 if self.collider.playercheck==False:
                     self.collidercheck=True
-                game.Move(self.badguys, self.tankers, self.abadguys)
+                self.Move(self.badguys, self.tankers, self.abadguys)
                 menu=Menu(self.screen,self.player.menuX)
                 menu.drow()
                 pygame.display.update()
@@ -265,17 +270,22 @@ class Screen:
                 x=self.collider.colltext(self.wl.regame)
                 if x==0:
                     cl.sendstate([0])
+                    self.regame=True
                     return
 
     def Starting(self):
         cl=Client()
+        self.buHeal=194
         while True:
             cl.sendstate([0])
             self.screen2.Start(cl)#스크린2 실행
-            game = Screen()
+            game = Screen(self.buHeal)
             game.Start(cl,self.screen2.what)#스크린1 실행
+            self.buHeal = game.healgauge
+            if game.regame==True:
+                self.buHeal=194
+                game.regame=False
 
-
-
-game = Screen()
-game.Starting()            #실행부
+if __name__ == '__main__':
+    game = Screen(0)
+    game.Starting()            #실행부
