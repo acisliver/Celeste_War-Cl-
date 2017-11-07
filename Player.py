@@ -18,7 +18,7 @@ class Player(pygame.Rect):
     menuX=530
     topBU=900
     Num=0
-    charge=50
+    charge=80
     playerMove = pygame.image.load('resources/images/PlayerMove.png')
     player = pygame.image.load('resources/images/spaceship.png')
     playerlist = [player, playerMove]
@@ -77,7 +77,7 @@ class Player(pygame.Rect):
                         laser = Laser(self.screen, self.top-25, self.left, self.lasertime, self.lasernum)
                         if self.charge==0:
                             self.laser_shot()
-                            self.charge=50
+                            self.charge=80
                             self.shot_flag=False
                             if self.lasertime!=2:
                                 self.lasertime = 2
@@ -93,7 +93,7 @@ class Player(pygame.Rect):
                             laser.charge()
                             self.charge-=1
             else:
-                self.charge = 50
+                self.charge = 80
                 self.lasertime = 2
                 self.lasernum = 0
                 self.shot_flag = True

@@ -5,7 +5,7 @@ import ServerClientBase as SCB
 
 
 class Client():
-    HOST = '220.149.42.62'
+    HOST = '172.30.1.59'
     PORT = SCB.PORT
     send_msg = ''
     recv_msg = ''

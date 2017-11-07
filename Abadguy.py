@@ -23,10 +23,6 @@ class Abadguy(pygame.Rect):
         self.num = num
         self.round=round
         self.bullets = []
-        if self.time/2==0:
-            self.wallCollX="Left"
-        else:
-            self.wallCollX="Right"
     def startmove(self, sinx):
         rotated = pygame.transform.rotate(self.abadguy, sinx)
         rect = rotated.get_rect()
@@ -34,13 +30,14 @@ class Abadguy(pygame.Rect):
         self.screen.blit(rotated, rect)
 
     def move(self):             #원거리몹 움직임 함수
-        if self.left<199:
+        if self.left<0:
             self.left+=2
-        if self.time == 0 and self.num == -1:
-            self.shot()
-            self.time = random.randint(0, 100)
         else:
-            self.time -= 1
+            if self.time == 0 and self.num == -1:
+                self.shot()
+                self.time = random.randint(0, 100)
+            else:
+                self.time -= 1
         for bullet in self.bullets:
             bullet.move()
         if self.top >= 650:

@@ -101,7 +101,7 @@ class Screen2:
             self.screen.blit(Starttext, StarttextRect)
 
             mobstextfont = pygame.font.Font("resources/font/consola.ttf", 25)
-            mobstext = mobstextfont.render(str(("%d/60" % (self.mobs))), True, self.mobs_color)
+            mobstext = mobstextfont.render(str(("%d/90" % (self.mobs))), True, self.mobs_color)
             mobstextRect = mobstext.get_rect()
             mobstextRect.center = (500, 500)
             self.screen.blit(mobstext, mobstextRect)
@@ -158,71 +158,76 @@ class Screen2:
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     for lists in drow.list:
-                        if lists == drow.list[0]:               #list = ^
-                            if lists.collidepoint(event.pos):   #^와 마우스가 충돌했을 경우
-                                if drow.numlist[1] < 9 and self.mobs<=59:         #1의 자리가 9보다 작으면
-                                    drow.numlist[1] = self.numlist[1] + 1   #1더하기
-                                    break
-                        if lists == drow.list[1]:               #10의 자리 더하기
-                            if lists.collidepoint(event.pos):
-                                if drow.numlist[0] < 5 and self.mobs<=50:
-                                    drow.numlist[0] = self.numlist[0] + 1
-                                    break
-                        if lists == drow.list[2]:               #10의 자리 더하기
-                            if lists.collidepoint(event.pos):
-                                if drow.tnumlist[1] < 9 and self.mobs<=57:
-                                    drow.tnumlist[1] = drow.tnumlist[1] + 1
-                                    break
-                        if lists == drow.list[3]:               #10의 자리 더하기
-                            if lists.collidepoint(event.pos):
-                                if drow.tnumlist[0] < 5 and self.mobs<=30:
-                                    drow.tnumlist[0] = drow.tnumlist[0] + 1
-                                    break
-                        if lists == drow.list[4]:
-                            if lists.collidepoint(event.pos):
-                                if drow.anumlist[1] < 9 and self.mobs<=58:
-                                    drow.anumlist[1] = drow.anumlist[1] + 1
-                        if lists == drow.list[5]:
-                            if lists.collidepoint(event.pos):
-                                if drow.anumlist[0] < 5 and self.mobs<=40:
-                                    drow.anumlist[0] = drow.anumlist[0] + 1
-                        if lists == drow.list[6]:
-                            if lists.collidepoint(event.pos):
-                                if drow.numlist[1] > 0:
-                                    drow.numlist[1] = drow.numlist[1] - 1
-                                    break
-                        if lists == drow.list[7]:               #1의 자리 빼기
-                            if lists.collidepoint(event.pos):
-                                if drow.numlist[0] > 0:
-                                    drow.numlist[0] = drow.numlist[0] - 1
-                                    break
-                        if lists == drow.list[8]:               #100의 자리 더하기
-                            if lists.collidepoint(event.pos):
-                                if drow.tnumlist[1] > 0:
-                                    drow.tnumlist[1] = drow.tnumlist[1] - 1
-                                    break
-                        if lists == drow.list[9]:               #100의 자리 더하기
-                            if lists.collidepoint(event.pos):
-                                if drow.tnumlist[0] > 0:
-                                    drow.tnumlist[0] = drow.tnumlist[0] - 1
-                                    break
-                        if lists == drow.list[10]:
-                            if lists.collidepoint(event.pos):
-                                if drow.anumlist[1] > 0:
-                                    drow.anumlist[1] = drow.anumlist[1] - 1
-                        if lists == drow.list[11]:
-                            if lists.collidepoint(event.pos):
-                                if drow.anumlist[0] > 0:
-                                    drow.anumlist[0] = drow.anumlist[0] - 1
-
+                        if self.start_color == (255, 255, 255):
+                            if lists == drow.list[0]:  # list = ^
+                                if lists.collidepoint(event.pos):  # ^와 마우스가 충돌했을 경우
+                                    if drow.numlist[1] < 9 and self.mobs <= 89:  # 1의 자리가 9보다 작으면
+                                        drow.numlist[1] = self.numlist[1] + 1  # 1더하기
+                                        break
+                            if lists == drow.list[1]:  # 10의 자리 더하기
+                                if lists.collidepoint(event.pos):
+                                    if drow.numlist[0] < 5 and self.mobs <= 80:
+                                        drow.numlist[0] = self.numlist[0] + 1
+                                        break
+                            if lists == drow.list[2]:  # 10의 자리 더하기
+                                if lists.collidepoint(event.pos):
+                                    if drow.tnumlist[1] < 9 and self.mobs <= 87:
+                                        drow.tnumlist[1] = drow.tnumlist[1] + 1
+                                        break
+                            if lists == drow.list[3]:  # 10의 자리 더하기
+                                if lists.collidepoint(event.pos):
+                                    if drow.tnumlist[0] < 5 and self.mobs <= 60:
+                                        drow.tnumlist[0] = drow.tnumlist[0] + 1
+                                        break
+                            if lists == drow.list[4]:
+                                if lists.collidepoint(event.pos):
+                                    if drow.anumlist[1] < 9 and self.mobs <= 88:
+                                        drow.anumlist[1] = drow.anumlist[1] + 1
+                            if lists == drow.list[5]:
+                                if lists.collidepoint(event.pos):
+                                    if drow.anumlist[0] < 5 and self.mobs <= 70:
+                                        drow.anumlist[0] = drow.anumlist[0] + 1
+                            if lists == drow.list[6]:
+                                if lists.collidepoint(event.pos):
+                                    if drow.numlist[1] > 0:
+                                        drow.numlist[1] = drow.numlist[1] - 1
+                                        break
+                            if lists == drow.list[7]:  # 1의 자리 빼기
+                                if lists.collidepoint(event.pos):
+                                    if drow.numlist[0] > 0:
+                                        drow.numlist[0] = drow.numlist[0] - 1
+                                        break
+                            if lists == drow.list[8]:  # 100의 자리 더하기
+                                if lists.collidepoint(event.pos):
+                                    if drow.tnumlist[1] > 0:
+                                        drow.tnumlist[1] = drow.tnumlist[1] - 1
+                                        break
+                            if lists == drow.list[9]:  # 100의 자리 더하기
+                                if lists.collidepoint(event.pos):
+                                    if drow.tnumlist[0] > 0:
+                                        drow.tnumlist[0] = drow.tnumlist[0] - 1
+                                        break
+                            if lists == drow.list[10]:
+                                if lists.collidepoint(event.pos):
+                                    if drow.anumlist[1] > 0:
+                                        drow.anumlist[1] = drow.anumlist[1] - 1
+                            if lists == drow.list[11]:
+                                if lists.collidepoint(event.pos):
+                                    if drow.anumlist[0] > 0:
+                                        drow.anumlist[0] = drow.anumlist[0] - 1
                         if lists == drow.list[12]:
                             if lists.collidepoint(event.pos):   #Start를 눌렀을 때
-                                self.max = (drow.numlist[0] * 10) + drow.numlist[1]    #몹의 수 총합 계산
-                                self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
-                                self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
-                                self.s_flag = 1
-                                self.what = [self.s_flag,self.max,self.tmax,self.amax,1]
-                                self.start_color=(0,255,255)
+                                if self.start_color==(255,255,255):
+                                    self.max = (drow.numlist[0] * 10) + drow.numlist[1]  # 몹의 수 총합 계산
+                                    self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
+                                    self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
+                                    self.s_flag = 1
+                                    self.what = [self.s_flag, self.max, self.tmax, self.amax, 0]
+                                    self.start_color = (0, 255, 255)
+                                else:
+                                    self.what=[0]
+                                    self.s_flag=0
+                                    self.start_color=(255,255,255)
             cl.sendstate(self.what)
             y = cl.recv_msg
             if self.s_flag==1 and y[0]==1:
@@ -241,9 +246,9 @@ class Screen2:
             self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
             self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
             self.mobs= self.max + 2 * self.amax + 3 * self.tmax
-            if self.mobs<=60:
+            if self.mobs<=90:
                 self.mobs = self.max + 2 * self.amax + 3 * self.tmax
-            if self.mobs==60:
+            if self.mobs==90:
                 self.mobs_color = (255, 0, 0)
             else:
                 self.mobs_color = (255, 255, 255)

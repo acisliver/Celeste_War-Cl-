@@ -219,13 +219,20 @@ class Screen:
                     self.collidercheck=True
                 self.Move(self.badguys, self.tankers, self.abadguys)
                 menu=Menu(self.screen,self.player.menuX)
+                mobtime = self.timer.mobtime
+                if mobtime==10:
+                    if 1 <= self.tmax:
+                        self.tcheck = True
+                    if 1 <= self.amax:
+                        self.acheck = True
+                    self.timer.mobtime=0
                 menu.drow()
                 pygame.display.update()
 
 
 
                 if self.badtimer == 0:
-                    for x in range(0, 10):
+                    for x in range(0, 6):
                         badguy = Badguy(self.screen,
                                         random.randint(50, self.width - 50), 0, self.bYplus-5, random.randint(0,20), 0)  # 위치랜덤의 속도8인 몹 객체 생성
                         self.badguys.append(badguy)  # 리스트에 추가

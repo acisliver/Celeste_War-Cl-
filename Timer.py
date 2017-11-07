@@ -9,8 +9,7 @@ class Timer:
     max=0
     count=0
     exidcode=1
-    badtimer=0
-    tbadtimer=0
+    mobtime = 0
 
     def __init__(self,screen,count):
         self.screen=screen
@@ -19,6 +18,8 @@ class Timer:
     def timer(self):
         time=threading.Timer(1,self.timer)  #1초마다 반복
         self.count -= 1                     #1씩 빠짐
+        if self.count<60:
+            self.mobtime += 1
         if self.exidcode==0:
             time.cancel()    #1초마다 반복 취소
 
