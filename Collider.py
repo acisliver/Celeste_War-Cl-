@@ -22,12 +22,13 @@ class Collider:
         for x in range(9):
             boomlist.append((x * 100, y * 100, 100, 100))
 
-    def __init__(self,sceen,arrows,badguys,tankers,abadguys, thealth, player,healgauge):
+    def __init__(self,sceen,arrows,badguys,tankers,abadguys,fixedmob, thealth, player,healgauge):
         self.screen=sceen
         self.arrows=arrows
         self.badguys=badguys
         self.tankers = tankers
         self.abadguys=abadguys
+        self.fixedmob=fixedmob
         self.thealth = thealth
         self.collplayer=player
         self.bullet=[]
@@ -103,6 +104,15 @@ class Collider:
                         pass
                     else:
                         self.iscolided = True
+            for fixed in self.fixedmob:  # 몹의 개수 만큼 실행
+                if arrow.colliderect(fixed):  # 충돌시
+                    fixed.time = 1
+                    self.backup.append(fixed)
+                    self.fixedmob.remove(fixed)  # 몹 삭제
+                    if arrow.name == "Laser":
+                        pass
+                    else:
+                        self.iscolided = True
             if self.iscolided == True:
                 self.arrows.remove(arrow)   #화살 삭제
                 self.iscolided = False
@@ -119,6 +129,15 @@ class Collider:
             for bullet in abad.bullets:
                 if self.collplayer.colliderect(bullet):
                     abad.bullets.remove(bullet)
+                    if self.playercheck == True:
+                        self.num+=1
+                        self.heallgauge -= int(194 / 5)
+                        self.heal = Healbar(self.screen, self.heallgauge)
+                        self.playercheck = False
+        for fixed in self.fixedmob:
+            for bullet in fixed.bullets:
+                if self.collplayer.colliderect(bullet):
+                    fixed.bullets.remove(bullet)
                     if self.playercheck == True:
                         self.num+=1
                         self.heallgauge -= int(194 / 5)

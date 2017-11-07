@@ -1,8 +1,7 @@
 import pygame
 import random
 from Bullet import Bullet
-from Timer import Timer
-from Collider import Collider
+
 
 class Abadguy(pygame.Rect):
     speed=0
@@ -66,4 +65,4 @@ class Abadguy(pygame.Rect):
 
     def shot(self):                 #화살생성함수
         bullet = Bullet(self.screen, self.top+50, self.left+75, 20 )    #speed가 30인 화살 생성
-        self.bullets.append(bullet)                               #list에 arrow객체 추가
+        self.bullets.append(bullet)                              #list에 arrow객체 추가

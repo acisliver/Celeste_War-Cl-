@@ -32,7 +32,7 @@ class Player(pygame.Rect):
         self.height=50
         self.screen=screen
         self.top = x+25
-        self.left =y
+        self.left =y+10
         self.collidercheck=True
         self.playertimer=5
 
@@ -63,7 +63,7 @@ class Player(pygame.Rect):
                 if (self.top < 600):
                     self.top += 15
             if pressed[pygame.K_LEFT]:
-                if (0 < self.top):
+                if (25 < self.top):
                     self.top -= 15
             if pressed[pygame.K_SPACE]:  # 스페이스바를 눌렀을 경우
                 if self.shot_flag:  # 먼저 shot_flag의 값 확인(초기에 True로 설정)
@@ -168,9 +168,6 @@ class Player(pygame.Rect):
         self.arrows.append(sector2)
         sector3 = Sector3(self.screen, self.top-25, self.left, 35,0)
         self.arrows.append(sector3)
-
-    def laser_charge(self):
-        print(self.charge)
 
     def laser_shot(self):
         laser = Laser(self.screen, self.top-25, self.left, self.lasertime, self.lasernum)
