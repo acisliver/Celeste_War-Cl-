@@ -35,6 +35,7 @@ class Player(pygame.Rect):
         self.left =y+10
         self.collidercheck=True
         self.playertimer=5
+        self.fixedbullet=[]
 
 
 
@@ -136,6 +137,8 @@ class Player(pygame.Rect):
             if sector.name == "Sector":
                 if sector.timer>=8:
                     self.arrows.remove(sector)
+        for fixed in self.fixedbullet:
+            fixed.move()
 
         for arrow in self.arrows:
             arrow.move()            #화살이 날아감

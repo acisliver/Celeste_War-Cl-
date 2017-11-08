@@ -230,15 +230,15 @@ class Screen:
                         self.acheck = True
                     if len(self.fixedMob) == 1:
                         if 0 == self.fixedMob[0].top:
-                            fixed = FixedMob(self.screen, 650,  200, 0)
+                            fixed = FixedMob(self.screen, 650,  200)
                             self.fixedMob.append(fixed)
                         else:
-                            fixed = FixedMob(self.screen, 50,  200, 0)
+                            fixed = FixedMob(self.screen, 50,  200)
                             self.fixedMob.append(fixed)
                     elif len(self.fixedMob) == 0:
-                        fixed = FixedMob(self.screen, 650,200, 0)
+                        fixed = FixedMob(self.screen, 650,200)
                         self.fixedMob.append(fixed)
-                        fixed = FixedMob(self.screen, 50,250, 0)
+                        fixed = FixedMob(self.screen, 50,250)
                         self.fixedMob.append(fixed)
                     self.timer.mobtime=0
                 menu.drow()
@@ -258,7 +258,7 @@ class Screen:
                 self.butimer = self.timer.count
                 if self.tcheck == True:
                     for x in range(0, self.tmax):
-                        tanker = Tanker(self.screen, random.randint(50, self.width - 50), 0, 1, 7, 1, 0)
+                        tanker = Tanker(self.screen, random.randint(50, self.width - 50), 0, 1, 10, 1, 0)
                         self.tankers.append(tanker)
                         self.tcheck = False
                 if self.acheck == True:

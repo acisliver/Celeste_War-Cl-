@@ -34,8 +34,6 @@ class Collider:
         self.bullet=[]
         self.num=0
         self.heallgauge =healgauge
-    def returns(self):
-        print(self.num)
 
     def collide(self):
         self.heal = Healbar(self.screen, self.heallgauge)
@@ -105,17 +103,30 @@ class Collider:
                     else:
                         self.iscolided = True
             for fixed in self.fixedmob:  # 몹의 개수 만큼 실행
-                if arrow.colliderect(fixed):  # 충돌시
-                    if fixed.heal==0:
-                        fixed.time = 1
+                if arrow.colliderect(fixed):
+                    if fixed.heall == 0:
+                        fixed.num = 0
+                        fixed.time=1
+                        print(fixed.time)
                         self.backup.append(fixed)
-                        self.fixedmob.remove(fixed)  # 몹 삭제
+                        self.fixedmob.remove(fixed)
+                        if arrow.name == "Laser":
+                            pass
+                        else:
+                            self.iscolided = True
                     else:
-                        fixed.heal-=1
-                    if arrow.name == "Laser":
-                        pass
-                    else:
-                        self.iscolided = True
+                        if arrow.name == "Laser":
+                            if arrow.chek==True and fixed.num==1:
+                                pass
+                            else:
+                                fixed.num=1
+                                arrow.chek=True
+                                fixed.heall -=1
+                        else:
+                            fixed.heall -= 1
+                            self.iscolided = True
+                else:
+                    fixed.num = 0
             if self.iscolided == True:
                 self.arrows.remove(arrow)   #화살 삭제
                 self.iscolided = False
@@ -137,15 +148,14 @@ class Collider:
                         self.heallgauge -= int(194 / 5)
                         self.heal = Healbar(self.screen, self.heallgauge)
                         self.playercheck = False
-        for fixed in self.fixedmob:
-            for bullet in fixed.bullets:
-                if self.collplayer.colliderect(bullet):
-                    fixed.bullets.remove(bullet)
-                    if self.playercheck == True:
-                        self.num+=1
-                        self.heallgauge -= int(194 / 5)
-                        self.heal = Healbar(self.screen, self.heallgauge)
-                        self.playercheck = False
+        for fixed in self.collplayer.fixedbullet:
+            if self.collplayer.colliderect(fixed):
+                self.collplayer.fixedbullet.remove(fixed)
+                if self.playercheck == True:
+                    self.num += 1
+                    self.heallgauge -= int(194 / 5)
+                    self.heal = Healbar(self.screen, self.heallgauge)
+                    self.playercheck = False
 
         if self.playtimer>0 and self.playercheck==False:
             self.playtimer-=1

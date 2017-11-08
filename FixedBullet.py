@@ -24,7 +24,7 @@ class FixedBullet(pygame.Rect):
 
     def move(self):         #총알의 움직임 함수
         self.top-=math.cos(self.rotate)*self.speed
-        self.left-=math.sin(self.rotate)*self.speed
+        self.left-=math.sin(self.rotate)*7
         if self.time==0:
             if self.num == 0:
                 self.num = 1

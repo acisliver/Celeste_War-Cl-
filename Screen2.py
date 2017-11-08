@@ -101,7 +101,7 @@ class Screen2:
             self.screen.blit(Starttext, StarttextRect)
 
             mobstextfont = pygame.font.Font("resources/font/consola.ttf", 25)
-            mobstext = mobstextfont.render(str(("%d/90" % (self.mobs))), True, self.mobs_color)
+            mobstext = mobstextfont.render(str(("%d/80" % (self.mobs))), True, self.mobs_color)
             mobstextRect = mobstext.get_rect()
             mobstextRect.center = (500, 500)
             self.screen.blit(mobstext, mobstextRect)
@@ -161,33 +161,32 @@ class Screen2:
                         if self.start_color == (255, 255, 255):
                             if lists == drow.list[0]:  # list = ^
                                 if lists.collidepoint(event.pos):  # ^와 마우스가 충돌했을 경우
-                                    if drow.numlist[1] < 9 and self.mobs <= 89:  # 1의 자리가 9보다 작으면
+                                    if drow.numlist[1] < 9 and self.mobs <= 79:  # 1의 자리가 9보다 작으면
                                         drow.numlist[1] = self.numlist[1] + 1  # 1더하기
                                         break
                             if lists == drow.list[1]:  # 10의 자리 더하기
                                 if lists.collidepoint(event.pos):
-                                    if drow.numlist[0] < 5 and self.mobs <= 80:
+                                    if drow.numlist[0] < 5 and self.mobs <= 70:
                                         drow.numlist[0] = self.numlist[0] + 1
                                         break
                             if lists == drow.list[2]:  # 10의 자리 더하기
                                 if lists.collidepoint(event.pos):
-                                    if drow.tnumlist[1] < 9 and self.mobs <= 87:
+                                    if drow.tnumlist[1] < 9 and self.mobs <= 77:
                                         drow.tnumlist[1] = drow.tnumlist[1] + 1
                                         break
                             if lists == drow.list[3]:  # 10의 자리 더하기
                                 if lists.collidepoint(event.pos):
-                                    if drow.tnumlist[0] < 5 and self.mobs <= 60:
+                                    if drow.tnumlist[0] < 5 and self.mobs <= 50:
                                         drow.tnumlist[0] = drow.tnumlist[0] + 1
                                         break
                             if lists == drow.list[4]:
                                 if lists.collidepoint(event.pos):
-                                    if drow.anumlist[1] < 9 and self.mobs <= 88:
+                                    if drow.anumlist[1] < 9 and self.mobs <= 68:
                                         drow.anumlist[1] = drow.anumlist[1] + 1
                             if lists == drow.list[5]:
                                 if lists.collidepoint(event.pos):
-                                    if drow.anumlist[0] < 5 and self.mobs <= 70:
+                                    if drow.anumlist[0] < 5 and self.mobs <= 50:
                                         drow.anumlist[0] = drow.anumlist[0] + 1
-                            if lists == drow.list[6]:
                                 if lists.collidepoint(event.pos):
                                     if drow.numlist[1] > 0:
                                         drow.numlist[1] = drow.numlist[1] - 1
@@ -246,9 +245,9 @@ class Screen2:
             self.tmax = (drow.tnumlist[0] * 10) + drow.tnumlist[1]
             self.amax = (drow.anumlist[0] * 10) + drow.anumlist[1]
             self.mobs= self.max + 2 * self.amax + 3 * self.tmax
-            if self.mobs<=90:
+            if self.mobs<=80:
                 self.mobs = self.max + 2 * self.amax + 3 * self.tmax
-            if self.mobs==90:
+            if self.mobs==80:
                 self.mobs_color = (255, 0, 0)
             else:
                 self.mobs_color = (255, 255, 255)
