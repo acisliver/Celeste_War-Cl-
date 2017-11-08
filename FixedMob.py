@@ -20,7 +20,7 @@ class FixedMob(pygame.Rect):
         self.left = 180
         self.screen = screen
         self.time=time
-        self.heal=2
+        self.heall=3
         self.num=0
         self.num2=0
 
